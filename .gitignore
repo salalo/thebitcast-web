@@ -1,0 +1,8 @@
+/server/node_modules
+/client/node_modules
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
