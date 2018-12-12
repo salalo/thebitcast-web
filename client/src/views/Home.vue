@@ -5,8 +5,8 @@
 
 <script>
 
-import Mobile from '../components/Home-mobile.vue';
-import Desktop from '../components/Home-desktop.vue';
+import Mobile from '../components/HomeMobile.vue';
+import Desktop from '../components/HomeDesktop.vue';
 
 export default {
 	components: {
@@ -17,7 +17,6 @@ export default {
 	methods: {
 
 		isMobile() {
-
 			if( navigator.userAgent.match(/Android/i)
 				|| navigator.userAgent.match(/webOS/i)
 				|| navigator.userAgent.match(/iPhone/i)

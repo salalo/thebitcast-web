@@ -12,8 +12,20 @@
 
 		<div class="badges row">
 			<!-- not a proper badge just img -->
-			<img src="../assets/Home/google-play-badge.png" alt="google" width="50%" height="80">
-			<img src="../assets/Home/ios-badge.png" alt="ios" width="44%" height="54" class="badges__ios">
+			<img
+				src="../assets/Home/google-play-badge.png"
+				alt="google"
+				width="50%"
+				height="80"
+			>
+
+			<img
+				src="../assets/Home/ios-badge.png"
+				alt="ios"
+				width="44%"
+				height="54"
+				class="badges__ios"
+			>
 		</div>
 	</div>
 </template>
@@ -24,7 +36,7 @@ export default {}
 
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 
 @import '@/stylesheets/master.scss';
 
@@ -36,9 +48,9 @@ export default {}
 	text-align: center;
 }
 .header {
-	color: $grey;
 	font-size: 20px;
 	padding: 30px;
+	color: $grey;
 
 	&__logo { text-align: left; }
 	&__info { text-align: right; }
@@ -49,11 +61,11 @@ export default {}
 	left: 0;
 	right: 0;
 	margin: auto;
+	color: $grey;
 
 	&__name {
 		font-size: 50px;
 		font-weight: 600;
-		color: $grey;
 	}
 
 	&__text {

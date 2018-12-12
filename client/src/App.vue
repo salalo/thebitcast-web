@@ -10,6 +10,8 @@ export default {}
 
 <style lang="scss">
 
+@import '@/stylesheets/master.scss';
+
 ::-webkit-scrollbar{ background: transparent; }
 
 html, body {
