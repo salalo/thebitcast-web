@@ -79,7 +79,7 @@ export default {
 @import '@/stylesheets/master.scss';
 
 .form {
-	width: 350px;
+	width: 360px;
 	padding: 0 30px;
 	height: 420px;
 	box-shadow: 2px 2px 15px #000;
@@ -91,10 +91,10 @@ export default {
 	font-weight: 300;
 }
 .button {
-	margin: 20px 10px 0 0;
+	margin: 20px 14px 0 0;
 	text-transform: none !important;
 	border-color: $light-grey;
-	width: 32px;
+	width: 36px;
 
 	&__reg {
 		width: 100%;

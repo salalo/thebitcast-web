@@ -44,6 +44,8 @@ export default {
 	clear: both;
 	position: relative;
 	color: $white;
+	width: 640px;
+	height: 100vh;
 }
 .logo {
 	color: $main;
@@ -73,7 +75,7 @@ a {
 	bottom: 20px;
 	font-size: 12px;
 	color: #A4A4A4;
-  left: 30px;
+	margin-left: 120px;
 
 	a {
 		font-size: 11px;

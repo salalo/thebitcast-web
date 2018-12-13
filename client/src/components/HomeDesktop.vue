@@ -20,6 +20,9 @@ export default {
 
 <style lang="scss" scoped>
 
-.row { height: 100vh; }
+.row {
+	height: 100vh;
+	width: 100%;
+}
 
 </style>
