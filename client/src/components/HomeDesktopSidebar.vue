@@ -12,11 +12,6 @@
 
 		<login-form class="login-form"></login-form>
 
-		<div class="buy-premium">
-			<a href="#">Buy premium</a> to listen all<br>
-			available podcasts with no ads.
-		</div>
-
 		<div class="footer">
 			<span>© 2019 TheBitCast</span>
 			<a href="#">About us</a>
@@ -60,10 +55,10 @@ export default {
 }
 .login-form {
 	margin: 0 auto;
-	margin-top: 90px;
+	margin-top: 9vh;
 }
 .info {
-	margin-top: 70px;
+	margin-top: 7vh;
 	text-align: center;
 	font-size: 17px;
 	font-weight: 300;
@@ -72,11 +67,6 @@ export default {
 a {
 	color: $main;
 	text-decoration: none;
-}
-.buy-premium {
-	text-align: center;
-	margin-top: 90px;
-	font-size: 24px;
 }
 .footer {
 	position: absolute;

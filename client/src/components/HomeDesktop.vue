@@ -6,7 +6,6 @@
 </template>
 
 <script>
-
 import Sidebar from './HomeDesktopSidebar.vue';
 import Panel from './HomeDesktopPanel.vue';
 
