@@ -11,7 +11,9 @@ import {
   faPlay,
   faChevronLeft,
   faChevronRight,
-  faBookmark
+  faChevronDown,
+  faBookmark,
+  faSearch
 } from "@fortawesome/free-solid-svg-icons";
 
 import {
@@ -33,8 +35,10 @@ library.add(
   faPlay,
   faChevronLeft,
   faChevronRight,
+  faChevronDown,
   faBookmark,
-  faBookmarkO
+  faBookmarkO,
+  faSearch
 );
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)

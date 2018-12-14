@@ -104,7 +104,7 @@ export default {
 }
 
 .player__btns { margin-left: 100px; }
-.bookmark { margin: 10px 0 0 90px; }
+.bookmark { margin: 15px 0 0 90px; }
 .undisplayed { display: none; }
 
 </style>
