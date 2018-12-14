@@ -504,7 +504,7 @@ export default {
 </script>
 
 <style lang="scss">
-.padding { margin: 20px 0;  }
+.padding { margin: 20px 0; }
 .white {
   background-color: #f5f5f5;
 }

@@ -1,16 +1,17 @@
 <template>
 	<div class="container">
-		<div class="player">
-			<div class="man-btns row"></div>
-			<div class="timeline"></div>
-			<div class="time row"></div>
-		</div>
+		<player></player>
 	</div>
 </template>
 
 <script>
 
+import Player from './Player.vue'
+
 export default {
+	components: {
+		'player': Player
+	}
 }
 </script>
 
