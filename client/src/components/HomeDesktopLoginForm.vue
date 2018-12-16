@@ -94,7 +94,7 @@ export default {
       let newUser = {
         nick: this.User.nick,
         email: this.User.email,
-        password: this.User.password
+				password: this.User.password
 			}
 
 			/* eslint-disable */

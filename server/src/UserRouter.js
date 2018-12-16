@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt-nodejs')
 
 const UserRouter = express.Router()
 
-const User = require('./models/user.js').default
+const User = require('./models/user.js')
 
 UserRouter.route('/create').post((req, res) => {
   let hash = bcrypt.hashSync(req.body.password) // default salt = 10
