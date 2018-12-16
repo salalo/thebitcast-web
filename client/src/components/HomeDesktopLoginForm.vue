@@ -1,10 +1,10 @@
 <template>
-	<div class="form">
+	<div class="form" v-bind:style="{height: formHeight + 'px'}">
 		<div class="row">
 			<q-btn
 				outline
 				lowercase
-				label="Sign up with Google"
+				:label="googleBtnState"
 				class="button button__google"
 			>
 				<font-awesome-icon :icon="['fab', 'google']" class="icon alt"/>
@@ -34,6 +34,7 @@
 				float-label="Name"
 				color="red-6"
 				class="input"
+				v-bind:class="{ undisplayed: isActive}"
 			/>
 			<q-input
 				dark
@@ -56,15 +57,17 @@
 				class="input"
 			/>
 
+			<a class="forgot-passwd" href="#" v-bind:class="{ undisplayed: !isActive}">Forgot your password?</a>
+
 			<q-btn
 				color="red-6"
-				label="SIGN UP"
+				:label="registerBtnState"
 				class="button button__reg"
 				type="submit"
 				name="submit"
 			/>
 		</form>
-		<div class="logged-in">Already registered? <a href="#">Log in</a>.</div>
+		<div class="formStateHyper">{{formStateText}} <a href="#" v-on:click="changeFormState">{{formStateHyperlink}}</a>.</div>
 	</div>
 </template>
 
@@ -76,6 +79,13 @@ import axios from 'axios';
 export default {
   data() {
     return {
+			isActive: false,
+			googleBtnState: "Sign up with Google",
+			registerBtnState: "SIGN UP",
+			formStateText: "Already registered?",
+			formStateHyperlink: "Sign in",
+			formHeight: 420,
+
       User: {
         nick: '',
         email: '',
@@ -101,7 +111,26 @@ export default {
       axios.post('http://localhost:8081/create', newUser)
         .then(res => console.log(res))
 			  .catch(err => console.log(err))
-    }
+		},
+		
+		changeFormState() {
+			if (this.registerBtnState === "SIGN UP") {
+				this.isActive = true;
+				this.formHeight = 360;
+				this.googleBtnState = "Sign in with Google";
+				this.registerBtnState = "SIGN IN";
+				this.formStateText = "Not registered yet?";
+				this.formStateHyperlink = "Create one";
+			}
+			else {
+				this.isActive = false;
+				this.formHeight = 420;
+				this.googleBtnState = "Sign up with Google";
+				this.registerBtnState = "SIGN UP";
+				this.formStateText = "Already registered?";
+				this.formStateHyperlink = "Sign in";
+			}
+		}
   }
 }
 
@@ -111,10 +140,18 @@ export default {
 
 @import '@/stylesheets/master.scss';
 
+.undisplayed { display: none; }
+.forgot-passwd {
+	text-decoration: none;
+	color: $main;
+	font-size: 12px;
+	font-weight: 200;
+	float: right;
+	margin-top: 5px;
+}
 .form {
 	width: 360px;
 	padding: 0 30px;
-	height: 420px;
 	box-shadow: 2px 2px 15px #000;
 }
 .input {
@@ -153,7 +190,7 @@ export default {
 // ICONS
 .fa-google { margin-left: 20px; }
 
-.logged-in {
+.formStateHyper {
 	padding-top: 20px;
 	border-top: 1px solid $light-grey;
 	text-align: center;

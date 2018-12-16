@@ -83,4 +83,19 @@ a {
 		margin-left: 20px;
 	}
 }
+
+@media (max-width: 600px) {
+	.footer { margin-left: 12vw; }
+}
+@media (max-width: 460px) {
+	.footer {
+		margin-left: 5vw;
+		a { margin-left: 10px; }
+	}
+
+	.info {
+		margin-top: 5vh;
+		font-size: 14px;
+	}
+}
 </style>
