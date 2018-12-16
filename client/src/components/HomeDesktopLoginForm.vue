@@ -1,6 +1,5 @@
 <template>
-	<form class="form" action="" method="post">
-
+	<div class="form">
 		<div class="row">
 			<q-btn
 				outline
@@ -26,51 +25,85 @@
 			</q-btn>
 		</div>
 
-		<q-input
-			dark
-			value=""
-			type="text"
-			float-label="Name"
-			color="red-6"
-			class="input"
-		/>
-		<q-input
-			dark
-			value=""
-			type="email"
-			float-label="Email"
-			color="red-6"
-			class="input"
-		/>
-		<q-input
-			dark
-			value=""
-			type="password"
-			float-label="Password"
-			color="red-6"
-			class="input"
-		/>
+		<form action="/create" method="post" @submit.prevent="sendUser">
+			<q-input
+				dark
+				value=""
+				type="text"
+				v-model="User.nick"
+				float-label="Name"
+				color="red-6"
+				class="input"
+			/>
+			<q-input
+				dark
+				value=""
+				type="email"
+				autocomplete="off"
+				v-model="User.email"
+				float-label="Email"
+				color="red-6"
+				class="input"
+			/>
+			<q-input
+				dark
+				value=""
+				type="password"
+				autocomplete="off"
+				v-model="User.password"
+				float-label="Password"
+				color="red-6"
+				class="input"
+			/>
 
-		<q-btn
-			color="red-6"
-			label="SIGN UP"
-			class="button button__reg"
-		/>
-
+			<q-btn
+				color="red-6"
+				label="SIGN UP"
+				class="button button__reg"
+				type="submit"
+				name="submit"
+			/>
+		</form>
 		<div class="logged-in">Already registered? <a href="#">Log in</a>.</div>
-	</form>
+	</div>
 </template>
 
 <script>
 
 import { QBtn, QInput } from "quasar-framework/dist/quasar.mat.esm";
+import axios from 'axios';
 
 export default {
-  components: {
+  data() {
+    return {
+      User: {
+        nick: '',
+        email: '',
+        password: ''
+      }
+    };
+	},
+
+	components: {
 		QInput,
 		QBtn
-  },
-};
+	},
+
+  methods: {
+    sendUser() {
+      let newUser = {
+        nick: this.User.nick,
+        email: this.User.email,
+        password: this.User.password
+			}
+
+			/* eslint-disable */
+      axios.post('http://localhost:8081/create', newUser)
+        .then(res => console.log(res))
+			  .catch(err => console.log(err))
+    }
+  }
+}
 
 </script>
 

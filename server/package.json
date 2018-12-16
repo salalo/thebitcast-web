@@ -16,5 +16,10 @@
     "express": "^4.16.4",
     "morgan": "^1.9.1",
     "nodemon": "^1.18.7"
+  },
+  "devDependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "connect-flash": "^0.1.1",
+    "mongoose": "^5.4.0"
   }
 }
