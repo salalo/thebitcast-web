@@ -17,6 +17,7 @@
     "npm": "^6.5.0",
     "quasar-extras": "^2.0.9",
     "quasar-framework": "^0.17.18",
+    "vee-validate": "^2.1.4",
     "vue": "^2.5.17",
     "vue-router": "^3.0.2"
   },

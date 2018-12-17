@@ -98,4 +98,10 @@ a {
 		font-size: 14px;
 	}
 }
+@media (max-height: 800px) {
+	.logo { margin: 10px 0 0 20px; }
+	.info { margin-top: 4vh; }
+	.login-form { margin-top: 4vh; }
+	.footer { bottom: 10px; }
+}
 </style>

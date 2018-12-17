@@ -28,18 +28,22 @@
 		<form action="/create" method="post" @submit.prevent="sendUser">
 			<q-input
 				dark
+				required
+				minlength=5
 				value=""
 				type="text"
 				v-model="User.nick"
 				float-label="Name"
 				color="red-6"
 				class="input"
-				v-bind:class="{ undisplayed: isActive}"
+				v-bind:class="{ undisplayed: isActive }"
 			/>
 			<q-input
 				dark
+				required
 				value=""
 				type="email"
+				name="email"
 				autocomplete="off"
 				v-model="User.email"
 				float-label="Email"
@@ -48,8 +52,11 @@
 			/>
 			<q-input
 				dark
+				required
+				minlength=6
 				value=""
 				type="password"
+				name="password"
 				autocomplete="off"
 				v-model="User.password"
 				float-label="Password"
