@@ -33,7 +33,7 @@ export default {
 
 .container {
 	background-color: #fff;
-	height: 120px;
+	height: 100px;
 	box-shadow: 0 0 10px #000;
 }
 
@@ -43,6 +43,6 @@ export default {
 	color: $grey;
 	float: right;
 	height: 50px;
-	margin: 30px 0 0 150px;
+	margin: 15px 0 0 150px;
 }
 </style>

@@ -25,13 +25,13 @@ export default {
 @import '@/stylesheets/master.scss';
 
 .creator-logo {
-	width: 90px;
-	height: 90px;
+	width: 80px;
+	height: 80px;
 	background-image: url('../assets/creatorsAvatar.jpg');
 	background-size: cover;
 	border-radius: 2px;
 	border: 2px solid $main;
-	margin: 15px 10px 0 50px;
+	margin: 10px 10px 0 50px;
 
 	&:hover {
 		cursor: pointer;
@@ -42,7 +42,7 @@ export default {
 .podcast-info {
 	max-width: 400px;
 	height: 90px;
-	margin-top: 20px;
+	margin-top: 10px;
 	font-size: 14px;
 	font-weight: 300;
 

@@ -94,7 +94,7 @@ export default {
 
 .icon {
 	font-size: 22px;
-	margin: 35px 0 0 40px;
+	margin: 30px 0 0 40px;
 	color: $main;
 
 	&:hover {
@@ -104,7 +104,7 @@ export default {
 }
 
 .player__btns { margin-left: 100px; }
-.bookmark { margin: 15px 0 0 90px; }
+.bookmark { margin: 11px 0 0 90px; }
 .undisplayed { display: none; }
 
 </style>
