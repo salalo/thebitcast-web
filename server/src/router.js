@@ -1,11 +1,11 @@
 const express = require('express')
 const bcrypt = require('bcrypt-nodejs')
-
-const UserRouter = express.Router()
-
 const User = require('./models/user.js')
+const passport = require('passport')
 
-UserRouter.route('/create').post((req, res) => {
+const router = express.Router()
+
+router.route('/create').post((req, res) => {
   let hash = bcrypt.hashSync(req.body.password) // default salt = 10
   const user = new User(req.body)
 
@@ -22,4 +22,13 @@ UserRouter.route('/create').post((req, res) => {
   user.password = hash
 })
 
-module.exports = UserRouter
+// Auth using google
+router.get('/google', passport.authenticate('google', {
+  scope: ['profile']
+}))
+
+router.get('/google/cb', (req, res) => { 
+  res.send('asd')
+})
+
+module.exports = router

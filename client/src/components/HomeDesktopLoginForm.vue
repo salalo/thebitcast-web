@@ -1,14 +1,16 @@
 <template>
 	<div class="form" v-bind:style="{height: formHeight + 'px'}">
 		<div class="row">
-			<q-btn
-				outline
-				lowercase
-				:label="googleBtnState"
-				class="button button__google"
-			>
-				<font-awesome-icon :icon="['fab', 'google']" class="icon alt"/>
-			</q-btn>
+			<a href="http://localhost:8081/google">
+				<q-btn
+					outline
+					lowercase
+					:label="googleBtnState"
+					class="button button__google"
+				>
+					<font-awesome-icon :icon="['fab', 'google']" class="icon alt"/>
+				</q-btn>
+			</a>
 
 			<q-btn
 				outline
@@ -147,6 +149,7 @@ export default {
 
 @import '@/stylesheets/master.scss';
 
+a { text-decoration: none; color: inherit; }
 .undisplayed { display: none; }
 .forgot-passwd {
 	text-decoration: none;
