@@ -7,17 +7,19 @@ const userSchema = mongoose.Schema({
     unique: true,
     trim: true
   },
+  googleID: {
+    type: String,
+    unique: true
+  },
   email: {
     type: String,
-    required: true,
     unique: true,
     lowercase: true,
     trim: true
   },
   password: {
     type: String,
-    required: true
   }
 });
 
-module.exports = mongoose.model('User', userSchema );
+module.exports = mongoose.model('User', userSchema);

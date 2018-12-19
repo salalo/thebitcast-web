@@ -27,7 +27,7 @@ router.get('/google', passport.authenticate('google', {
   scope: ['profile']
 }))
 
-router.get('/google/cb', (req, res) => { 
+router.get('/google/cb', passport.authenticate('google'), (req, res) => { 
   res.send('asd')
 })
 
