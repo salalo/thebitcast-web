@@ -166,7 +166,7 @@ a { text-decoration: none; color: inherit; }
 .form {
 	width: 360px;
 	padding: 0 30px;
-	box-shadow: 2px 2px 15px #000;
+	box-shadow: 0px 0px 15px #000;
 }
 .input {
 	margin-top: 20px;
