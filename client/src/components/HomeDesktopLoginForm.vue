@@ -12,13 +12,14 @@
 				</q-btn>
 			</a>
 
-			<q-btn
-				outline
-				class="button button__fb"
-			>
-				<font-awesome-icon :icon="['fab', 'facebook-f']" class="icon alt"/>		
-			</q-btn>
-
+			<a href="http://localhost:8081/facebook">
+				<q-btn
+					outline
+					class="button button__fb"
+				>
+					<font-awesome-icon :icon="['fab', 'facebook-f']" class="icon alt"/>		
+				</q-btn>
+			</a>
 			<q-btn
 				outline
 				class="button button__twitter"

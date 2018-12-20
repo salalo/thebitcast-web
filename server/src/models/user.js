@@ -4,10 +4,13 @@ const userSchema = mongoose.Schema({
   nick: {
     type: String,
     required: true,
-    unique: true,
     trim: true
   },
   googleID: {
+    type: String,
+    unique: true
+  },
+  facebookID: {
     type: String,
     unique: true
   },

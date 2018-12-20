@@ -27,8 +27,18 @@ router.get('/google', passport.authenticate('google', {
   scope: ['profile']
 }))
 
-router.get('/google/cb', passport.authenticate('google'), (req, res) => { 
-  res.send('asd')
+router.get('/google/cb', passport.authenticate('google'), (req, res) => {
+  res.redirect('http://localhost:8080')
+})
+
+
+// Auth using facebook
+router.get('/facebook',
+  passport.authenticate('facebook')
+)
+
+router.get('/facebook/cb', passport.authenticate('facebook'), (req, res) => {
+  res.redirect('http://localhost:8080')
 })
 
 module.exports = router
