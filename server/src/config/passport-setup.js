@@ -28,11 +28,24 @@ passport.use(
 				}
 				else {
 					new user({
-						nick: profile.displayName,
-						googleID: profile.id
-					}).save().then(newUser => done(null, newUser))
+
+						/* Prefix for nick to enable same user
+							registered using different social media
+							accounts will have the same nicks */
+							
+						nick: "google_" + profile.displayName,
+						googleID: profile.id,
+						email: profile.emails[0].value,
+
+						// Generates value holders to prevent null value crashes
+						password: "password-dump_" + profile.id,
+						facebookID: "facebook-dump_" + profile.id
+					}).save()
+						.then(newUser => done(null, newUser))
+						.catch(err => console.error(err))
 				}
 			})
+			.catch(err => console.error(err))
 	})
 )
 
@@ -52,10 +65,46 @@ passport.use(
 				}
 				else {
 					new user({
-						nick: profile.displayName,
-						facebookID: profile.id
-					}).save().then(newUser => done(null, newUser))
+						nick: "facebook_" + profile.displayName,
+						facebookID: profile.id,
+
+						// Generates value holders to prevent null value crashes
+						email: "email-dump_" + profile.id,
+						password: "password-dump_" + profile.id,
+						googleID: "google-dump_" + profile.id
+
+					}).save()
+						.then(newUser => done(null, newUser))
+						.catch(err => console.error(err))
 				}
 			})
+			.catch(err => console.error(err))
 	})
 )
+
+// passport.use(
+// 	new twitterStrategy({
+// 		consumerKey: keys.twitter.clientID,
+// 		consumerSecret: keys.twitter.clientSecret,
+// 		callbackURL: '/twitter/cb'
+// 	},
+// 	(accessToken, refreshToken, profile, done) => {
+// 		user.findOne({twitterID: profile.id})
+// 			.then(currentUser => {
+// 				if(currentUser) {
+// 					console.log('user already exists')
+// 					// log in
+// 					done(null, currentUser)
+// 				}
+// 				else {
+// 					new user({
+// 						nick: profile.displayName,
+// 						twitterID: profile.id
+// 					}).save()
+// 						.then(newUser => done(null, newUser))
+// 						.catch(err => console.error(err))
+// 				}
+// 			})
+// 			.catch(err => console.error(err))
+// 	})
+// )

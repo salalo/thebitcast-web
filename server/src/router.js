@@ -6,8 +6,8 @@ const passport = require('passport')
 const router = express.Router()
 
 router.route('/create').post((req, res) => {
-  let hash = bcrypt.hashSync(req.body.password) // default salt = 10
-  const user = new User(req.body)
+  let hash = bcrypt.hashSync(req.body.local.password) // default salt = 10
+  const user = new User(req.body.local)
 
   // double check if password is not empty (1st in axios)
   if (user.password !== '') {
@@ -24,7 +24,7 @@ router.route('/create').post((req, res) => {
 
 // Auth using google
 router.get('/google', passport.authenticate('google', {
-  scope: ['profile']
+  scope: ['profile', 'email']
 }))
 
 router.get('/google/cb', passport.authenticate('google'), (req, res) => {

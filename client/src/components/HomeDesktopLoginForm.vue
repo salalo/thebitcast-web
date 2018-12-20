@@ -17,15 +17,18 @@
 					outline
 					class="button button__fb"
 				>
-					<font-awesome-icon :icon="['fab', 'facebook-f']" class="icon alt"/>		
+					<font-awesome-icon :icon="['fab', 'facebook-f']" class="icon alt"/>
 				</q-btn>
 			</a>
-			<q-btn
-				outline
-				class="button button__twitter"
-			>
-				<font-awesome-icon :icon="['fab', 'twitter']" class="icon alt"/>
-			</q-btn>
+
+			<a href="http://localhost:8081/twitter">
+				<q-btn
+					outline
+					class="button button__twitter"
+				>
+					<font-awesome-icon :icon="['fab', 'twitter']" class="icon alt"/>
+				</q-btn>
+			</a>
 		</div>
 
 		<form action="/create" method="post" @submit.prevent="sendUser">
@@ -122,7 +125,7 @@ export default {
         .then(res => console.log(res))
 			  .catch(err => console.log(err))
 		},
-		
+
 		changeFormState() {
 			if (this.registerBtnState === "SIGN UP") {
 				this.isActive = true;

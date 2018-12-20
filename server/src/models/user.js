@@ -6,23 +6,24 @@ const userSchema = mongoose.Schema({
     required: true,
     trim: true
   },
+
   googleID: {
-    type: String,
-    unique: true
+    type: String
   },
+
   facebookID: {
-    type: String,
-    unique: true
+    type: String
   },
+
   email: {
     type: String,
-    unique: true,
     lowercase: true,
     trim: true
   },
-  password: {
-    type: String,
-  }
-});
 
-module.exports = mongoose.model('User', userSchema);
+  password: {
+    type: String
+  }
+})
+
+module.exports = mongoose.model('User', userSchema)
