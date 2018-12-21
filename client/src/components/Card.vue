@@ -29,11 +29,12 @@ export default {}
 @import '@/stylesheets/master.scss';
 
 .card {
-	display: inline-block;
 	width: 200px;
 	height: 250px;
 	border-radius: 5px;
-	box-shadow: 0 0 20px $grey;
+	box-shadow: 0 5px 20px rgba(0, 0, 0, .3);
+	// enables top shadow
+	align-self: center;
 
 	&:hover { cursor: pointer; }
 
@@ -46,21 +47,22 @@ export default {}
 	}
 
 	&__info {
-		width: 100%;
+		// 94% because of Panel Swiper
+		width: 94%;
 		height: 100px;
 		background-color: #fff;
 		font-size: 14px;
-		padding: 7px;
+		padding: 6px;
 		border-radius: 0 0 5px 5px;
 
 		&-title { font-weight: 500; }
 		&-creator { margin: 5px 0 15px 0; }
 		&-details {
-			font-size: 13px;
+			font-size: 12px;
 			font-weight: 500;
 
 			:first-child { float: left; }
-			:nth-child(2){ display: inline-block; margin: 0 auto; }
+			:nth-child(2){ margin-left: 15px; }
 			:last-child { float: right; }
 		}
 	}
