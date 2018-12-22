@@ -19,7 +19,6 @@
 					<swiper-slide><card/></swiper-slide>
 					<swiper-slide><card/></swiper-slide>
 					<swiper-slide><card/></swiper-slide>
-					<!-- <div class="swiper-pagination" slot="pagination"></div> -->
 				</swiper>
 
 			</div>
@@ -42,7 +41,6 @@
 					<swiper-slide><card/></swiper-slide>
 					<swiper-slide><card/></swiper-slide>
 					<swiper-slide><card/></swiper-slide>
-					<!-- <div class="swiper-pagination" slot="pagination"></div> -->
 				</swiper>
 
 			</div>
@@ -61,13 +59,9 @@ export default {
 	data() {
 		return {
 			swiperOption: {
-				slidesPerView: 5,
+				slidesPerView: 5.5,
 				spaceBetween: 30,
-				freeMode: true,
-				// pagination: {
-				// 	el: '.swiper-pagination',
-				// 	clickable: true
-				// }
+				freeMode: true
 			}
 		}
 	},
@@ -90,25 +84,29 @@ export default {
 .recommended, .popular {
 	width: 100%;
 	height: 50%;
-	padding: 30px;
+	padding: 30px 0 30px 30px;
 	display: flex;
   justify-content: center;
 	flex-direction: column;
 
 	span{
+		position: relative;
 		font-size: 20px;
 		// 10px left to center swiper and enable left shadow
-		margin: -50px 0 20px 10px;
+		margin: -50px 0 20px 0;
 	}
 }
 .popular { span { margin-top: -200px; } }
 
 .swiper-slide {
-	display: flex;
   justify-content: center;
-	width: 200px;
-	height: 280px;
-	// box-shadow: 0 0 20px rgba(0, 0, 0, .3);
+	align-self: center;
+	min-width: 200px;
+	min-height: 280px;
+
+	&:nth-child(2n) {
+		min-width: 350px; 
+	}
 }
 
 // !!! TOTAL MARGIN LEFT = 40PX (recommended padding + span margin)

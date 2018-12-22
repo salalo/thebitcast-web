@@ -34,7 +34,7 @@ export default {
 .container {
 	background-color: #fff;
 	height: 100px;
-	box-shadow: 0 0 10px #000;
+	box-shadow: 0 0 10px rgba(0, 0, 0, .3);
 }
 
 // HAS TO BE CHANGED
