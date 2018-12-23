@@ -1,5 +1,10 @@
 <template>
-	<div class="card--expanded" v-if="isActive" v-on:click="expandCard()">
+	<div
+		class="card--expanded"
+		v-if="isActive"
+		v-on:click="expandCard()"
+		v-bind:class="{ expanded: isActive }"
+	>
 		<div class="card--expanded__header">
 			<span>Joe Rogan</span>
 		</div>
@@ -58,15 +63,24 @@ export default {
 
 	methods: {
 		expandCard() {
+
+			// let expandedCard = document.getElementsByClassName('expanded')[0];
+
+			// console.log(event.target);
 			this.isActive = !this.isActive;
 
-			if (this.isActive)
-				this.$store.state.cardExpanded = true;
+			// if (this.isActive)
+			// 	this.$store.state.cardExpanded = true;
 
-			else
-				this.$store.state.cardExpanded = false;
+			// else
+			// 	this.$store.state.cardExpanded = false;
 
-			console.log(this.$store.state.cardExpanded);
+			// console.log(this.$store.state.cardExpanded);
+
+			// window.onclick = e => {
+			// 	if(e.target == expandedCard)
+			// 		expandedCard.style.display = "none";
+			// }
 		}
 	}
 }

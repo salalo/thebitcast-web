@@ -90,25 +90,21 @@ export default {
 	flex-direction: column;
 
 	span{
-		position: relative;
+		position: absolute;
 		font-size: 20px;
-		// 10px left to center swiper and enable left shadow
-		margin: -50px 0 20px 0;
+		top: 160px;
 	}
 }
-.popular { span { margin-top: -200px; } }
+.popular {
+	margin-top: -100px;
+	span { top: 560px; }
+}
 
 .swiper-slide {
   justify-content: center;
 	align-self: center;
 	min-width: 200px;
 	min-height: 280px;
-
-	&:nth-child(2n) {
-		min-width: 350px; 
-	}
 }
-
-// !!! TOTAL MARGIN LEFT = 40PX (recommended padding + span margin)
 
 </style>
