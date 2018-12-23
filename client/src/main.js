@@ -19,11 +19,16 @@ import {
   faChevronRight,
   faChevronDown,
   faBookmark,
-  faSearch
+  faShare,
+  faSearch,
+  faThumbsUp,
+  faThumbsDown
 } from "@fortawesome/free-solid-svg-icons"
 
 import {
-  faBookmark as faBookmarkO
+  faBookmark as faBookmarkO,
+  faThumbsUp as faThumbsUpO,
+  faThumbsDown as faThumbsDownO
 } from "@fortawesome/free-regular-svg-icons"
 
 import {
@@ -44,7 +49,12 @@ library.add(
   faChevronDown,
   faBookmark,
   faBookmarkO,
-  faSearch
+  faShare,
+  faSearch,
+  faThumbsUp,
+  faThumbsUpO,
+  faThumbsDown,
+  faThumbsDownO
 )
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)

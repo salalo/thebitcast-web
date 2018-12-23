@@ -6,12 +6,12 @@
 		v-bind:class="{ expanded: isActive }"
 	>
 		<div class="card--expanded__header">
-			<span>Joe Rogan</span>
+			Joe Rogan
 		</div>
 		<div class="card--expanded__info">
 
 			<div class="card--expanded__info-title">
-				Killing few ppl with my super abilities, just look...
+				Killing few ppl with my super abilities, just look at me, cmon.
 			</div>
 
 			<div class="card--expanded__info-description">
@@ -26,7 +26,23 @@
 			</div>
 
 			<div class="card--expanded__info-buttons">
+        <font-awesome-icon
+				  :icon="[bookmarksPrefab, 'bookmark']"
+				  v-on:click="addToBookmarks()"
+				  class="icon alt"
+			  /> 
+        <font-awesome-icon :icon="['fas', 'share']" class="icon alt"/>
 
+        <font-awesome-icon
+          :icon="[thumbsUpPrefab, 'thumbs-up']"
+          v-on:click="likePodcast()"
+          class="icon alt"
+        />
+        <font-awesome-icon
+          :icon="[thumbsDownPrefab, 'thumbs-down']"
+          v-on:click="dislikePodcast()"
+          class="icon alt fa-flip-horizontal"
+        />
 			</div>
 		</div>
 	</div>
@@ -57,7 +73,10 @@ export default {
 
 	data() {
 		return {
-			isActive: false
+      bookmarksPrefab: 'far',
+			thumbsUpPrefab: 'far',
+			thumbsDownPrefab: 'far',
+      isActive: false
 		}
 	},
 
@@ -67,7 +86,7 @@ export default {
 			// let expandedCard = document.getElementsByClassName('expanded')[0];
 
 			// console.log(event.target);
-			this.isActive = !this.isActive;
+			this.isActive = true;
 
 			// if (this.isActive)
 			// 	this.$store.state.cardExpanded = true;
@@ -81,7 +100,31 @@ export default {
 			// 	if(e.target == expandedCard)
 			// 		expandedCard.style.display = "none";
 			// }
-		}
+		},
+
+    addToBookmarks() {
+      if (this.bookmarksPrefab === 'fas')
+        this.bookmarksPrefab = 'far';
+
+      else
+        this.bookmarksPrefab = 'fas';
+    },
+
+    likePodcast() {
+      if (this.thumbsUpPrefab === 'fas')
+        this.thumbsUpPrefab = 'far';
+
+      else
+        this.thumbsUpPrefab = 'fas';
+    },
+
+    dislikePodcast() {
+      if (this.thumbsDownPrefab === 'fas')
+        this.thumbsDownPrefab = 'far';
+
+      else
+        this.thumbsDownPrefab = 'fas';
+    }
 	}
 }
 </script>
@@ -93,13 +136,56 @@ export default {
 // .undisplayed { display: none; }
 
 .card--expanded {
-	opacity: .5;
 	position: relative;
-	background-color: $main;
 	height: 500px;
+  background-color: #fff;
 	width: 350px;
 	border-radius: 2px;
 	box-shadow: 1px 10px 20px rgba(0, 0, 0, .3);
+
+  &__header {
+    width: 100%;
+    height: 150px;
+    color: $white;
+    font-size: 30px;
+    font-weight: 600;
+    text-indent: 10px;
+    background: linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6) ), url('../assets/creatorsAvatar.jpg');
+    background-position: center top;
+    background-size: cover;
+    line-height: 150px;
+  }
+  &__info {
+    color: rgba(0, 0, 0, .95);
+    padding: 10px;
+    font-size: 14px;
+
+    &-title {
+      font-size: 15px;
+      font-weight: 500;
+      width: 90%;
+    }
+    &-description {
+      margin: 20px 0;
+    }
+    &-details {
+      border-top: 1px solid $lighter-grey;
+      border-bottom: 1px solid $lighter-grey;
+      font-weight: 500;
+      padding: 2px;
+
+      :first-child { float: left; }
+      :nth-child(2) { margin-left: 70px; }
+      :last-child { float: right; }
+    }
+    &-buttons {
+      color: $main;
+      font-size: 26px;
+      text-align: center;
+      &:hover { cursor: pointer; }
+      .icon { margin: 20px 20px 0 20px; }
+    }
+  }
 }
 
 .card {
