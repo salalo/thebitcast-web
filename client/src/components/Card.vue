@@ -27,10 +27,10 @@
 
 			<div class="card--expanded__info-buttons">
         <font-awesome-icon
-				  :icon="[bookmarksPrefab, 'bookmark']"
-				  v-on:click="addToBookmarks()"
-				  class="icon alt"
-			  /> 
+					:icon="[bookmarksPrefab, 'bookmark']"
+					v-on:click="addToBookmarks()"
+					class="icon alt"
+				/> 
         <font-awesome-icon :icon="['fas', 'share']" class="icon alt"/>
 
         <font-awesome-icon

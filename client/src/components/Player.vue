@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="player">
 		<div class="row player__btns">
 			<font-awesome-icon :icon="['fas', 'chevron-left']" class="icon alt"/>
 
@@ -78,6 +78,8 @@ export default {
 	
 @import '@/stylesheets/master.scss';
 
+
+.player { max-height: 100px; }
 .time-sets {
 	width: 350px;
 	margin-left: 30px;

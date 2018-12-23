@@ -1,5 +1,5 @@
 <template>
-	<div class="row">
+	<div class="playing-info row">
 		<div class="creator-logo"></div>
 		<div class="podcast-info">
 			<div class="podcast-info__author">Author's name</div><br>
@@ -24,6 +24,7 @@ export default {
 
 @import '@/stylesheets/master.scss';
 
+.playing-info { max-height: 100px; }
 .creator-logo {
 	width: 80px;
 	height: 80px;

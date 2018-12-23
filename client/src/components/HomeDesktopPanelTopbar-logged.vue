@@ -1,5 +1,5 @@
 <template>
-	<div class="topbar container row">
+	<div class="topbar-logged container row">
 		<player></player>
 		<playing-info></playing-info>
 
@@ -34,7 +34,11 @@ export default {
 .container {
 	background-color: #fff;
 	height: 100px;
+	width: 100%;
 	box-shadow: 0 0 10px rgba(0, 0, 0, .3);
+	// to enable shadows
+	position: relative;
+	z-index: 99999;
 }
 
 // HAS TO BE CHANGED
