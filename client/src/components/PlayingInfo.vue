@@ -32,7 +32,7 @@ export default {
 	background-size: cover;
 	border-radius: 2px;
 	border: 2px solid $main;
-	margin: 10px 10px 0 50px;
+	margin: 10px 10px 0 0;
 
 	&:hover {
 		cursor: pointer;

@@ -45,4 +45,7 @@ export default {
 	height: 50px;
 	margin: 15px 0 0 150px;
 }
+
+// child component
+.playing-info { margin-left: 50px; }
 </style>

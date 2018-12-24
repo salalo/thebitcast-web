@@ -54,15 +54,16 @@ import { swiper, swiperSlide } from 'vue-awesome-swiper';
 export default {
 	data() {
 		return {
-			loggedIn: true,
-			
 			swiperOption: {
-				slidesPerView: 6.5,
+				direction: 'horizontal',
+				mousewheel: true,
+				slidesPerView: 8,
 				spaceBetween: 30,
 				freeMode: true
 			}
 		}
 	},
+
 	components: {
 		'card': Card,
 		swiper,
@@ -79,18 +80,15 @@ export default {
 .container {
 	width: calc(100vw - 300px);
 	height: calc(100vh - 100px);
-	background-color: $white;
 	position: fixed;
-	color: $grey;
 	bottom: 0;
 	right: 0;
 }
 
 .recommended, .popular {
-	height: 100px;
 	width: 100%;
 	height: 50%;
-	padding: 30px 0 30px 30px;
+	padding: 90px 0 30px 30px;
 	display: flex;
   justify-content: center;
 	flex-direction: column;
@@ -102,7 +100,8 @@ export default {
 	}
 }
 .popular {
-	span { top: 500px; }
+	margin-top: -60px;
+	span { top: 460px; }
 }
 
 .swiper-slide {

@@ -22,7 +22,17 @@ import {
   faShare,
   faSearch,
   faThumbsUp,
-  faThumbsDown
+  faThumbsDown,
+  faHome,
+  faTable,
+  faHeart,
+  faCloudUploadAlt,
+  faChartLine,
+  faHandshake,
+  faStar,
+  faComment,
+  faQuestion,
+  faFlag
 } from "@fortawesome/free-solid-svg-icons"
 
 import {
@@ -54,7 +64,18 @@ library.add(
   faThumbsUp,
   faThumbsUpO,
   faThumbsDown,
-  faThumbsDownO
+  faThumbsDownO,
+  faHome,
+  faTable,
+  faHeart,
+  faCloudUploadAlt,
+  faChartLine,
+  faHandshake,
+  faStar,
+  faComment,
+  faQuestion,
+  faFlag
+
 )
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)

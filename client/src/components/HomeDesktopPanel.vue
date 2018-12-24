@@ -59,12 +59,15 @@ export default {
 	data() {
 		return {
 			swiperOption: {
+				direction: 'horizontal',
+				mousewheel: true,
 				slidesPerView: 5.5,
 				spaceBetween: 30,
 				freeMode: true
 			}
 		}
 	},
+
 	components: {
 		'topbar': Topbar,
 		'card': Card,

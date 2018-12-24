@@ -1,5 +1,6 @@
 <template>
 	<div class="topbar-logged container row">
+		<user-logged></user-logged>
 		<player></player>
 		<playing-info></playing-info>
 
@@ -15,12 +16,13 @@
 </template>
 
 <script>
-
+import UserLogged from './User-logged.vue';
 import Player from './Player.vue';
 import PlayingInfo from './PlayingInfo.vue';
 
 export default {
 	components: {
+		'user-logged': UserLogged,
 		'player': Player,
 		'playing-info': PlayingInfo
 	}
@@ -47,6 +49,10 @@ export default {
 	color: $grey;
 	float: right;
 	height: 50px;
-	margin: 15px 0 0 150px;
+	margin: 15px 0 0 250px;
 }
+
+// child components
+.player { margin-left: 400px; }
+.playing-info { margin-left: 160px; }
 </style>

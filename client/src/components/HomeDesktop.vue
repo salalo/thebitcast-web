@@ -21,7 +21,7 @@ import TopbarLogged from './HomeDesktopPanelTopbar-logged.vue';
 export default {
 	data() {
 		return {
-			loggedIn: true 
+			loggedIn: true
 		}
 	},
 
