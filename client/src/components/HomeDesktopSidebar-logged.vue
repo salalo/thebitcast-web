@@ -86,6 +86,12 @@ export default {
   height: calc(100vh - 100px);
   position: fixed;
   bottom: 0;
+  
+  div {
+    overflow: hidden;
+    padding: 15% 0;
+    border-bottom: 1px solid $dark-white;
+  }
 }
 
 a {
@@ -94,7 +100,6 @@ a {
   text-decoration: none;
   color: $grey;
   float: left;
-  clear: both;
 
   .icon {
     margin: 0 50px;
@@ -109,15 +114,13 @@ a {
   }
 }
 
-.taker {}
-// giver and info -> same height
-.giver {}
-.info { .icon, span { color: $main;  } }
-.essentials {}
+.info { .icon, span { color: $main; } }
 
 .footer {
-  position: fixed;
+  position: absolute;
   bottom: 20px;
+  padding: 0 !important;
+  border: none !important;
   
   span {
     font-size: 15px;

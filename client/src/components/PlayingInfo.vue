@@ -8,7 +8,7 @@
 
 			<font-awesome-icon
 				:icon="['fas', 'chevron-down']"
-				class="icon alt drop-down"
+				class="icon alt drop-down-icon"
 			/>
 		</div>
 	</div>
@@ -53,7 +53,7 @@ export default {
 	}
 }
 
-.drop-down {
+.drop-down-icon {
 	font-size: 20px;
 	color: $main;
 	float: right;
