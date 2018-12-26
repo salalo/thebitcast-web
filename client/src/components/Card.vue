@@ -48,7 +48,14 @@
 	</div>
 
 	<div class="card" v-else>
-		<div class="card__img"></div>
+		<div class="card__avatar">
+			<img src="../assets/crAvatar.jpg" alt="avatar">
+			<font-awesome-icon
+				:icon="['fas', 'play']"
+				v-on:click="playThePodcast()"
+				class="icon alt card__avatar-play-btn"
+			/>
+		</div>
 		<div class="card__info" v-on:click="expandCard()">
 
 			<div class="card__info-title">
@@ -82,24 +89,7 @@ export default {
 
 	methods: {
 		expandCard() {
-
-			// let expandedCard = document.getElementsByClassName('expanded')[0];
-
-			// console.log(event.target);
 			this.isActive = true;
-
-			// if (this.isActive)
-			// 	this.$store.state.cardExpanded = true;
-
-			// else
-			// 	this.$store.state.cardExpanded = false;
-
-			// console.log(this.$store.state.cardExpanded);
-
-			// window.onclick = e => {
-			// 	if(e.target == expandedCard)
-			// 		expandedCard.style.display = "none";
-			// }
 		},
 
     addToBookmarks() {
@@ -114,16 +104,22 @@ export default {
       if (this.thumbsUpPrefab === 'fas')
         this.thumbsUpPrefab = 'far';
 
-      else
+      else {
         this.thumbsUpPrefab = 'fas';
+        // undislike on like
+        this.thumbsDownPrefab = 'far';
+      }
     },
 
     dislikePodcast() {
       if (this.thumbsDownPrefab === 'fas')
         this.thumbsDownPrefab = 'far';
 
-      else
+      else {
         this.thumbsDownPrefab = 'fas';
+        // unlike on dislike click
+        this.thumbsUpPrefab = 'far';
+      }
     }
 	}
 }
@@ -133,17 +129,14 @@ export default {
 
 @import '@/stylesheets/master.scss';
 
-// .undisplayed { display: none; }
-
 .card--expanded {
 	position: relative;
 	height: 500px;
   background-color: #fff;
 	width: 350px;
-	border-radius: 2px;
 	box-shadow: 1px 10px 20px rgba(0, 0, 0, .3);
 
-  &__header {
+	&__header {
     width: 100%;
     height: 150px;
     color: $white;
@@ -165,9 +158,7 @@ export default {
       font-weight: 500;
       width: 90%;
     }
-    &-description {
-      margin: 20px 0;
-    }
+    &-description { margin: 20px 0; }
     &-details {
       border-top: 1px solid $lighter-grey;
       border-bottom: 1px solid $lighter-grey;
@@ -191,19 +182,29 @@ export default {
 .card {
 	width: 200px;
 	height: 250px;
-	border-radius: 2px;
 	box-shadow: 1px 10px 20px rgba(0, 0, 0, .3);
 
-	&:hover { cursor: pointer; }
-
-	&__img {
-		background-image: url('../assets/creatorsAvatar.jpg');
+	&__avatar {
 		width: 100%;
 		height: 150px;
-		background-size: cover;
-		border-radius: 2px 2px 0 0;
-	}
 
+		&:hover {
+			img { -webkit-filter: blur(2px); filter: blur(2px); }
+			.card__avatar-play-btn { opacity: 1; }
+		}
+
+		img { @include transition(0s, filter .4s ease); }
+		&-play-btn {
+			&:hover { cursor: pointer; }
+			opacity: 0;
+			@include transition(0s, opacity .3s ease-in);
+			position: absolute;
+			top: calc(150px * .5 - 15px);
+			left: calc(50% - 15px);
+			font-size: 30px;
+			color: $main;
+		}
+	}
 	&__info {
 		// 94% because of Panel Swiper
 		width: 94%;
@@ -211,8 +212,8 @@ export default {
 		background-color: #fff;
 		font-size: 14px;
 		padding: 6px;
-		border-radius: 0 0 2px 2px;
 
+		&:hover { cursor: pointer; }
 		&-title { font-weight: 500; }
 		&-creator { margin: 10px 0 25px 0; }
 		&-details {

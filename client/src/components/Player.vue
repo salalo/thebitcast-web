@@ -30,7 +30,7 @@
 				:min="0"
 				:max="100"
 				class="time-sets__timeline"
-				fill-handle-always
+				value=0
 			/>
 			<div class="time-sets__counter">
 				99:59:59

@@ -58,7 +58,7 @@
     </div>
 
     <div class="footer">
-      <span>&copy 2019 TheBitCast</span>
+      <span>&copy; 2019 TheBitCast</span>
       <a href="#">About us</a>
       <a href="#">Copyright</a>
       <a href="#">Contact</a>
@@ -101,6 +101,7 @@ a {
   color: $grey;
   float: left;
 
+  &:hover { background-color: $dark-white; }
   .icon {
     margin: 0 50px;
     font-size: 18px;
@@ -134,6 +135,7 @@ a {
     float: none;
     font-size: 11px;
     margin-left: 20px;
+    &:hover { background-color: inherit; }
   }
 }
 
