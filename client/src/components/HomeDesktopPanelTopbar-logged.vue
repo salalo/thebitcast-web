@@ -53,7 +53,7 @@ export default {
 }
 
 // child components
-.user-logged { margin: 20px 0 0 30px; }
+.user-logged { margin: 17px 0 0 30px; }
 .player { margin-left: 150px; }
 .playing-info { margin-left: 160px; }
 </style>

@@ -57,7 +57,7 @@ export default {
 			swiperOption: {
 				direction: 'horizontal',
 				mousewheel: true,
-				slidesPerView: 8,
+				slidesPerView: 7,
 				spaceBetween: 30,
 				freeMode: true
 			}
@@ -109,6 +109,7 @@ export default {
 	align-self: center;
 	min-width: 200px;
 	min-height: 280px;
+
 }
 
 </style>

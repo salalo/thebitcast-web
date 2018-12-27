@@ -78,7 +78,6 @@ export default {
 	
 @import '@/stylesheets/master.scss';
 
-
 .player { max-height: 100px; }
 .time-sets {
 	width: 350px;

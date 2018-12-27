@@ -55,6 +55,12 @@
 				v-on:click="playThePodcast()"
 				class="icon alt card__avatar-play-btn"
 			/>
+
+			<div class="card__avatar-details">
+				<span>999K play</span>
+				<span>99:59:59</span>
+				<span>31.12.19</span>
+			</div>
 		</div>
 		<div class="card__info" v-on:click="expandCard()">
 
@@ -63,12 +69,6 @@
 			</div>
 			
 			<div class="card__info-creator">Joe Rogan</div>
-
-			<div class="card__info-details">
-				<span>999K play</span>
-				<span>99:59:59</span>
-				<span>31.12.19</span>
-			</div>
 
 		</div>
 	</div>
@@ -171,18 +171,18 @@ export default {
     }
     &-buttons {
       color: $main;
-      font-size: 26px;
+      font-size: 22px;
       text-align: center;
       &:hover { cursor: pointer; }
-      .icon { margin: 20px 20px 0 20px; }
+      .icon { margin: 25px 20px 0 20px; }
     }
   }
 }
 
 .card {
 	width: 200px;
-	height: 250px;
-	box-shadow: 1px 10px 20px rgba(0, 0, 0, .3);
+	height: 240px;
+	box-shadow: 0 4px 20px rgba(0, 0, 0, .3);
 
 	&__avatar {
 		width: 100%;
@@ -191,39 +191,63 @@ export default {
 		&:hover {
 			img { -webkit-filter: blur(2px); filter: blur(2px); }
 			.card__avatar-play-btn { opacity: 1; }
+			.card__avatar-details { opacity: 1; }
 		}
 
-		img { @include transition(0s, filter .4s ease); }
+		img {
+			@include transition(0s, filter .4s ease);
+			height: 150px;
+			width: 100%;
+		}
 		&-play-btn {
-			&:hover { cursor: pointer; }
+			&:hover {
+				cursor: pointer;
+				color: $lighter-main;
+				border: 2px solid $lighter-main;
+			}
+
+			width: 30px;
+			height: 30px;
+			border-radius: 100%;
+			border: 2px solid $main;
+			padding: 15px 15px 15px 18px;
+
 			opacity: 0;
 			@include transition(0s, opacity .3s ease-in);
-			position: absolute;
-			top: calc(150px * .5 - 15px);
-			left: calc(50% - 15px);
-			font-size: 30px;
-			color: $main;
-		}
-	}
-	&__info {
-		// 94% because of Panel Swiper
-		width: 94%;
-		height: 100px;
-		background-color: #fff;
-		font-size: 14px;
-		padding: 6px;
 
-		&:hover { cursor: pointer; }
-		&-title { font-weight: 500; }
-		&-creator { margin: 10px 0 25px 0; }
+			color: $main;
+			position: absolute;
+			top: calc(150px * .5 - 30px);
+			left: calc(50% - 30px);
+			font-size: 30px;
+		}
 		&-details {
+			opacity: 0;
+			@include transition(.2s, opacity .3s ease-in);
+
+			position: absolute;
+			top: 135px;
+			left: 5px;
 			font-size: 12px;
 			font-weight: 500;
 
+			color: white;
+			mix-blend-mode: difference;
+
 			:first-child { float: left; }
-			:nth-child(2) { margin-left: 20px; }
+			:nth-child(2) { margin: 0 20px; }
 			:last-child { float: right; }
 		}
+	}
+	&__info {
+		width: 100%;
+		height: 90px;
+		background-color: #fff;
+		font-size: 14px;
+
+		&:hover { cursor: pointer; }
+		&-title { font-weight: 500; padding: 10px; }
+		&-creator { padding: 10px; }
 	}
 }
 

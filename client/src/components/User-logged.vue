@@ -6,7 +6,7 @@
     <font-awesome-icon
       :icon="['fas', 'chevron-down']"
       class="icon alt drop-down-icon"
-	  />
+    />
   </div>
 </template>
 
@@ -29,14 +29,18 @@ export default {}
 }
 
 .avatar {
-  height: 60px;
-  width: 60px;
+  height: 65px;
+  width: 65px;
   border-radius: 100%;
-  border: 2px solid $main;
   background-image: url('../assets/creatorsAvatar.jpg');
   background-size: cover;
+  border: 2px solid $main;
+  @include transition(0s, border .15s ease);
 
-  &:hover { cursor: pointer; }
+  &:hover {
+    cursor: pointer;
+    border: 4px solid $main;
+  }
 }
 
 .drop-down-icon {
