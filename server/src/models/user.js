@@ -4,24 +4,21 @@ const userSchema = mongoose.Schema({
   nick: {
     type: String,
     required: true,
-    trim: true
+  },
+  email: {
+    type: String,
+    lowercase: true,
+    trim: true,
+    unique: true
+  },
+  password: {
+    type: String
   },
 
   googleID: {
     type: String
   },
-
   facebookID: {
-    type: String
-  },
-
-  email: {
-    type: String,
-    lowercase: true,
-    trim: true
-  },
-
-  password: {
     type: String
   }
 })

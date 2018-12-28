@@ -35,7 +35,7 @@
 			<q-input
 				dark
 				required
-				minlength=5
+				minlength=4
 				value=""
 				type="text"
 				v-model="User.nick"
@@ -88,6 +88,13 @@
 
 import { QBtn, QInput } from "quasar-framework/dist/quasar.mat.esm";
 import axios from 'axios';
+import Joi from 'joi';
+
+const schema = Joi.object().keys({
+  nick: Joi.string().min(4).required(),
+  email: Joi.string().lowercase().trim().required(),
+  password: Joi.string().trim().min(6).required()
+});
 
 export default {
   data() {
@@ -120,10 +127,14 @@ export default {
 				password: this.User.password
 			}
 
-			/* eslint-disable */
-      axios.post('http://localhost:8081/create', newUser)
-        .then(res => console.log(res))
-			  .catch(err => console.log(err))
+			const result = Joi.validate(newUser, schema);
+
+			if(result.error === null) {
+				/* eslint-disable */
+	      axios.post('http://localhost:8081/create', newUser)
+	        .then(res => console.log(res))
+				  .catch(err => console.log(err))
+			} else { console.log(result.error); }
 		},
 
 		changeFormState() {
