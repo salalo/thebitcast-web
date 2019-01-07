@@ -48,4 +48,9 @@ export default {
 
 // child component
 .playing-info { margin-left: 50px; }
+
+@media (max-width: 1700px) {
+	.search-input { margin: 15px 0 0 50px; }
+}
+
 </style>

@@ -56,4 +56,19 @@ export default {
 .user-logged { margin: 17px 0 0 30px; }
 .player { margin-left: 150px; }
 .playing-info { margin-left: 160px; }
+
+@media (max-width: 1710px) {
+	.search-input { margin-left: 50px; }
+	.playing-info { margin-left: 50px; }
+	// .player { margin-left: 150px; }
+}
+
+@media (max-width: 1400px) {
+	.player { margin-left: 50px; }
+}
+
+@media (max-width: 1300px) {
+	// search input is becoming an icon
+	// playing-info text disappears
+}
 </style>

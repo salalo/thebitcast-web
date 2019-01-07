@@ -74,7 +74,7 @@ passport.use(
 			.then(currentUser => {
 				if (currentUser) {
 					console.log('\n\nUser already exists.\n')
-					// log in
+					// log in (jwt)
 					done(null, currentUser)
 				}
 				else {
