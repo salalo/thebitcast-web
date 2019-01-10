@@ -49,13 +49,14 @@ export default {
 	color: $grey;
 	float: right;
 	height: 50px;
-	margin: 15px 0 0 250px;
+	margin: 15px auto 0 auto;
 }
 
 // child components
 .user-logged { margin: 17px 0 0 30px; }
 .player { margin-left: 150px; }
 .playing-info { margin-left: 160px; }
+
 
 @media (max-width: 1710px) {
 	.search-input { margin-left: 50px; }
@@ -67,8 +68,14 @@ export default {
 	.player { margin-left: 50px; }
 }
 
-@media (max-width: 1300px) {
-	// search input is becoming an icon
-	// playing-info text disappears
+@media (max-width: 1100px) {
+	.playing-info { display: none; }
 }
+
+@media (max-width: 768px) {
+	.user-logged { display: none; }
+	.search-input { display: none; }
+	.player { margin: 0 auto; }
+}
+
 </style>

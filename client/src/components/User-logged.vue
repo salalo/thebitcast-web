@@ -24,7 +24,7 @@ export default {}
   span {
     line-height: 60px;
     vertical-align: middle;
-    margin: 0 30px; 
+    margin: 0 30px;
   }
 }
 

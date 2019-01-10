@@ -50,4 +50,8 @@ export default {
 	}
 }
 
+@media (max-width: 1300px) {
+	.podcast-info { display: none; }
+}
+
 </style>

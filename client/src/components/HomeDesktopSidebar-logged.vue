@@ -139,4 +139,8 @@ a {
   }
 }
 
+// @media (max-width: 1100px) {
+//   .container { display: none; }
+// }
+
 </style>

@@ -109,7 +109,6 @@ export default {
 	align-self: center;
 	min-width: 200px;
 	min-height: 280px;
-
 }
 
 </style>
