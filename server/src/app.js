@@ -37,7 +37,6 @@ mongoose.connect(keys.mongodb.DB, { useNewUrlParser: true }).then(
   err => console.log('\nCan not connect to the database\n\n' + err)
 )
 
-// app.use(cors())
 app.use(morgan('dev'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))

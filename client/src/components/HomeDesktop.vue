@@ -1,5 +1,5 @@
 <template>
-	<div v-if="loggedIn">
+	<div v-if="$store.getters.LOGGED">
 		<panel-logged />
 		<sidebar-logged />
 		<topbar-logged />
@@ -19,11 +19,6 @@ import PanelLogged from './HomeDesktopPanel-logged.vue';
 import TopbarLogged from './HomeDesktopPanelTopbar-logged.vue';
 
 export default {
-	data() {
-		return {
-			loggedIn: true
-		}
-	},
 
 	components: {
 		'sidebar': Sidebar,

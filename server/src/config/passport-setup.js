@@ -4,6 +4,7 @@ const googleStrategy = require('passport-google-oauth20')
 const facebookStrategy = require('passport-facebook')
 const bcrypt = require('bcrypt-nodejs')
 const Joi = require('joi')
+const axios = require('axios')
 const keys = require('./keys.js')
 const user = require('../models/user.js')
 
@@ -21,7 +22,6 @@ const schema = Joi.object().keys({
   password: Joi.string().trim().min(6).required()
 })
 
-
 passport.use(
 	new localStrategy({
 		usernameField: 'nick',
@@ -30,7 +30,6 @@ passport.use(
 	},
 	(req, nick, password, done) => {
 		const result = Joi.validate(req.body, schema)
-
 		if (result.error === null) {
 			const email = req.body.email
 			user.findOne({$or: [{ nick: nick }, { email: email} ]})
@@ -44,7 +43,7 @@ passport.use(
 
 							/* Adding dump_ prefixes for
 							keys in db that will be null
-							to make them unique every registration*/
+							to make them unique every registration */
 
 							nick: nick,
 							email: email,
@@ -54,7 +53,9 @@ passport.use(
 	  					facebookID: 'facebook-dump_' + email
 
 						}).save()
-							.then(newUser => done(null, newUser))
+							.then(newUser => {
+								done(null, newUser)
+							})
 							.catch(err => console.log(err))
 					}
 				})
@@ -73,7 +74,6 @@ passport.use(
 		user.findOne({ googleID: profile.id })
 			.then(currentUser => {
 				if (currentUser) {
-					console.log('\n\nUser already exists.\n')
 					// log in (jwt)
 					done(null, currentUser)
 				}
@@ -103,8 +103,7 @@ passport.use(
 		user.findOne({ facebookID: profile.id })
 			.then(currentUser => {
 				if (currentUser) {
-					console.log('\n\nUser already exists.\n')
-					// log in
+					// log in (jwt)
 					done(null, currentUser)
 				}
 				else {

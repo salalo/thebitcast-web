@@ -30,7 +30,7 @@
 				</q-btn>
 			</a>
 		</div>
-
+		<!-- var for action and @submit method -->
 		<form action="/create" method="post" @submit.prevent="sendUser">
 			<q-input
 				dark
@@ -121,6 +121,7 @@ export default {
 
   methods: {
     sendUser() {
+
       let newUser = {
         nick: this.User.nick,
         email: this.User.email,
@@ -128,8 +129,8 @@ export default {
 			}
 
 			const result = Joi.validate(newUser, schema);
-
-			if(result.error === null) {
+			
+			if (result.error === null) {
 				/* eslint-disable */
 	      axios.post('http://localhost:8081/create', newUser)
 	        .then(res => console.log(res))
@@ -145,6 +146,7 @@ export default {
 				this.registerBtnState = "SIGN IN";
 				this.formStateText = "Not registered yet?";
 				this.formStateHyperlink = "Create one";
+				this.$store.commit('CHANGE_FORMTYPE', 'login');
 			}
 			else {
 				this.isActive = false;
@@ -153,6 +155,7 @@ export default {
 				this.registerBtnState = "SIGN UP";
 				this.formStateText = "Already registered?";
 				this.formStateHyperlink = "Sign in";
+				this.$store.commit('CHANGE_FORMTYPE', 'register');
 			}
 		}
   }
