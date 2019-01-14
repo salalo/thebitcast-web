@@ -55,12 +55,6 @@
 				v-on:click="playThePodcast()"
 				class="icon alt card__avatar-play-btn"
 			/>
-
-			<div class="card__avatar-details">
-				<span>999K play</span>
-				<span>99:59:59</span>
-				<span>31.12.19</span>
-			</div>
 		</div>
 		<div class="card__info" v-on:click="expandCard()">
 
@@ -187,15 +181,16 @@ export default {
 	&__avatar {
 		width: 100%;
 		height: 150px;
+		background-color: #000;
 
 		&:hover {
-			img { -webkit-filter: blur(2px); filter: blur(2px); }
+			img { -webkit-filter: blur(2px); filter: blur(2px) opacity(.7); }
 			.card__avatar-play-btn { opacity: 1; }
-			.card__avatar-details { opacity: 1; }
 		}
 
 		img {
 			@include transition(0s, filter .4s ease);
+
 			height: 150px;
 			width: 100%;
 		}
@@ -203,22 +198,15 @@ export default {
 			&:hover {
 				cursor: pointer;
 				color: $lighter-main;
-				border: 2px solid $lighter-main;
 			}
-
-			width: 30px;
-			height: 30px;
-			border-radius: 100%;
-			border: 2px solid $main;
-			padding: 15px 15px 15px 18px;
 
 			opacity: 0;
 			@include transition(0s, opacity .3s ease-in);
 
 			color: $main;
 			position: absolute;
-			top: calc(150px * .5 - 30px);
-			left: calc(50% - 30px);
+			top: calc(150px * .5 - 15px);
+			left: calc(50% - 15px);
 			font-size: 30px;
 		}
 		&-details {

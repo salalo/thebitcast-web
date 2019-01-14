@@ -1,6 +1,6 @@
 <template>
-	<mobile v-if="isMobile()" />
-	<desktop v-else />
+	<mobile v-if="isMobile()" class="mobile-only" />
+	<desktop v-else/>
 </template>
 
 <script>

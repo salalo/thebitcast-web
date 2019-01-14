@@ -42,7 +42,7 @@
 				float-label="Name"
 				color="red-6"
 				class="input"
-				v-bind:class="{ undisplayed: isActive }"
+				v-bind:class="{ hidden: isActive }"
 			/>
 			<q-input
 				dark
@@ -70,7 +70,7 @@
 				class="input"
 			/>
 
-			<a class="forgot-passwd" href="#" v-bind:class="{ undisplayed: !isActive}">Forgot your password?</a>
+			<a class="forgot-passwd" href="#" v-bind:class="{ hidden: !isActive}">Forgot your password?</a>
 
 			<q-btn
 				color="red-6"
@@ -79,8 +79,17 @@
 				type="submit"
 				name="submit"
 			/>
+
+			<div class="policy-reg" v-bind:class="{ hidden: isActive }">
+				<input
+					required
+					class="policy-reg__checkbox"
+					type="checkbox"
+				>By creating an account you're okay with our Privacy & Policy.
+			</div>
+
 		</form>
-		<div class="formStateHyper">{{formStateText}} <a href="#" v-on:click="changeFormState">{{formStateHyperlink}}</a>.</div>
+		<div class="form-state">{{formStateText}} <a href="#" v-on:click="changeFormState">{{formStateHyperlink}}</a>.</div>
 	</div>
 </template>
 
@@ -104,7 +113,7 @@ export default {
 			registerBtnState: "SIGN UP",
 			formStateText: "Already registered?",
 			formStateHyperlink: "Sign in",
-			formHeight: 420,
+			formHeight: 450,
 
       User: {
         nick: '',
@@ -141,7 +150,7 @@ export default {
 		changeFormState() {
 			if (this.registerBtnState === "SIGN UP") {
 				this.isActive = true;
-				this.formHeight = 360;
+				this.formHeight = 350;
 				this.googleBtnState = "Sign in with Google";
 				this.registerBtnState = "SIGN IN";
 				this.formStateText = "Not registered yet?";
@@ -150,7 +159,7 @@ export default {
 			}
 			else {
 				this.isActive = false;
-				this.formHeight = 420;
+				this.formHeight = 450;
 				this.googleBtnState = "Sign up with Google";
 				this.registerBtnState = "SIGN UP";
 				this.formStateText = "Already registered?";
@@ -168,7 +177,6 @@ export default {
 @import '@/stylesheets/master.scss';
 
 a { text-decoration: none; color: inherit; }
-.undisplayed { display: none; }
 .forgot-passwd {
 	text-decoration: none;
 	color: $main;
@@ -181,6 +189,19 @@ a { text-decoration: none; color: inherit; }
 	width: 360px;
 	padding: 0 30px;
 	box-shadow: 0 0 20px rgba(0, 0, 0, .4);
+}
+.policy-reg {	
+	margin-bottom: 15px;
+	font-size: 12px;
+	font-weight: 400;
+	color: $darker-white;
+
+	&__checkbox {
+		margin: 7px;
+		width: 16px;
+		height: 16px;
+		float: left;
+	}
 }
 .input {
 	margin-top: 20px;
@@ -196,7 +217,7 @@ a { text-decoration: none; color: inherit; }
 
 	&__reg {
 		width: 100%;
-		margin-bottom: 20px;
+		margin-bottom: 15px;
 	}
 	&__google {
 		width: 200px;
@@ -218,8 +239,8 @@ a { text-decoration: none; color: inherit; }
 // ICONS
 .fa-google { margin-left: 20px; }
 
-.formStateHyper {
-	padding-top: 20px;
+.form-state {
+	padding-top: 15px;
 	border-top: 1px solid $light-grey;
 	text-align: center;
 	font-weight: 300;

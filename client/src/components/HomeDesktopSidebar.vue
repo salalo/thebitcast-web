@@ -1,7 +1,8 @@
 <template>
 	<div class="container">
 
-		<div class="logo"><span>The</span> BITCAST</div>
+<!-- <span>The</span> BITCAST -->
+		<div class="logo"><img src="../../public/logos/logo_red_64.png"></div>
 
 		<div class="info">
 			Our mission is to promote podcasting, let every single creator<br>
@@ -48,19 +49,19 @@ export default {
 	height: 100vh;
 }
 .logo {
-	color: $main;
-	font-weight: 500;
-	font-size: 30px;
-	margin: 20px 0 0 20px;
+	margin-top: 3vh;
 
-	span { font-size: 17px; }
+	img {
+    display: block;
+    margin: auto;
+	}
 }
 .login-form {
 	margin: 0 auto;
 	margin-top: 9vh;
 }
 .info {
-	margin-top: 7vh;
+	margin-top: 3vh;
 	text-align: center;
 	font-size: 17px;
 	font-weight: 300;
