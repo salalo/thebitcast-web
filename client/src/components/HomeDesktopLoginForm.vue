@@ -85,7 +85,7 @@
 					required
 					class="policy-reg__checkbox"
 					type="checkbox"
-				>By creating an account you're okay with our Privacy & Policy.
+				>By creating an account you're okay with our <router-link to="/privacy-policy">Privacy & Policy</router-link>.
 			</div>
 
 		</form>
@@ -184,6 +184,8 @@ a { text-decoration: none; color: inherit; }
 	font-weight: 200;
 	float: right;
 	margin-top: 5px;
+
+	&:hover { color: $lighter-main; }
 }
 .form {
 	width: 360px;
@@ -201,6 +203,10 @@ a { text-decoration: none; color: inherit; }
 		width: 16px;
 		height: 16px;
 		float: left;
+	}
+
+	a {
+		color: $lighter-main;
 	}
 }
 .input {
@@ -249,6 +255,8 @@ a { text-decoration: none; color: inherit; }
 	a {
 		text-decoration: none;
 		color: $main;
+
+		&:hover { color: $lighter-main; }
 	}
 }
 </style>

@@ -19,7 +19,7 @@ export default {}
 @import '@/stylesheets/master.scss';
 
 .user-logged {
-  max-height: 100px;
+  max-height: 80px;
 
   span {
     line-height: 60px;
@@ -29,8 +29,8 @@ export default {}
 }
 
 .avatar {
-  height: 65px;
-  width: 65px;
+  height: 60px;
+  width: 60px;
   border-radius: 100%;
   background-image: url('../assets/creatorsAvatar.jpg');
   background-size: cover;

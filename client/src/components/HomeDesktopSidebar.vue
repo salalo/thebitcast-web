@@ -8,17 +8,17 @@
 			Our mission is to promote podcasting, let every single creator<br>
 			earn on every podcast, grow their business and<br>
 			patronize charity activities.<br><br>
-			We encourage you to <a href="#">get more info about us</a>.
+			We encourage you to <router-link to="/about-us">get more info about us</router-link>.
 		</div>
 
 		<login-form class="login-form"></login-form>
 
 		<div class="footer">
 			<span>© 2019 TheBitCast</span>
-			<a href="#">About us</a>
-			<a href="#">Contact</a>
-			<a href="#">Copyright</a>
-			<a href="#">Privacy & policy</a>
+			<router-link to="/about-us">About us</router-link>
+			<router-link to="/contact">Contact</router-link>
+			<router-link to="/copyright">Copyright</router-link>
+			<router-link to="/privacy-policy">Privacy & policy</router-link>
 		</div>
 
 	</div>

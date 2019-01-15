@@ -7,13 +7,13 @@
 				:icon="['fas', 'pause']"
 				class="icon alt"
 				v-on:click="isActive = true"
-				v-bind:class="{ undisplayed: isActive}"
+				v-bind:class="{ hidden: isActive}"
 			/>
 			<font-awesome-icon
 				:icon="['fas', 'play']"
 				class="icon alt"
 				v-on:click="isActive = false"
-				v-bind:class="{ undisplayed: !isActive}"
+				v-bind:class="{ hidden: !isActive}"
 			/>
 
 			<font-awesome-icon :icon="['fas', 'chevron-right']" class="icon alt"/>
@@ -78,7 +78,7 @@ export default {
 	
 @import '@/stylesheets/master.scss';
 
-.player { max-height: 100px; }
+.player { max-height: 80px; }
 .time-sets {
 	width: 350px;
 	margin-left: 30px;
@@ -89,13 +89,13 @@ export default {
 		float: right;
 		font-size: 12px;
 		font-weight: 400;
-		margin: -8px 8px 0 0;
+		margin: -9px 8px 0 0;
 	}
 }
 
 .icon {
-	font-size: 22px;
-	margin: 30px 0 0 40px;
+	font-size: 20px;
+	margin: 20px 0 0 40px;
 	color: $main;
 
 	&:hover {
@@ -105,7 +105,6 @@ export default {
 }
 
 .player__btns { margin-left: 100px; }
-.bookmark { margin: 11px 0 0 90px; }
-.undisplayed { display: none; }
+.bookmark { margin: 10px 0 0 90px; }
 
 </style>

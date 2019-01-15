@@ -20,11 +20,11 @@ export default {
 
 @import '@/stylesheets/master.scss';
 
-.playing-info { max-height: 100px; }
+.playing-info { max-height: 80px; }
 .creator-logo {
-  height: 65px;
-  width: 65px;
-  margin: 17px 10px 0 0;
+  height: 60px;
+  width: 60px;
+  margin: 10px 10px 0 50px;
   border-radius: 100%;
   background-image: url('../assets/crAvatar.jpg');
   background-size: cover;
@@ -39,13 +39,12 @@ export default {
 
 .podcast-info {
 	max-width: 400px;
-	height: 90px;
+	height: 80px;
 	margin-top: 10px;
 	font-size: 14px;
 	font-weight: 300;
 
 	&__title {
-		margin: -10px 0;
 		font-weight: 500;
 	}
 }

@@ -5,7 +5,7 @@ Vue.use(Vuex)
 
 export const store = new Vuex.Store({
 	state: {
-		loggedIn: false,
+		loggedIn: true,
 		formType: "register"
 	},
 	getters: {

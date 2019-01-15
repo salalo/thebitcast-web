@@ -2,67 +2,67 @@
   <div class="container">
 
     <div class="taker">
-      <a href="#">
+      <router-link to="/">
         <font-awesome-icon :icon="['fas', 'home']" class="icon alt" />
         <span>Home</span>        
-      </a>
-      <a href="#">
+      </router-link>
+      <router-link to="#">
         <font-awesome-icon :icon="['fas', 'table']" class="icon alt" />
         <span>Categories</span>        
-      </a>
-      <a href="#">
+      </router-link>
+      <router-link to="#">
         <font-awesome-icon :icon="['fas', 'heart']" class="icon alt" />
         <span>Following</span>        
-      </a>
-      <a href="#">
+      </router-link>
+      <router-link to="#">
         <font-awesome-icon :icon="['fas', 'bookmark']" class="icon alt" />
         <span>Bookmarks</span>    
-      </a>
+      </router-link>
     </div>
 
     <div class="giver">
-      <a href="#">  
+      <router-link to="#">
         <font-awesome-icon :icon="['fas', 'cloud-upload-alt']" class="icon alt" />
         <span>Upload podcast</span>
-      </a>
-      <a href="#">  
+      </router-link>
+      <router-link to="#">
         <font-awesome-icon :icon="['fas', 'chart-line']" class="icon alt" />
         <span>Statistics panel</span>
-      </a>
+      </router-link>
     </div>
 
     <div class="info">
-      <a href="#">  
+      <router-link to="/about-us">
         <font-awesome-icon :icon="['fas', 'handshake']" class="icon alt" />
         <span>Our mission</span>
-      </a>
-      <a href="#">  
+      </router-link>
+      <router-link to="/premium">
         <font-awesome-icon :icon="['fas', 'star']" class="icon alt" />
         <span>Premium</span>
-      </a>
+      </router-link>
     </div>
 
     <div class="essentials">
-      <a href="#">  
+      <router-link to="/feedback">  
         <font-awesome-icon :icon="['fas', 'comment']" class="icon alt" />
         <span>Feedback</span>
-      </a>
-      <a href="#">  
+      </router-link>
+      <router-link to="/support">  
         <font-awesome-icon :icon="['fas', 'question']" class="icon alt" />
         <span>Support & help</span>
-      </a>
-      <a href="#">  
+      </router-link>
+      <router-link to="/report">  
         <font-awesome-icon :icon="['fas', 'flag']" class="icon alt" />
         <span>Report</span>
-      </a>
+      </router-link>
     </div>
 
     <div class="footer">
       <span>&copy; 2019 TheBitCast</span>
-      <a href="#">About us</a>
-      <a href="#">Copyright</a>
-      <a href="#">Contact</a>
-      <a href="#">Privacy & policy</a>
+      <router-link to="/about-us">About us</router-link>
+      <router-link to="/contact">Contact</router-link>
+      <router-link to="/copyright">Copyright</router-link>
+      <router-link to="/privacy-policy">Privacy & policy</router-link>
     </div>
 
   </div>
@@ -83,7 +83,7 @@ export default {
   background-color: #fff;
 	box-shadow: 0 0 10px rgba(0, 0, 0, .3);
   width: 300px;
-  height: calc(100vh - 100px);
+  height: calc(100vh - 80px);
   position: fixed;
   bottom: 0;
   

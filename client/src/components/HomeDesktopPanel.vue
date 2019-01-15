@@ -87,7 +87,7 @@ export default {
 .recommended, .popular {
 	width: 100%;
 	height: 50%;
-	padding: 30px 0 30px 30px;
+	padding: 30px 0 0 30px;
 	display: flex;
   justify-content: center;
 	flex-direction: column;

@@ -33,7 +33,7 @@ export default {
 
 .container {
 	background-color: #fff;
-	height: 100px;
+	height: 80px;
 	box-shadow: 0 0 10px rgba(0, 0, 0, .3);
 }
 
@@ -43,14 +43,14 @@ export default {
 	color: $grey;
 	float: right;
 	height: 50px;
-	margin: 15px 0 0 150px;
+	margin: 5px 0 0 150px;
 }
 
 // child component
 .playing-info { margin-left: 50px; }
 
 @media (max-width: 1700px) {
-	.search-input { margin: 15px 0 0 50px; }
+	.search-input { margin: 5px 0 0 50px; }
 }
 
 </style>

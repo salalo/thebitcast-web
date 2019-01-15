@@ -79,7 +79,7 @@ export default {
 // minus width of Sidebar
 .container {
 	width: calc(100vw - 300px);
-	height: calc(100vh - 100px);
+	height: calc(100vh - 80px);
 	position: fixed;
 	bottom: 0;
 	right: 0;
@@ -88,7 +88,7 @@ export default {
 .recommended, .popular {
 	width: 100%;
 	height: 50%;
-	padding: 90px 0 30px 30px;
+	padding: 30px 0 0 30px;
 	display: flex;
   justify-content: center;
 	flex-direction: column;

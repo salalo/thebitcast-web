@@ -35,7 +35,7 @@ export default {
 
 .container {
 	background-color: #fff;
-	height: 100px;
+	height: 80px;
 	width: 100%;
 	box-shadow: 0 0 10px rgba(0, 0, 0, .3);
 	// to enable shadows
@@ -49,11 +49,11 @@ export default {
 	color: $grey;
 	float: right;
 	height: 50px;
-	margin: 15px auto 0 auto;
+	margin: 5px auto 0 auto;
 }
 
 // child components
-.user-logged { margin: 17px 0 0 30px; }
+.user-logged { margin: 10px 0 0 30px; }
 .player { margin-left: 150px; }
 .playing-info { margin-left: 160px; }
 
