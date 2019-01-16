@@ -4,12 +4,12 @@ import passport from 'passport'
 import bodyParser from 'body-parser'
 import mongoose from 'mongoose'
 import flash from 'connect-flash'
-import cookieSession from 'cookie-session'
+import ejs from 'ejs'
 
 import users from './routes/users.js'
 import auths from './routes/auths.js'
 import keys from './config/keys.js'
-import passportSetup from './config/passport-setup.js'
+import authController from './controllers/authController.js'
 import { notFound, catchErrors } from './errors.js'
 
 const app = express()
@@ -24,11 +24,6 @@ app.use(function (req, res, next) {
   next()
 })
 
-app.use(cookieSession({
-  maxAge: 365 * 24 * 60 * 60 * 1000,
-  keys: [keys.session.cookieKey]
-}))
-
 // connect to database
 mongoose.connect(keys.mongodb.DB, { useNewUrlParser: true }).then(
   () => { console.log('\nConnected successfully!') },
@@ -36,7 +31,10 @@ mongoose.connect(keys.mongodb.DB, { useNewUrlParser: true }).then(
 )
 
 app.use(passport.initialize())
-app.use(passport.session())
+
+app.disable('etag')
+app.use('/about-us', express.static('views'))
+
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))

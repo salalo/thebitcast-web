@@ -2,7 +2,7 @@ import User from '../models/user.js'
 
 export default {
 	async findOne(req, res, next) {
-		const user = await User.findOne({ slug: req.params.slug })
+		const user = await User.findOne({ id: req.params.id })
 		if (!user) return next()
 		return res.status(200).send({ data: user })
 	},
@@ -12,26 +12,18 @@ export default {
 		return res.status(200).send({ data: users })
 	},
 
-	async create(req, res) {
-		const user = await new User({
-			title: req.body.title
-		}).save()
-
-		return res.status(201).send({ data: user, message: `User was created` })
-	},
-
 	async update(req, res, next) {
-		const user = await User.find({ 'slug': req.params.slug })
+		const user = await User.find({ 'id': req.params.id })
 		if (!user) return next()
 
-		user.title = req.body.title
+		user.id = req.body.id
 		await user.save()
 
 		return res.status(200).send({ data: user, message: `User was updated` })
 	},
 
 	async remove(req, res, next) {
-		const user = await User.findOne({ 'slug': req.params.slug })
+		const user = await User.findOne({ 'id': req.params.id })
 		if (!user) return next()
 		await user.remove()
 

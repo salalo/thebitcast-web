@@ -5,11 +5,12 @@ import facebookStrategy from 'passport-facebook'
 import bcrypt from 'bcrypt-nodejs'
 import Joi from 'joi'
 
-import keys from './keys.js'
+import keys from '../config/keys.js'
 import user from '../models/user.js'
 
 import { Router } from 'express'
-const router = Router()
+const api = Router()
+import axios from 'axios'
 
 passport.serializeUser((user, done) => {
 	done(null, user.id)
@@ -57,6 +58,10 @@ passport.use(
 						}).save()
 							.then(newUser => done(null, newUser))
 							.catch(err => console.log(err))
+
+							axios.post('/users', { data: 'kurwano'})
+								.then(res => console.log(res))
+								.catch(err => console.log(err))
 					}
 				})
 				.catch(err => console.log(err))
@@ -87,6 +92,10 @@ passport.use(
 					}).save()
 						.then(newUser => done(null, newUser))
 						.catch(err => console.error(err))
+
+						api.get('/about-us', (req, res) => {
+							res.send({ data: 'kureqqqqqqqqqqq'})
+						})
 				}
 			})
 			.catch(err => console.error(err))

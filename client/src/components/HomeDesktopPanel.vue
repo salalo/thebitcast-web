@@ -92,7 +92,7 @@ export default {
   justify-content: center;
 	flex-direction: column;
 
-	span{
+	span {
 		position: absolute;
 		font-size: 20px;
 		top: 160px;

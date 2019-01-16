@@ -4,8 +4,7 @@ import passport from 'passport'
 export default () => {
 	const api = Router()
 
-	api.post('/create', passport.authenticate('local'), (req, res) => {
-		res.status(200)
+	api.post('/create', passport.authenticate('local', { session: false }), (req, res) => {
 	  res.redirect('http://localhost:8080')
 	})
 

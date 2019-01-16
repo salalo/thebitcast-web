@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import URLSlugs from 'mongoose-url-slugs'
+// import URLSlugs from 'mongoose-url-slugs'
 
 const userSchema = mongoose.Schema({
   nick: {
@@ -27,6 +27,6 @@ const userSchema = mongoose.Schema({
   timestamps: true
 })
 
-userSchema.plugin(URLSlugs('nick', { field: 'slug', update: true }))
+// userSchema.plugin(URLSlugs('nick', { field: 'slug', update: true }))
 
 module.exports = mongoose.model('User', userSchema)

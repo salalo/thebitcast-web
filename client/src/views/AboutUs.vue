@@ -1,16 +1,16 @@
 <template>
 	<div>
-
-				<div
-					v-for="post in posts"
-					:key="post"
-				>{{post.data}}</div>
+		About us
+		<div
+			v-for="post in posts"
+			:key="post"
+		>{{ post }}</div>
 	</div>
 </template>
-<!-- 
+
 <script>
 	
-import userDataService from '../services/userDataService.js';
+import axios from 'axios'
 
 export default {
 	data () {
@@ -19,16 +19,12 @@ export default {
 		}
 	},
 	mounted() {
-		this.getPosts()
-	},
-	methods: {
-		async getPosts () {
-			let response = await userDataService.()
-			this.posts = response
-		}
+		axios.get('http://localhost:8081/about-us').then(res => {
+			this.posts = res.data
+		})
 	}
 }
-</script> -->
+</script>
 
 <style lang="scss" scoped>
 

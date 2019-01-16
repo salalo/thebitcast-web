@@ -199,15 +199,13 @@ a { text-decoration: none; color: inherit; }
 	color: $darker-white;
 
 	&__checkbox {
-		margin: 7px;
+		margin: 6px 7px;
 		width: 16px;
 		height: 16px;
 		float: left;
 	}
 
-	a {
-		color: $lighter-main;
-	}
+	a { color: $lighter-main; }
 }
 .input {
 	margin-top: 20px;
