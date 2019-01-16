@@ -1,7 +1,7 @@
 <template>
 	<div class="form" v-bind:style="{height: formHeight + 'px'}">
 		<div class="row">
-			<a href="http://localhost:8081/google">
+			<a href="http://localhost:8081/auth/google">
 				<q-btn
 					outline
 					lowercase
@@ -12,7 +12,7 @@
 				</q-btn>
 			</a>
 
-			<a href="http://localhost:8081/facebook">
+			<a href="http://localhost:8081/auth/facebook">
 				<q-btn
 					outline
 					class="button button__fb"
@@ -21,7 +21,7 @@
 				</q-btn>
 			</a>
 
-			<a href="http://localhost:8081/twitter">
+			<a href="http://localhost:8081/auth/twitter">
 				<q-btn
 					outline
 					class="button button__twitter"
@@ -31,7 +31,7 @@
 			</a>
 		</div>
 		<!-- var for action and @submit method -->
-		<form action="/create" method="post" @submit.prevent="sendUser">
+		<form action="/auth/create" method="post" @submit.prevent="sendUser">
 			<q-input
 				dark
 				required
@@ -141,7 +141,7 @@ export default {
 			
 			if (result.error === null) {
 				/* eslint-disable */
-	      axios.post('http://localhost:8081/create', newUser)
+	      axios.post('http://localhost:8081/auth/create', newUser)
 	        .then(res => console.log(res))
 				  .catch(err => console.log(err))
 			} else { console.log(result.error); }

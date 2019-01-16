@@ -1,12 +1,15 @@
-const passport = require('passport')
-const localStrategy = require('passport-local')
-const googleStrategy = require('passport-google-oauth20')
-const facebookStrategy = require('passport-facebook')
-const bcrypt = require('bcrypt-nodejs')
-const Joi = require('joi')
-const axios = require('axios')
-const keys = require('./keys.js')
-const user = require('../models/user.js')
+import passport from 'passport'
+import localStrategy from 'passport-local'
+import googleStrategy from 'passport-google-oauth20'
+import facebookStrategy from 'passport-facebook'
+import bcrypt from 'bcrypt-nodejs'
+import Joi from 'joi'
+
+import keys from './keys.js'
+import user from '../models/user.js'
+
+import { Router } from 'express'
+const router = Router()
 
 passport.serializeUser((user, done) => {
 	done(null, user.id)
@@ -51,11 +54,8 @@ passport.use(
 							password: bcrypt.hashSync(password),
 							googleID: 'google-dump_' + email,
 	  					facebookID: 'facebook-dump_' + email
-
 						}).save()
-							.then(newUser => {
-								done(null, newUser)
-							})
+							.then(newUser => done(null, newUser))
 							.catch(err => console.log(err))
 					}
 				})
@@ -68,7 +68,7 @@ passport.use(
 	new googleStrategy({
 		clientID: keys.google.clientID,
 		clientSecret: keys.google.clientSecret,
-		callbackURL: '/google/cb'
+		callbackURL: '/auth/google/cb'
 	},
 	(accessToken, refreshToken, profile, done) => {
 		user.findOne({ googleID: profile.id })
@@ -97,7 +97,7 @@ passport.use(
 	new facebookStrategy({
 		clientID: keys.facebook.clientID,
 		clientSecret: keys.facebook.clientSecret,
-		callbackURL: '/facebook/cb'
+		callbackURL: '/auth/facebook/cb'
 	},
 	(accessToken, refreshToken, profile, done) => {
 		user.findOne({ facebookID: profile.id })
@@ -127,7 +127,7 @@ passport.use(
 // 	new twitterStrategy({
 // 		consumerKey: keys.twitter.clientID,
 // 		consumerSecret: keys.twitter.clientSecret,
-// 		callbackURL: '/twitter/cb'
+// 		callbackURL: '/auth/twitter/cb'
 // 	},
 // 	(accessToken, refreshToken, profile, done) => {
 // 		user.findOne({ twitterID: profile.id })

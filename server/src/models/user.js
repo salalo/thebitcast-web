@@ -1,9 +1,10 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
+import URLSlugs from 'mongoose-url-slugs'
 
 const userSchema = mongoose.Schema({
   nick: {
     type: String,
-    required: true,
+    required: true
   },
   email: {
     type: String,
@@ -21,6 +22,11 @@ const userSchema = mongoose.Schema({
   facebookID: {
     type: String
   }
+},
+{
+  timestamps: true
 })
+
+userSchema.plugin(URLSlugs('nick', { field: 'slug', update: true }))
 
 module.exports = mongoose.model('User', userSchema)

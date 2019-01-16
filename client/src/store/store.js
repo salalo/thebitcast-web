@@ -1,11 +1,12 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import axios from 'axios'
 
 Vue.use(Vuex)
 
 export const store = new Vuex.Store({
 	state: {
-		loggedIn: true,
+		loggedIn: false,
 		formType: "register"
 	},
 	getters: {
@@ -24,5 +25,11 @@ export const store = new Vuex.Store({
 			state.formType = payload
 		}
 	},
-	actions: {}  
+	actions: {
+		GET_LOGGED: (context) => {
+			axios.get('/reg-status').then(response => {
+				context.commit('CHANGE_LOGGED', response.data)
+			})
+		}
+	}  
 })

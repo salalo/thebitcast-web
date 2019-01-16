@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon src/app.js",
+    "start": "nodemon src/start.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -12,11 +12,17 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.18.0",
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-register": "^6.26.0",
     "body-parser": "^1.18.3",
     "cookie-session": "^2.0.0-beta.3",
     "cors": "^2.8.5",
+    "ejs": "^2.6.1",
     "express": "^4.16.4",
     "joi": "^14.3.0",
+    "join": "^3.0.0",
+    "mongoose-url-slugs": "^1.0.2",
     "morgan": "^1.9.1",
     "nodemon": "^1.18.7",
     "passport": "^0.4.0",
@@ -26,6 +32,7 @@
     "passport-twitter": "^1.0.4"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.2.3",
     "bcrypt-nodejs": "0.0.3",
     "connect-flash": "^0.1.1",
     "express-session": "^1.15.6",

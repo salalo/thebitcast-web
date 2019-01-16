@@ -1,4 +1,4 @@
-module.exports = {
+export default{
 	google: {
 		clientID: '807330899195-vnljsoc166knhnskerpcuq4lv8e1kn45.apps.googleusercontent.com',
 		clientSecret: 'EB0kpp5Hc2pmzLJr0NEVc31n'
