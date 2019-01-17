@@ -140,10 +140,17 @@ export default {
 			const result = Joi.validate(newUser, schema);
 			
 			if (result.error === null) {
-				/* eslint-disable */
-	      axios.post('http://localhost:8081/auth/create', newUser)
-	        .then(res => console.log(res))
-				  .catch(err => console.log(err))
+				if (this.formStateHyperlink === "Sign in") {
+					/* eslint-disable */
+		      axios.post('http://localhost:8081/auth/create', newUser)
+		        .then(res => console.log(res))
+					  .catch(err => console.log(err))
+				}
+				else if (this.formStateHyperlink === "Create one") {
+					axios.post('http://localhost:8081/auth/login', newUser)
+		        .then(res => console.log(res))
+					  .catch(err => console.log(err))
+				}
 			} else { console.log(result.error); }
 		},
 

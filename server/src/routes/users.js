@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { catchAsync } from '../errors.js'
+import { catchAsync } from '../middlewares/errors.js'
 import userController from '../controllers/userController'
 
 export default () => {

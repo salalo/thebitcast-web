@@ -1,12 +1,13 @@
 import { Router } from 'express'
 import passport from 'passport'
+import AuthController from '../controllers/authController.js'
 
 export default () => {
 	const api = Router()
 
-	api.post('/create', passport.authenticate('local', { session: false }), (req, res) => {
-	  res.redirect('http://localhost:8080')
-	})
+  api.post('/login', passport.authenticate('local', { session: false }), AuthController.login)
+
+  api.post('/create', AuthController.register)
 
 	// Auth using google oauth2.0
 	api.get('/google', passport.authenticate('google', {

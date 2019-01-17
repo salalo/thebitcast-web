@@ -6,9 +6,10 @@ Vue.use(Vuex)
 
 export const store = new Vuex.Store({
 	state: {
-		loggedIn: false,
+		loggedIn: sessionStorage.getItem('token'),
 		formType: "register"
 	},
+
 	getters: {
 		LOGGED: state => {
 			return state.loggedIn;
@@ -17,19 +18,37 @@ export const store = new Vuex.Store({
 			return state.formType;
 		}
   },
+
 	mutations: {
-		CHANGE_LOGGED: (state, payload) => {
-			state.loggedIn = payload
-		},
+		LOGIN: state => {
+      state.pending = true
+    },
+    LOGIN_SUCCESS: state => {
+      state.loggedIn = true
+      state.pending = false
+    },
+    LOGOUT: state => {
+      state.loggedIn = false
+    },
 		CHANGE_FORMTYPE: (state, payload) => {
 			state.formType = payload
 		}
 	},
-	actions: {
-		GET_LOGGED: (context) => {
-			axios.get('/reg-status').then(response => {
-				context.commit('CHANGE_LOGGED', response.data)
-			})
-		}
-	}  
+
+ actions: {
+   login({ commit }, creds) {
+     commit(LOGIN)
+     return new Promise(resolve => {
+       setTimeout(() => {
+        	sessionStorage.setItem('token', 'JWT')
+        	commit(LOGIN_SUCCESS)
+        	resolve()
+       }, 1000)
+     });
+   },
+   logout({ commit }) {
+    	sessionStorage.removeItem('token')
+    	commit(LOGOUT)
+   }
+ }
 })

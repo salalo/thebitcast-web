@@ -1,19 +1,21 @@
+import dotenv from 'dotenv'
+dotenv.config({ path: '.env' })
+
 import express from 'express'
 import morgan from 'morgan'
-import passport from 'passport'
 import bodyParser from 'body-parser'
 import mongoose from 'mongoose'
-import flash from 'connect-flash'
-import ejs from 'ejs'
+import { join } from 'path'
 
 import users from './routes/users.js'
 import auths from './routes/auths.js'
 import keys from './config/keys.js'
+import passport from './config/passport.js' 
+import { notFound, catchErrors } from './middlewares/errors.js'
 import authController from './controllers/authController.js'
-import { notFound, catchErrors } from './errors.js'
 
 const app = express()
-app.set('view engine', 'ejs')
+passport()
 
 app.use(function (req, res, next) {
   // Website you wish to allow to connect
@@ -30,17 +32,12 @@ mongoose.connect(keys.mongodb.DB, { useNewUrlParser: true }).then(
   err => console.log('\nCan not connect to the database\n\n' + err)
 )
 
-app.use(passport.initialize())
-
-app.disable('etag')
-app.use('/about-us', express.static('views'))
-
-
+app.set('view engine', 'pug')
+app.set('views', join(__dirname, 'views'))
+app.use(express.static('public'))
+app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }))
-
 app.use(morgan('dev'))
-app.use(flash())
 
 // routes
 app.use('/auth', auths())
