@@ -31,10 +31,10 @@
 			</a>
 		</div>
 		<!-- var for action and @submit method -->
-		<form action="/auth/create" method="post" @submit.prevent="sendUser">
+		<form action="fontStateAction" method="post" @submit.prevent="sendUser">
 			<q-input
 				dark
-				required
+				:required=!isActive
 				minlength=4
 				value=""
 				type="text"
@@ -82,7 +82,7 @@
 
 			<div class="policy-reg" v-bind:class="{ hidden: isActive }">
 				<input
-					required
+					:required=!isActive
 					class="policy-reg__checkbox"
 					type="checkbox"
 				>By creating an account you're okay with our <router-link to="/privacy-policy">Privacy & Policy</router-link>.
@@ -99,8 +99,13 @@ import { QBtn, QInput } from "quasar-framework/dist/quasar.mat.esm";
 import axios from 'axios';
 import Joi from 'joi';
 
-const schema = Joi.object().keys({
+const schemaRegister = Joi.object().keys({
   nick: Joi.string().min(4).required(),
+  email: Joi.string().lowercase().trim().required(),
+  password: Joi.string().trim().min(6).required()
+});
+
+const schemaLogin = Joi.object().keys({
   email: Joi.string().lowercase().trim().required(),
   password: Joi.string().trim().min(6).required()
 });
@@ -113,6 +118,7 @@ export default {
 			registerBtnState: "SIGN UP",
 			formStateText: "Already registered?",
 			formStateHyperlink: "Sign in",
+			fontStateAction: "/auth/create",
 			formHeight: 450,
 
       User: {
@@ -130,28 +136,38 @@ export default {
 
   methods: {
     sendUser() {
-
       let newUser = {
         nick: this.User.nick,
         email: this.User.email,
 				password: this.User.password
 			}
 
-			const result = Joi.validate(newUser, schema);
-			
-			if (result.error === null) {
-				if (this.formStateHyperlink === "Sign in") {
+			let logingUser = {
+        email: this.User.email,
+				password: this.User.password
+			}
+
+			const resultRegister = Joi.validate(newUser, schemaRegister);
+			const resultLogin = Joi.validate(logingUser, schemaLogin);
+
+
+			if (this.fontStateAction === "/auth/create") {
+				if (resultRegister.error === null) {
 					/* eslint-disable */
 		      axios.post('http://localhost:8081/auth/create', newUser)
 		        .then(res => console.log(res))
 					  .catch(err => console.log(err))
-				}
-				else if (this.formStateHyperlink === "Create one") {
-					axios.post('http://localhost:8081/auth/login', newUser)
+				} else { console.log(resultRegister.error); }
+			}
+
+			else if (this.fontStateAction === "/auth/login") {
+				if (resultLogin.error === null) {
+					/* eslint-disable */
+					axios.post('http://localhost:8081/auth/login', logingUser)
 		        .then(res => console.log(res))
 					  .catch(err => console.log(err))
-				}
-			} else { console.log(result.error); }
+				} else { console.log(resultLogin.error); }
+			}
 		},
 
 		changeFormState() {
@@ -162,6 +178,7 @@ export default {
 				this.registerBtnState = "SIGN IN";
 				this.formStateText = "Not registered yet?";
 				this.formStateHyperlink = "Create one";
+				this.fontStateAction = "/auth/login";
 				this.$store.commit('CHANGE_FORMTYPE', 'login');
 			}
 			else {
@@ -171,6 +188,7 @@ export default {
 				this.registerBtnState = "SIGN UP";
 				this.formStateText = "Already registered?";
 				this.formStateHyperlink = "Sign in";
+				this.fontStateAction = "/auth/create";
 				this.$store.commit('CHANGE_FORMTYPE', 'register');
 			}
 		}

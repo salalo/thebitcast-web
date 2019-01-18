@@ -3,6 +3,7 @@ dotenv.config({ path: '.env' })
 
 import express from 'express'
 import morgan from 'morgan'
+import passport from 'passport'
 import bodyParser from 'body-parser'
 import mongoose from 'mongoose'
 import { join } from 'path'
@@ -10,12 +11,12 @@ import { join } from 'path'
 import users from './routes/users.js'
 import auths from './routes/auths.js'
 import keys from './config/keys.js'
-import passport from './config/passport.js' 
+import passportAuth from './config/passport.js' 
 import { notFound, catchErrors } from './middlewares/errors.js'
 import authController from './controllers/authController.js'
 
 const app = express()
-passport()
+passportAuth()
 
 app.use(function (req, res, next) {
   // Website you wish to allow to connect
@@ -38,6 +39,7 @@ app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(morgan('dev'))
+app.use(passport.initialize())
 
 // routes
 app.use('/auth', auths())

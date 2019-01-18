@@ -14,7 +14,7 @@ export default () => {
 	  scope: ['profile', 'email']
 	}))
 
-	api.get('/google/cb', passport.authenticate('google'), (req, res) => {
+	api.get('/google/cb', passport.authenticate('google', { session: false }), (req, res) => {
 	  res.redirect('http://localhost:8080')
 	})
 
@@ -23,7 +23,7 @@ export default () => {
 	  passport.authenticate('facebook')
 	)
 
-	api.get('/facebook/cb', passport.authenticate('facebook'), (req, res) => {
+	api.get('/facebook/cb', passport.authenticate('facebook', { session: false }), (req, res) => {
 	  res.redirect('http://localhost:8080')
 	})
 	

@@ -1,12 +1,11 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import axios from 'axios'
 
 Vue.use(Vuex)
 
 export const store = new Vuex.Store({
 	state: {
-		loggedIn: sessionStorage.getItem('token'),
+		// loggedIn: this.$session.exists(),
 		formType: "register"
 	},
 
@@ -21,13 +20,13 @@ export const store = new Vuex.Store({
 
 	mutations: {
 		LOGIN: state => {
-      state.pending = true
-    },
-    LOGIN_SUCCESS: state => {
-      state.loggedIn = true
-      state.pending = false
-    },
-    LOGOUT: state => {
+			state.pending = true
+		},
+		LOGIN_SUCCESS: state => {
+			state.loggedIn = true
+			state.pending = false
+		},
+		LOGOUT: state => {
       state.loggedIn = false
     },
 		CHANGE_FORMTYPE: (state, payload) => {
@@ -35,20 +34,20 @@ export const store = new Vuex.Store({
 		}
 	},
 
- actions: {
-   login({ commit }, creds) {
-     commit(LOGIN)
-     return new Promise(resolve => {
-       setTimeout(() => {
-        	sessionStorage.setItem('token', 'JWT')
-        	commit(LOGIN_SUCCESS)
-        	resolve()
-       }, 1000)
-     });
-   },
-   logout({ commit }) {
-    	sessionStorage.removeItem('token')
-    	commit(LOGOUT)
-   }
- }
+	actions: {
+		login({ commit }) {
+			commit('LOGIN')
+				return new Promise(resolve => {
+					setTimeout(() => {
+						sessionStorage.setItem('token', 'JWT')
+						commit('LOGIN_SUCCESS')
+						resolve()
+					}, 1000)
+				});
+		},
+		logout({ commit }) {
+			sessionStorage.removeItem('token')
+			commit('LOGOUT')
+		}
+	}
 })

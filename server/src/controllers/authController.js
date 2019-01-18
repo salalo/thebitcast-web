@@ -8,26 +8,34 @@ import sessionStorage from 'sessionstorage'
 import keys from '../config/keys.js'
 import User from '../models/user.js'
 
-const schema = Joi.object().keys({
+const schemaRegister = Joi.object().keys({
   nick: Joi.string().min(4).required(),
   email: Joi.string().lowercase().trim().required(),
   password: Joi.string().trim().min(6).required()
 })
+
+const resultRegister = Joi.validate(User, schemaRegister)
 
 export default {
 
 	async login(req, res, next) {
 	  const token = jwt.sign({ id: req.user._id }, process.env.JWT_SECRET)
 	  sessionStorage.setItem('token', token)
+
+	  // console.log('as')
+	  // res.redirect('http://localhost:8080/olol')
+
 	  return res.send({ token })
 	},
 
 	async register(req, res, next) {
-	  const { nick, email, password } = req.body
-	  const user = new User({ nick, email })
-	  await User.register(user, password)
 
-	  res.send('User created successfully. Now you can log in.')
+		if (resultRegister.error === null) {
+		  const { nick, email, password } = req.body
+		  const user = new User({ nick, email })
+		  await User.register(user, password)
+		}
+	  return res.send('User created successfully. Now you can log in.')
 	},
 }
 
@@ -42,10 +50,12 @@ passport.use(
 			.then(currentUser => {
 				if (currentUser) {
 					// log in (jwt)
+					console.log('logged in using google')
 					done(null, currentUser)
 				}
 				else {
-					new user({
+					new User({
+						nick: "nick-dump_" + profile.id,
 						email: profile.emails[0].value,
 						googleID: profile.id,
 					}).save()
@@ -68,10 +78,12 @@ passport.use(
 			.then(currentUser => {
 				if (currentUser) {
 					// log in (jwt)
+					console.log('logged in using fb')
 					done(null, currentUser)
 				}
 				else {
-					new user({
+					new User({
+						nick: "nick-dump_" + profile.id,
 						email: "email-dump_" + profile.id,
 						facebookID: profile.id
 

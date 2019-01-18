@@ -1,10 +1,10 @@
 <template>
 	<div>
 		About us
-		<div
+<!-- 		<div
 			v-for="post in posts"
 			:key="post"
-		>{{ post }}</div>
+		>{{ post }}</div> -->
 	</div>
 </template>
 
@@ -19,9 +19,9 @@ export default {
 		}
 	},
 	mounted() {
-		axios.get('http://localhost:8081/about-us').then(res => {
-			this.posts = res.data
-		})
+		// axios.get('http://localhost:8081/about-us').then(res => {
+		// 	this.posts = res.data
+		// })
 	}
 }
 </script>
