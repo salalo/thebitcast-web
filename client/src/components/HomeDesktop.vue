@@ -35,9 +35,14 @@ export default {
 	},
 
 	mounted() {
-		axios.post('http://localhost:8081/auth/login').then(res => {
-			this.token = res.data
+		axios.post('auth')
+		.then(response => {
+			response.json()
+			/* eslint-disable */
+				.then(responseJson => { window.localStorage.setItem('token', responseJson.token) })
+				.catch(error => console.log(error))
 		})
+		.catch(err => console.log(err))
 	}
 }
 

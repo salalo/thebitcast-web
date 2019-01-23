@@ -3,10 +3,11 @@ import googleStrategy from 'passport-google-oauth20'
 import facebookStrategy from 'passport-facebook'
 import Joi from 'joi'
 import jwt from 'jsonwebtoken'
-import sessionStorage from 'sessionstorage'
+// import localStorage from 'node-localstorage'
 
 import keys from '../config/keys.js'
 import User from '../models/user.js'
+import axios from 'axios'
 
 const schemaRegister = Joi.object().keys({
   nick: Joi.string().min(4).required(),
@@ -20,22 +21,25 @@ export default {
 
 	async login(req, res, next) {
 	  const token = jwt.sign({ id: req.user._id }, process.env.JWT_SECRET)
-	  sessionStorage.setItem('token', token)
+ 
+		// localStorage.setItem('myFirstKey', 'myFirstValue')
+		// res.json(token)
 
-	  // console.log('as')
-	  // res.redirect('http://localhost:8080/olol')
+		axios.post('http://localhost:8080/auth', token)
+		  .then(res => console.log(res))
+			.catch(err => console.log(err))
 
-	  return res.send({ token })
+	  return res.json({ token })
 	},
 
 	async register(req, res, next) {
 
-		if (resultRegister.error === null) {
+		// if (resultRegister.error === null) {
 		  const { nick, email, password } = req.body
 		  const user = new User({ nick, email })
 		  await User.register(user, password)
-		}
-	  return res.send('User created successfully. Now you can log in.')
+		  return res.send('User created successfully. Now you can log in.')
+		// } else { console.log(resultRegister.error) }
 	},
 }
 
