@@ -8,6 +8,8 @@
 					:label="googleBtnState"
 					class="button button__google"
 				>
+
+
 					<font-awesome-icon :icon="['fab', 'google']" class="icon alt"/>
 				</q-btn>
 			</a>
@@ -32,6 +34,9 @@
 		</div>
 		<!-- var for action and @submit method -->
 		<form action="fontStateAction" method="post" @submit.prevent="sendUser">
+
+
+
 			<q-input
 				dark
 				:required=!isActive
@@ -124,7 +129,8 @@ export default {
       User: {
         nick: '',
         email: '',
-        password: ''
+        password: '',
+				captcha: '6Lf-EYwUAAAAAMX3WFNl82HQMQF3r2D7_qMUd2VQ'
       }
     };
 	},
@@ -139,7 +145,8 @@ export default {
       let newUser = {
         nick: this.User.nick,
         email: this.User.email,
-				password: this.User.password
+				password: this.User.password,
+				captcha: this.User.captcha
 			}
 
 			let logingUser = {
@@ -152,21 +159,21 @@ export default {
 
 
 			if (this.fontStateAction === "/auth/create") {
-				if (resultRegister.error === null) {
+				//if (resultRegister.error === null) {
 					/* eslint-disable */
 		      axios.post('http://localhost:8081/auth/create', newUser)
 		        .then(res => console.log(res))
 					  .catch(err => console.log(err))
-				} else { console.log(resultRegister.error); }
+				//} else { console.log(resultRegister.error); }
 			}
 
 			else if (this.fontStateAction === "/auth/login") {
-				if (resultLogin.error === null) {
+				//if (resultLogin.error === null) {
 					/* eslint-disable */
 					axios.post('http://localhost:8081/auth/login', logingUser)
 		        .then(res => console.log(res))
 					  .catch(err => console.log(err))
-				} else { console.log(resultLogin.error); }
+				//} else { console.log(resultLogin.error); }
 			}
 		},
 
@@ -217,7 +224,7 @@ a { text-decoration: none; color: inherit; }
 	padding: 0 30px;
 	box-shadow: 0 0 20px rgba(0, 0, 0, .4);
 }
-.policy-reg {	
+.policy-reg {
 	margin-bottom: 15px;
 	font-size: 12px;
 	font-weight: 400;

@@ -26,7 +26,8 @@ export default {
 		const resultRegister = Joi.validate(User, schemaRegister)
 
 		// if (resultRegister.error === null) {
-		  const { nick, email, password } = req.body
+		  const { nick, email, password, captcha } = req.body
+			console.log("CAPTCHA: " + captcha);	
 		  const user = new User({ nick, email })
 		  await User.register(user, password)
 		  return res.send('User created successfully. Now you can log in.')
