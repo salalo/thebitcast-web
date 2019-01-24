@@ -11,9 +11,11 @@ import { join } from 'path'
 import users from './routes/users.js'
 import auths from './routes/auths.js'
 import keys from './config/keys.js'
-import passportAuth from './config/passport.js' 
+import passportAuth from './config/passport.js'
 import { notFound, catchErrors } from './middlewares/errors.js'
 import authController from './controllers/authController.js'
+
+
 
 const app = express()
 passportAuth()

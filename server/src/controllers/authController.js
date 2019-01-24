@@ -3,6 +3,7 @@ import googleStrategy from 'passport-google-oauth20'
 import facebookStrategy from 'passport-facebook'
 import Joi from 'joi'
 import jwt from 'jsonwebtoken'
+import request from 'request'
 
 import keys from '../config/keys.js'
 import User from '../models/user.js'
@@ -27,7 +28,26 @@ export default {
 
 		// if (resultRegister.error === null) {
 		  const { nick, email, password, captcha } = req.body
-			console.log("CAPTCHA: " + captcha);	
+
+			//Sprawdzenie captchy
+			console.log("CAPTCHA - KLUCZ PUBLICZNY: " + captcha);
+			console.log("CAPTCHA - KLUCZ PRYWATNY: " + keys.captcha.secret);
+
+			//Zapytanie do googla
+			var verificationUrl = "https://www.google.com/recaptcha/api/siteverify?secret="
+			 + keys.captcha.secret + "&response="
+			  + captcha +
+				"&remoteip=" + 'localhost';
+
+			//Wyslanie zapytania do googla
+			request(verificationUrl,function(error,response,body) {
+	    body = JSON.parse(body);
+	    if(body.success !== undefined && !body.success) {
+	      console.log("NIEUDANA WERYFIKACJA CAPTCHY")
+	    }else console.log("CAPTCHA WESZŁA");
+		});
+
+
 		  const user = new User({ nick, email })
 		  await User.register(user, password)
 		  return res.send('User created successfully. Now you can log in.')
