@@ -8,11 +8,15 @@
 *.sw*
 
 client/node_modules
+client/package.json
+client/package-lock.json
 client/dist
 client/.vscode
 client/.idea
 
 server/node_modules
+server/package.json
+server/package-lock.json
 server/.vscode
 server/.idea
 

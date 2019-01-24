@@ -34,20 +34,20 @@ export const store = new Vuex.Store({
 		}
 	},
 
-	actions: {
-		login({ commit }) {
-			commit('LOGIN')
-				return new Promise(resolve => {
-					setTimeout(() => {
-						sessionStorage.setItem('token', 'JWT')
-						commit('LOGIN_SUCCESS')
-						resolve()
-					}, 1000)
-				});
-		},
-		logout({ commit }) {
-			sessionStorage.removeItem('token')
-			commit('LOGOUT')
-		}
-	}
+	// actions: {
+	// 	login({ commit }) {
+	// 		commit('LOGIN')
+	// 			return new Promise(resolve => {
+	// 				setTimeout(() => {
+	// 					sessionStorage.setItem('token', 'JWT')
+	// 					commit('LOGIN_SUCCESS')
+	// 					resolve()
+	// 				}, 1000)
+	// 			});
+	// 	},
+	// 	logout({ commit }) {
+	// 		sessionStorage.removeItem('token')
+	// 		commit('LOGOUT')
+	// 	}
+	// }
 })

@@ -3,36 +3,27 @@ import googleStrategy from 'passport-google-oauth20'
 import facebookStrategy from 'passport-facebook'
 import Joi from 'joi'
 import jwt from 'jsonwebtoken'
-// import localStorage from 'node-localstorage'
 
 import keys from '../config/keys.js'
 import User from '../models/user.js'
 import axios from 'axios'
 
-const schemaRegister = Joi.object().keys({
-  nick: Joi.string().min(4).required(),
-  email: Joi.string().lowercase().trim().required(),
-  password: Joi.string().trim().min(6).required()
-})
-
-const resultRegister = Joi.validate(User, schemaRegister)
-
 export default {
-
 	async login(req, res, next) {
-	  const token = jwt.sign({ id: req.user._id }, process.env.JWT_SECRET)
- 
-		// localStorage.setItem('myFirstKey', 'myFirstValue')
-		// res.json(token)
+		const token = jwt.sign({ id: req.user._id }, process.env.JWT_SECRET)
 
-		axios.post('http://localhost:8080/auth', token)
-		  .then(res => console.log(res))
-			.catch(err => console.log(err))
-
-	  return res.json({ token })
+		return token
 	},
 
 	async register(req, res, next) {
+
+		const schemaRegister = Joi.object().keys({
+		  nick: Joi.string().min(4).required(),
+		  email: Joi.string().lowercase().trim().required(),
+		  password: Joi.string().trim().min(6).required()
+		})
+
+		const resultRegister = Joi.validate(User, schemaRegister)
 
 		// if (resultRegister.error === null) {
 		  const { nick, email, password } = req.body

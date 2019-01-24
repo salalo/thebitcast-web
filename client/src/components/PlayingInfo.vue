@@ -5,7 +5,6 @@
 			<div class="podcast-info__author">Author's name</div>
 			<div class="podcast-info__title">Title of the currently playing podcast</div>
 			<div class="podcast-info__guests"></div>
-
 		</div>
 	</div>
 </template>

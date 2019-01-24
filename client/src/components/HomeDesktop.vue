@@ -20,12 +20,6 @@ import TopbarLogged from './HomeDesktopPanelTopbar-logged.vue';
 import axios from 'axios'
 
 export default {
-		data () {
-			return {
-				token: []
-			}
-	},
-
 	components: {
 		'sidebar': Sidebar,
 		'sidebar-logged': SidebarLogged,
@@ -35,14 +29,12 @@ export default {
 	},
 
 	mounted() {
-		axios.post('auth')
-		.then(response => {
-			response.json()
-			/* eslint-disable */
-				.then(responseJson => { window.localStorage.setItem('token', responseJson.token) })
-				.catch(error => console.log(error))
-		})
-		.catch(err => console.log(err))
+		// { localStorage.setItem('token', res.data) }
+		axios.post('http://localhost:8081/auth')
+			.then(res => console.log(res.data))
+			.catch(err => console.log(err))
+		// let token = document.getElementById('info_arc').innerHTML.value;
+		// localStorage.setItem('token', token);
 	}
 }
 
