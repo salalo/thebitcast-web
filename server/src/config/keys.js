@@ -19,7 +19,7 @@ export default{
 	},
 
 	captcha: {
-		secret: '6Lf-EYwUAAAAADTHeoTmtuzKUM5zWAUg2KXQvV8d'
+		secret: '6Lcvt4wUAAAAANRcG29xP9UgUOJ2PQ8Uz-yeIsh4'
 	},
 
 	mongodb: {

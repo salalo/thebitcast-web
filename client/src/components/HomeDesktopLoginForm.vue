@@ -33,7 +33,7 @@
 			</a>
 		</div>
 		<!-- var for action and @submit method -->
-		<form action="fontStateAction" method="post" @submit.prevent="sendUser">
+		<form action="fontStateAction" method="post" @submit.prevent="startCaptcha">
 
 
 
@@ -75,6 +75,7 @@
 				class="input"
 			/>
 
+
 			<a class="forgot-passwd" href="#" v-bind:class="{ hidden: !isActive}">Forgot your password?</a>
 
 			<q-btn
@@ -83,6 +84,7 @@
 				class="button button__reg"
 				type="submit"
 				name="submit"
+				v-on:click="startCaptcha"
 			/>
 
 			<div class="policy-reg" v-bind:class="{ hidden: isActive }">
@@ -103,12 +105,16 @@
 import { QBtn, QInput } from "quasar-framework/dist/quasar.mat.esm";
 import axios from 'axios';
 import Joi from 'joi';
+import { VueReCaptcha } from 'vue-recaptcha-v3';
+import Vue from "vue"
+Vue.use(VueReCaptcha, { siteKey: '6Lcvt4wUAAAAACOvd54WTCBGMeegcNdFj1JdokMr' })
+
 
 const schemaRegister = Joi.object().keys({
   nick: Joi.string().min(4).required(),
   email: Joi.string().lowercase().trim().required(),
   password: Joi.string().trim().min(6).required(),
- 	captcha: Joi.string().trim()
+ 	captchaToken: Joi.string().trim().required()
 });
 
 const schemaLogin = Joi.object().keys({
@@ -126,29 +132,43 @@ export default {
 			formStateHyperlink: "Sign in",
 			fontStateAction: "/auth/create",
 			formHeight: 450,
+			status: "",
+      sucessfulServerResponse: "",
+			newCaptchaToken: "",
+serverError: "",
 
       User: {
         nick: '',
         email: '',
         password: '',
-				captcha: '6Lf-EYwUAAAAAMX3WFNl82HQMQF3r2D7_qMUd2VQ'
+				captchaToken: '6Lf-EYwUAAAAAMX3WFNl82HQMQF3r2D7_qMUd2VQ'
       }
     };
 	},
 
 	components: {
 		QInput,
-		QBtn
+		QBtn,
 	},
 
   methods: {
+
+		startCaptcha() {
+      this.$recaptcha('login').then((token) => {
+				this.newCaptchaToken = token;
+				this.sendUser();
+      })},
+
     sendUser() {
+			console.log(this.newCaptchaToken);
+
       let newUser = {
         nick: this.User.nick,
         email: this.User.email,
 				password: this.User.password,
-				captcha: this.User.captcha
+				captchaToken: this.newCaptchaToken,
 			}
+
 
 			let logingUser = {
         email: this.User.email,

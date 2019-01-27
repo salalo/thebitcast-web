@@ -21,29 +21,34 @@ export default {
 		const schemaRegister = Joi.object().keys({
 		  nick: Joi.string().min(4).required(),
 		  email: Joi.string().lowercase().trim().required(),
-		  password: Joi.string().trim().min(6).required()
+		  password: Joi.string().trim().min(6).required(),
+			captchaToken: Joi.string().trim().required()
 		})
 
 		const resultRegister = Joi.validate(User, schemaRegister)
 
 		// if (resultRegister.error === null) {
-		  const { nick, email, password, captcha } = req.body
+		  const { nick, email, password, captchaToken } = req.body;
 
 			//Sprawdzenie captchy
-			console.log("CAPTCHA - KLUCZ PUBLICZNY: " + captcha);
+			console.log("CAPTCHA - TOKEN: " + captchaToken);
 			console.log("CAPTCHA - KLUCZ PRYWATNY: " + keys.captcha.secret);
 
+			const ip = req.headers['x-forwarded-for'] || (req.connection && req.connection.remoteAddress) || '';
+
 			//Zapytanie do googla
-			var verificationUrl = "https://www.google.com/recaptcha/api/siteverify?secret="
-			 + keys.captcha.secret + "&response="
-			  + captcha +
-				"&remoteip=" + 'localhost';
+			var verificationUrl = "https://www.google.com/recaptcha/api/siteverify?"
+				+ "secret=" + keys.captcha.secret
+			  + "&response=" + captchaToken;
+				//+ "&remoteip=" + ip;
+
+				console.log(verificationUrl);
 
 			//Wyslanie zapytania do googla
 			request(verificationUrl,function(error,response,body) {
 	    body = JSON.parse(body);
 	    if(body.success !== undefined && !body.success) {
-	      console.log("NIEUDANA WERYFIKACJA CAPTCHY")
+	      console.log(body)
 	    }else console.log("CAPTCHA WESZŁA");
 		});
 
