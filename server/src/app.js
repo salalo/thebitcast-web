@@ -7,6 +7,7 @@ import passport from 'passport'
 import bodyParser from 'body-parser'
 import mongoose from 'mongoose'
 import { join } from 'path'
+import cookieSession from 'cookie-session'
 
 import users from './routes/users.js'
 import auths from './routes/auths.js'
@@ -26,6 +27,15 @@ app.use(function (req, res, next) {
   res.setHeader('Access-Control-Allow-Credentials', true)
   next()
 })
+
+//cookie session
+app.use(cookieSession({
+  maxAge: 365 * 24 * 60 * 60 * 1000,
+  keys: [keys.session.cookieKey]
+}))
+
+app.use(passport.initialize())
+app.use(passport.session())
 
 // connect to database
 mongoose.connect(keys.mongodb.DB, { useNewUrlParser: true }).then(

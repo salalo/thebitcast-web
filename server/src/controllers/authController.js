@@ -11,6 +11,7 @@ import axios from 'axios'
 export default {
 	async login(req, res, next) {
 		const token = jwt.sign({ id: req.user._id }, process.env.JWT_SECRET)
+		console.log(token)
 
 		return token
 	},

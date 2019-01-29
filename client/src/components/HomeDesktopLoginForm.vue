@@ -35,8 +35,6 @@
 		<!-- var for action and @submit method -->
 		<form action="fontStateAction" method="post" @submit.prevent="sendUser">
 
-
-
 			<q-input
 				dark
 				:required=!isActive
@@ -107,7 +105,8 @@ import Joi from 'joi';
 const schemaRegister = Joi.object().keys({
   nick: Joi.string().min(4).required(),
   email: Joi.string().lowercase().trim().required(),
-  password: Joi.string().trim().min(6).required()
+  password: Joi.string().trim().min(6).required(),
+  captcha: Joi.string().trim()
 });
 
 const schemaLogin = Joi.object().keys({
@@ -159,21 +158,21 @@ export default {
 
 
 			if (this.fontStateAction === "/auth/create") {
-				//if (resultRegister.error === null) {
+				if (resultRegister.error === null) {
 					/* eslint-disable */
 		      axios.post('http://localhost:8081/auth/create', newUser)
 		        .then(res => console.log(res))
 					  .catch(err => console.log(err))
-				//} else { console.log(resultRegister.error); }
+				} else { console.log(resultRegister.error); }
 			}
 
 			else if (this.fontStateAction === "/auth/login") {
-				//if (resultLogin.error === null) {
+				if (resultLogin.error === null) {
 					/* eslint-disable */
 					axios.post('http://localhost:8081/auth/login', logingUser)
 		        .then(res => console.log(res))
 					  .catch(err => console.log(err))
-				//} else { console.log(resultLogin.error); }
+				} else { console.log(resultLogin.error); }
 			}
 		},
 
