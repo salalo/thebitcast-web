@@ -18,6 +18,10 @@ export default{
 		cookieKey: 'goandsmackyobitchdude'
 	},
 
+	captcha: {
+		secret: '6Lcvt4wUAAAAANRcG29xP9UgUOJ2PQ8Uz-yeIsh4'
+	},
+
 	mongodb: {
 		DB: 'mongodb://localhost:27017/users'
 	}

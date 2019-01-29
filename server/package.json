@@ -37,6 +37,7 @@
     "passport-local-mongoose": "^5.0.1",
     "passport-twitter": "^1.0.4",
     "pug": "^2.0.3",
+    "request": "^2.88.0",
     "sessionstorage": "^0.1.0"
   },
   "devDependencies": {

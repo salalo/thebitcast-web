@@ -3,6 +3,7 @@ import googleStrategy from 'passport-google-oauth20'
 import facebookStrategy from 'passport-facebook'
 import Joi from 'joi'
 import jwt from 'jsonwebtoken'
+import request from 'request'
 
 import keys from '../config/keys.js'
 import User from '../models/user.js'
@@ -21,14 +22,38 @@ export default {
 		const schemaRegister = Joi.object().keys({
 		  nick: Joi.string().min(4).required(),
 		  email: Joi.string().lowercase().trim().required(),
-		  password: Joi.string().trim().min(6).required()
+		  password: Joi.string().trim().min(6).required(),
+			captchaToken: Joi.string().trim().required()
 		})
 
 		const resultRegister = Joi.validate(User, schemaRegister)
 
 		// if (resultRegister.error === null) {
-		  const { nick, email, password, captcha } = req.body
-			console.log("CAPTCHA: " + captcha);	
+		  const { nick, email, password, captchaToken } = req.body;
+
+			//Sprawdzenie captchy
+			console.log("CAPTCHA - TOKEN: " + captchaToken);
+			console.log("CAPTCHA - KLUCZ PRYWATNY: " + keys.captcha.secret);
+
+			const ip = req.headers['x-forwarded-for'] || (req.connection && req.connection.remoteAddress) || '';
+
+			//Zapytanie do googla
+			var verificationUrl = "https://www.google.com/recaptcha/api/siteverify?"
+				+ "secret=" + keys.captcha.secret
+			  + "&response=" + captchaToken;
+				//+ "&remoteip=" + ip;
+
+				console.log(verificationUrl);
+
+			//Wyslanie zapytania do googla
+			request(verificationUrl,function(error,response,body) {
+	    body = JSON.parse(body);
+	    if(body.success !== undefined && !body.success) {
+	      console.log(body)
+	    }else console.log("CAPTCHA WESZŁA");
+		});
+
+
 		  const user = new User({ nick, email })
 		  await User.register(user, password)
 		  return res.send('User created successfully. Now you can log in.')
