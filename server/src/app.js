@@ -16,8 +16,6 @@ import passportAuth from './config/passport.js'
 import { notFound, catchErrors } from './middlewares/errors.js'
 import authController from './controllers/authController.js'
 
-
-
 const app = express()
 passportAuth()
 

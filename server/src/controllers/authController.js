@@ -9,6 +9,16 @@ import keys from '../config/keys.js'
 import User from '../models/user.js'
 import axios from 'axios'
 
+passport.serializeUser((user, done) => {
+	done(null, user.id)
+})
+
+passport.deserializeUser((id, done) => {
+	User.findById(id).then((user) => {
+		done(null, user)
+	})
+})
+
 export default {
 	async login(req, res, next) {
 		const token = jwt.sign({ id: req.user._id }, process.env.JWT_SECRET)
