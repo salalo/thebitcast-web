@@ -22,8 +22,9 @@ passport.deserializeUser((id, done) => {
 export default {
 	async login(req, res, next) {
 		const token = jwt.sign({ id: req.user._id }, process.env.JWT_SECRET)
-		console.log(token)
+		console.log("JWT TOKEN:" + token);
 
+		res.send(token);
 		return token
 	},
 
@@ -53,14 +54,14 @@ export default {
 			  + "&response=" + captchaToken;
 				//+ "&remoteip=" + ip;
 
-				console.log(verificationUrl);
+				console.log("SPRAWDZANIE CAPTCHY POD ADRESEM:" + verificationUrl + "\n");
 
 			//Wyslanie zapytania do googla
 			request(verificationUrl,function(error,response,body) {
 	    body = JSON.parse(body);
 	    if(body.success !== undefined && !body.success) {
-	      console.log(body)
-	    }else console.log("CAPTCHA WESZŁA");
+	      console.log("BŁAD CAPTCHY:" + body + "\n");
+	    }else console.log("CAPTCHA WESZŁA\n");
 		});
 
 

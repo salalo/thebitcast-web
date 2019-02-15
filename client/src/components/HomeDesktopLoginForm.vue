@@ -105,6 +105,7 @@ import axios from 'axios';
 import Joi from 'joi';
 import { VueReCaptcha } from 'vue-recaptcha-v3';
 import Vue from "vue"
+import VueCookies from "vue-cookies"
 Vue.use(VueReCaptcha, { siteKey: '6Lcvt4wUAAAAACOvd54WTCBGMeegcNdFj1JdokMr' })
 
 
@@ -190,7 +191,7 @@ serverError: "",
 				if (resultLogin.error === null) {
 					/* eslint-disable */
 					axios.post('http://localhost:8081/auth/login', logingUser)
-		        .then(res => console.log(res))
+		        .then(res => {VueCookies.set("token", res); console.log("JWT TOKEN: " + res);})
 					  .catch(err => console.log(err))
 				} else { console.log(resultLogin.error); }
 			}

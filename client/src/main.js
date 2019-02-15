@@ -7,6 +7,7 @@ import "quasar-framework/dist/umd/quasar.mat.css"
 import "quasar-extras/material-icons/material-icons.css"
 import "quasar-extras/roboto-font"
 import "quasar-extras/animate"
+import VueCookies from "vue-cookies"
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { store } from "./store/store.js"
@@ -82,7 +83,10 @@ Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Vue.use(Quasar)
 Vue.use(VeeValidate)
+Vue.use(VueCookies)
 Vue.config.productionTip = false
+
+VueCookies.config("7d");
 
 new Vue({
   router,
