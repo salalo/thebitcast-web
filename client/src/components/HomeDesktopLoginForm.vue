@@ -191,7 +191,11 @@ serverError: "",
 				if (resultLogin.error === null) {
 					/* eslint-disable */
 					axios.post('http://localhost:8081/auth/login', logingUser)
-		        .then(res => {VueCookies.set("token", res); console.log("JWT TOKEN: " + res);})
+		        .then(res => {
+							VueCookies.set("token", res);
+							console.log("JWT TOKEN: " + res);
+							location.reload()
+						 })
 					  .catch(err => console.log(err))
 				} else { console.log(resultLogin.error); }
 			}

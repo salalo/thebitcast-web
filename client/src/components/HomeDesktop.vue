@@ -1,10 +1,10 @@
 <template>
-	<div v-if="false">
+	<div v-if="GetToken() != null">
 		<panel-logged />
 		<sidebar-logged />
 		<topbar-logged />
 	</div>
-	
+
   <div class="row" v-else>
 		<sidebar />
 		<panel />
@@ -17,7 +17,8 @@ import SidebarLogged from './HomeDesktopSidebar-logged.vue';
 import Panel from './HomeDesktopPanel.vue';
 import PanelLogged from './HomeDesktopPanel-logged.vue';
 import TopbarLogged from './HomeDesktopPanelTopbar-logged.vue';
-import axios from 'axios'
+import axios from 'axios';
+import VueCookies from 'vue-cookies';
 
 export default {
 	components: {
@@ -26,6 +27,18 @@ export default {
 		'panel': Panel,
 		'panel-logged': PanelLogged,
 		'topbar-logged': TopbarLogged
+	},
+	methods:{
+		GetToken:function()
+		{
+			return VueCookies.get("token");
+		}
+	},
+
+	data() {
+		return {
+			logged: false
+		}
 	},
 
 	mounted() {
