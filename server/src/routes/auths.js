@@ -5,10 +5,6 @@ import AuthController from '../controllers/authController.js'
 export default () => {
 	const api = Router()
 
-	// api.post('/', (req, res) => {
-	// 	res.send(AuthController.login())
-	// })
-
   api.post('/login', passport.authenticate('local', { session: false }), AuthController.login)
 
   api.post('/create', AuthController.register)

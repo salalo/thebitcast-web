@@ -5,7 +5,7 @@
 		<topbar-logged />
 	</div>
 
-  <div class="row" v-else>
+	<div class="row" v-else>
 		<sidebar />
 		<panel />
 	</div>
@@ -17,8 +17,8 @@ import SidebarLogged from './HomeDesktopSidebar-logged.vue';
 import Panel from './HomeDesktopPanel.vue';
 import PanelLogged from './HomeDesktopPanel-logged.vue';
 import TopbarLogged from './HomeDesktopPanelTopbar-logged.vue';
-import axios from 'axios';
 import VueCookies from 'vue-cookies';
+// import { Notify } from "quasar-framework/dist/quasar.mat.esm";
 
 export default {
 	components: {
@@ -41,13 +41,24 @@ export default {
 		}
 	},
 
-	mounted() {
-		// { localStorage.setItem('token', res.data) }
-		axios.post('http://localhost:8081/auth')
-			.then(res => console.log(res.data))
-			.catch(err => console.log(err))
-		// let token = document.getElementById('info_arc').innerHTML.value;
-		// localStorage.setItem('token', token);
+	mounted(){
+		// Notify.create({
+		//   message: 'Danger, Will Robinson! Danger!'
+		// })
+
+		// góra, lub dokładniej -> dół
+
+		this.$q.notify({
+			// required param
+			message: `A text with your nofification's awesome message`,
+
+			// optional params
+			position: 'bottom',
+			type: 'negative', // 'positive', 'negative', 'warning', 'info'
+			timeout: 3000,
+			icon: 'wifi',
+			// textColor: 'black', // if default 'white' doesn't fit
+		})
 	}
 }
 
