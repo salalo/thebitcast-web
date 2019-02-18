@@ -1,15 +1,17 @@
 <template>
   <div class="container">
 
+    <categories-bar v-if="isActive"/>
+
     <div class="taker">
       <router-link to="/">
         <font-awesome-icon :icon="['fas', 'home']" class="icon alt" />
         <span>Home</span>        
       </router-link>
-      <router-link to="#">
+      <a v-on:click="isActive = !isActive">
         <font-awesome-icon :icon="['fas', 'table']" class="icon alt" />
         <span>Categories</span>        
-      </router-link>
+      </a>
       <router-link to="#">
         <font-awesome-icon :icon="['fas', 'heart']" class="icon alt" />
         <span>Following</span>        
@@ -70,7 +72,22 @@
 
 <script>
 
+import CategoriesBar from './CategoriesBar.vue'
+
 export default {
+  components: {
+    'categories-bar': CategoriesBar
+  },
+  data() {
+    return {
+      isActive: false
+    }
+  },
+
+  marhods: {
+    goToCategories(){
+    }
+  }
 }
 
 </script>
