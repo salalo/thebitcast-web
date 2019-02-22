@@ -33,7 +33,9 @@ import {
   faStar,
   faComment,
   faQuestion,
-  faFlag
+  faFlag,
+  faVolumeUp,
+  faTachometerAlt
 } from "@fortawesome/free-solid-svg-icons"
 
 import {
@@ -75,8 +77,9 @@ library.add(
   faStar,
   faComment,
   faQuestion,
-  faFlag
-
+  faFlag,
+  faVolumeUp,
+  faTachometerAlt
 )
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)

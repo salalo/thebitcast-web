@@ -1,6 +1,7 @@
 <template>
 	<div class="player">
 		<div class="row player__btns">
+
 			<font-awesome-icon :icon="['fas', 'chevron-left']" class="icon alt"/>
 
 			<font-awesome-icon
@@ -9,6 +10,7 @@
 				v-on:click="isActive = true"
 				v-bind:class="{ hidden: isActive}"
 			/>
+
 			<font-awesome-icon
 				:icon="['fas', 'play']"
 				class="icon alt"
@@ -17,12 +19,6 @@
 			/>
 
 			<font-awesome-icon :icon="['fas', 'chevron-right']" class="icon alt"/>
-
-			<font-awesome-icon
-				:icon="[prefab, 'bookmark']"
-				v-on:click="addToBookmarks()"
-				class="icon alt bookmark"
-			/>
 		</div>
 		
 		<div class="time-sets">
@@ -35,6 +31,19 @@
 			<div class="time-sets__counter">
 				99:59:59
 			</div>
+		</div>
+
+		<div class="row player__options">
+
+			<font-awesome-icon :icon="['fas', 'volume-up']" class="icon icon__options alt"/>
+
+			<font-awesome-icon :icon="['fas', 'tachometer-alt']" class="icon icon__options alt"/>
+
+			<font-awesome-icon
+				:icon="[prefab, 'bookmark']"
+				v-on:click="addToBookmarks()"
+				class="icon icon__options alt"
+			/>
 		</div>
 	</div>
 </template>
@@ -78,10 +87,22 @@ export default {
 	
 @import '@/stylesheets/master.scss';
 
-.player { max-height: 80px; }
+.player {
+	max-height: 80px;
+	text-align: center;
+
+	&__btns { margin-left: calc(50% - 100px); }
+	&__options {
+		width: 330px;
+		display: inline-block;
+
+		:first-child { float: left; }
+		:nth-child(3) { float: middle; }
+		:last-child { float: right; }
+	}
+}
 .time-sets {
 	width: 350px;
-	margin-left: 30px;
 
 	&__timeline { color: $main; }
 
@@ -89,22 +110,23 @@ export default {
 		float: right;
 		font-size: 12px;
 		font-weight: 400;
-		margin: -9px 8px 0 0;
+		margin: -35px 7px 0 0;
 	}
 }
 
 .icon {
 	font-size: 20px;
-	margin: 20px 0 0 40px;
+	margin: 12px 0 0 40px;
 	color: $main;
 
 	&:hover {
 		cursor: pointer;
 		color: $lighter-main;
 	}
+
+	&__options {
+		font-size: 15px;
+		margin: 0;
+	}
 }
-
-.player__btns { margin-left: 100px; }
-.bookmark { margin: 10px 0 0 90px; }
-
 </style>
