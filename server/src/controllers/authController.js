@@ -1,23 +1,13 @@
 import passport from 'passport'
 import googleStrategy from 'passport-google-oauth20'
 import facebookStrategy from 'passport-facebook'
-import Joi from 'joi'
+// import Joi from 'joi'
 import jwt from 'jsonwebtoken'
 import request from 'request'
 
 import keys from '../config/keys.js'
 import User from '../models/user.js'
-import axios from 'axios'
 
-passport.serializeUser((user, done) => {
-	done(null, user.id)
-})
-
-passport.deserializeUser((id, done) => {
-	User.findById(id).then((user) => {
-		done(null, user)
-	})
-})
 
 export default {
 	async login(req, res, next) {
@@ -27,14 +17,14 @@ export default {
 
 	async register(req, res, next) {
 
-		const schemaRegister = Joi.object().keys({
-		  nick: Joi.string().min(4).required(),
-		  email: Joi.string().lowercase().trim().required(),
-		  password: Joi.string().trim().min(6).required(),
-			captchaToken: Joi.string().trim().required()
-		})
+		// const schemaRegister = Joi.object().keys({
+		//   nick: Joi.string().min(4).required(),
+		//   email: Joi.string().lowercase().trim().required(),
+		//   password: Joi.string().trim().min(6).required(),
+		// 	captchaToken: Joi.string().trim().required()
+		// })
 
-		const resultRegister = Joi.validate(User, schemaRegister)
+		// const resultRegister = Joi.validate(User, schemaRegister)
 
 		// if (resultRegister.error === null) {
 	  const { nick, email, password, captchaToken } = req.body;

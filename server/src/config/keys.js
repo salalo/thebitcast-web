@@ -14,10 +14,6 @@ export default{
 		clientSecret: ''
 	},
 
-	session: {
-		cookieKey: 'goandsmackyobitchdude'
-	},
-
 	captcha: {
 		secret: '6Lcvt4wUAAAAANRcG29xP9UgUOJ2PQ8Uz-yeIsh4'
 	},
