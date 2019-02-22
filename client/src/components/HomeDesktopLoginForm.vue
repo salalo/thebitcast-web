@@ -110,20 +110,20 @@ Vue.use(VueReCaptcha, { siteKey: '6Lcvt4wUAAAAACOvd54WTCBGMeegcNdFj1JdokMr' })
 
 
 const schemaRegister = Joi.object().keys({
-  nick: Joi.string().min(4).required(),
-  email: Joi.string().lowercase().trim().required(),
-  password: Joi.string().trim().min(6).required(),
- 	captchaToken: Joi.string().trim().required()
+	nick: Joi.string().min(4).required(),
+	email: Joi.string().lowercase().trim().required(),
+	password: Joi.string().trim().min(6).required(),
+	captchaToken: Joi.string().trim().required()
 });
 
 const schemaLogin = Joi.object().keys({
-  email: Joi.string().lowercase().trim().required(),
-  password: Joi.string().trim().min(6).required()
+	email: Joi.string().lowercase().trim().required(),
+	password: Joi.string().trim().min(6).required()
 });
 
 export default {
-  data() {
-    return {
+	data() {
+		return {
 			isActive: false,
 			googleBtnState: "Sign up with Google",
 			registerBtnState: "SIGN UP",
@@ -132,17 +132,17 @@ export default {
 			fontStateAction: "/auth/create",
 			formHeight: 450,
 			status: "",
-      sucessfulServerResponse: "",
+			sucessfulServerResponse: "",
 			newCaptchaToken: "",
 serverError: "",
 
-      User: {
-        nick: '',
-        email: '',
-        password: '',
+			User: {
+				nick: '',
+				email: '',
+				password: '',
 				captchaToken: '6Lf-EYwUAAAAAMX3WFNl82HQMQF3r2D7_qMUd2VQ'
-      }
-    };
+			}
+		};
 	},
 
 	components: {
@@ -150,27 +150,25 @@ serverError: "",
 		QBtn,
 	},
 
-  methods: {
+	methods: {
 
 		startCaptcha() {
-      this.$recaptcha('login').then((token) => {
+			this.$recaptcha('login').then((token) => {
 				this.newCaptchaToken = token;
 				this.sendUser();
-      })},
+			})},
 
-    sendUser() {
-			console.log(this.newCaptchaToken);
-
-      let newUser = {
-        nick: this.User.nick,
-        email: this.User.email,
+		sendUser() {
+			let newUser = {
+				nick: this.User.nick,
+				email: this.User.email,
 				password: this.User.password,
 				captchaToken: this.newCaptchaToken,
 			}
 
 
 			let logingUser = {
-        email: this.User.email,
+				email: this.User.email,
 				password: this.User.password
 			}
 
@@ -181,9 +179,13 @@ serverError: "",
 			if (this.fontStateAction === "/auth/create") {
 				if (resultRegister.error === null) {
 					/* eslint-disable */
-		      axios.post('http://localhost:8081/auth/create', newUser)
-		        .then(res => console.log(res))
-					  .catch(err => console.log(err))
+					axios.post('http://localhost:8081/auth/create', newUser)
+						.then(res => {
+							VueCookies.set("token", res);
+							// console.log("JWT TOKEN: " + res);
+							location.reload()
+						})
+						.catch(err => console.log(err))
 				} else { console.log(resultRegister.error); }
 			}
 
@@ -191,12 +193,12 @@ serverError: "",
 				if (resultLogin.error === null) {
 					/* eslint-disable */
 					axios.post('http://localhost:8081/auth/login', logingUser)
-		        .then(res => {
+						.then(res => {
 							VueCookies.set("token", res);
-							console.log("JWT TOKEN: " + res);
+							// console.log("JWT TOKEN: " + res);
 							location.reload()
-						 })
-					  .catch(err => console.log(err))
+						})
+						.catch(err => console.log(err))
 				} else { console.log(resultLogin.error); }
 			}
 		},
@@ -223,7 +225,7 @@ serverError: "",
 				this.$store.commit('CHANGE_FORMTYPE', 'register');
 			}
 		}
-  }
+	}
 }
 
 </script>

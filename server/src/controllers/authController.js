@@ -22,10 +22,7 @@ passport.deserializeUser((id, done) => {
 export default {
 	async login(req, res, next) {
 		const token = jwt.sign({ id: req.user._id }, process.env.JWT_SECRET)
-		console.log("JWT TOKEN:" + token);
-
-		res.send(token);
-		return token
+		return res.send(token)
 	},
 
 	async register(req, res, next) {
@@ -40,34 +37,35 @@ export default {
 		const resultRegister = Joi.validate(User, schemaRegister)
 
 		// if (resultRegister.error === null) {
-		  const { nick, email, password, captchaToken } = req.body;
+	  const { nick, email, password, captchaToken } = req.body;
 
-			//Sprawdzenie captchy
-			console.log("CAPTCHA - TOKEN: " + captchaToken);
-			console.log("CAPTCHA - KLUCZ PRYWATNY: " + keys.captcha.secret);
+		//Sprawdzenie captchy
+		console.log("CAPTCHA - TOKEN: " + captchaToken);
+		console.log("CAPTCHA - KLUCZ PRYWATNY: " + keys.captcha.secret);
 
-			const ip = req.headers['x-forwarded-for'] || (req.connection && req.connection.remoteAddress) || '';
+		const ip = req.headers['x-forwarded-for'] || (req.connection && req.connection.remoteAddress) || '';
 
-			//Zapytanie do googla
-			var verificationUrl = "https://www.google.com/recaptcha/api/siteverify?"
-				+ "secret=" + keys.captcha.secret
-			  + "&response=" + captchaToken;
-				//+ "&remoteip=" + ip;
+		//Zapytanie do googla
+		var verificationUrl = "https://www.google.com/recaptcha/api/siteverify?"
+			+ "secret=" + keys.captcha.secret
+		  + "&response=" + captchaToken;
+			//+ "&remoteip=" + ip;
 
-				console.log("SPRAWDZANIE CAPTCHY POD ADRESEM:" + verificationUrl + "\n");
+		console.log("SPRAWDZANIE CAPTCHY POD ADRESEM:" + verificationUrl + "\n");
 
-			//Wyslanie zapytania do googla
-			request(verificationUrl,function(error,response,body) {
+		//Wyslanie zapytania do googla
+		request(verificationUrl,function(error, response, body) {
+
 	    body = JSON.parse(body);
+
 	    if(body.success !== undefined && !body.success) {
 	      console.log("BŁAD CAPTCHY:" + body + "\n");
-	    }else console.log("CAPTCHA WESZŁA\n");
+	    } else console.log("CAPTCHA WESZŁA\n");
 		});
 
-
-		  const user = new User({ nick, email })
-		  await User.register(user, password)
-		  return res.send('User created successfully. Now you can log in.')
+	  const user = new User({ nick, email })
+	  User.register(user, password)
+	  return res.send('User created successfully. Now you can log in.')
 		// } else { console.log(resultRegister.error) }
 	},
 }
@@ -82,7 +80,6 @@ passport.use(
 		User.findOne({ googleID: profile.id })
 			.then(currentUser => {
 				if (currentUser) {
-					// log in (jwt)
 					console.log('logged in using google')
 					done(null, currentUser)
 				}
