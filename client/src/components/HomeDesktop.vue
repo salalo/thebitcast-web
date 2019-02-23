@@ -47,7 +47,7 @@ export default {
 		// })
 
 		// góra, lub dokładniej -> dół
-
+/*
 		this.$q.notify({
 			// required param
 			message: `A text with your nofification's awesome message`,
@@ -59,6 +59,7 @@ export default {
 			icon: 'wifi',
 			// textColor: 'black', // if default 'white' doesn't fit
 		})
+		*/
 	}
 }
 

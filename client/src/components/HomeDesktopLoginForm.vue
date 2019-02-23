@@ -82,7 +82,6 @@
 				class="button button__reg"
 				type="submit"
 				name="submit"
-				v-on:click="startCaptcha"
 			/>
 
 			<div class="policy-reg" v-bind:class="{ hidden: isActive }">
@@ -106,6 +105,7 @@ import Joi from 'joi';
 import { VueReCaptcha } from 'vue-recaptcha-v3';
 import Vue from "vue"
 import VueCookies from "vue-cookies"
+
 Vue.use(VueReCaptcha, { siteKey: '6Lcvt4wUAAAAACOvd54WTCBGMeegcNdFj1JdokMr' })
 
 
@@ -149,7 +149,6 @@ serverError: "",
 		QInput,
 		QBtn,
 	},
-
 	methods: {
 
 		startCaptcha() {
@@ -192,14 +191,27 @@ serverError: "",
 			else if (this.fontStateAction === "/auth/login") {
 				if (resultLogin.error === null) {
 					/* eslint-disable */
+
 					axios.post('http://localhost:8081/auth/login', logingUser)
 						.then(res => {
 							VueCookies.set("token", res);
+							VueCookies.set("logging", "true")
 							// console.log("JWT TOKEN: " + res);
+
 							location.reload()
+
 						})
-						.catch(err => console.log(err))
-				} else { console.log(resultLogin.error); }
+						.catch(err => {
+							console.log(err)
+							this.$q.notify({
+								message: `Błędny login lub hasło`,
+								//DO DODANIA JAKAŚ PASUJĄCA IKONKA
+							})
+						})
+				} else {
+
+					console.log(resultLogin.error);
+				 }
 			}
 		},
 
