@@ -2,7 +2,8 @@ import User from '../models/user.js'
 
 export default {
 	async findOne(req, res, next) {
-		const user = await User.findOne({ id: req.params.id })
+		console.log(req.params._id);
+		const user = await User.findOne({ _id: req.params._id })
 		if (!user) return next()
 		return res.status(200).send({ data: user })
 	},
@@ -13,7 +14,7 @@ export default {
 	},
 
 	async update(req, res, next) {
-		const user = await User.find({ 'id': req.params.id })
+		const user = await User.find({ _id: req.params._id })
 		if (!user) return next()
 
 		user.id = req.body.id
@@ -23,7 +24,7 @@ export default {
 	},
 
 	async remove(req, res, next) {
-		const user = await User.findOne({ 'id': req.params.id })
+		const user = await User.findOne({ _id: req.params._id })
 		if (!user) return next()
 		await user.remove()
 

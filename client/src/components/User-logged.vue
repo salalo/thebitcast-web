@@ -2,7 +2,7 @@
 	<div class="user-logged row">
     <div class="avatar"></div>
     <span>Joe Rogannnnnnn</span>
-   
+
     <font-awesome-icon
       :icon="['fas', 'chevron-down']"
       class="icon alt drop-down-icon"

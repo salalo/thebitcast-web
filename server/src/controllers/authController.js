@@ -1,7 +1,7 @@
 import passport from 'passport'
 import googleStrategy from 'passport-google-oauth20'
 import facebookStrategy from 'passport-facebook'
-// import Joi from 'joi'
+import Joi from 'joi'
 import jwt from 'jsonwebtoken'
 import request from 'request'
 
@@ -17,30 +17,49 @@ export default {
 
 	async register(req, res, next) {
 
-		// const schemaRegister = Joi.object().keys({
-		//   nick: Joi.string().min(4).required(),
-		//   email: Joi.string().lowercase().trim().required(),
-		//   password: Joi.string().trim().min(6).required(),
-		// 	captchaToken: Joi.string().trim().required()
-		// })
 
-		// const resultRegister = Joi.validate(User, schemaRegister)
-
-		// if (resultRegister.error === null) {
 	  const { nick, email, password, captchaToken } = req.body;
 
-		//Sprawdzenie captchy
-		console.log("CAPTCHA - TOKEN: " + captchaToken);
-		console.log("CAPTCHA - KLUCZ PRYWATNY: " + keys.captcha.secret);
+		//Sprawdzenie długości
+		if(nick.length < 4)
+			res.send({
+				message: 'Nazwa użytkownika musi mieć przynajmniej 4 znaki',
+				type: 'negative'
+			})
+		if(password.length < 6)
+		res.send({
+			message: 'Hasło musi mieć przynajmniej 6 znaków',
+			type: 'negative'
+		})
 
+		//Sprawdzenie danych
+/*
+		const schemaRegister = Joi.object().keys({
+		   nick: Joi.string().min(4).required(),
+		   email: Joi.string().lowercase().trim().required(),
+		   password: Joi.string().trim().min(6).required(),
+		 	captchaToken: Joi.string().trim().required()
+		 })
+
+		const resultRegister = Joi.validate(User, schemaRegister)
+
+		 if (resultRegister.error )
+	 		{
+		 		return res.send(resultRegister.error)/*{
+				message: 'Wprowadź poprawne dane',
+				type: 'negative'
+			})
+
+		}
+*/
+
+		//Sprawdzenie captchy
 		const ip = req.headers['x-forwarded-for'] || (req.connection && req.connection.remoteAddress) || '';
 
 		//Zapytanie do googla
 		var verificationUrl = "https://www.google.com/recaptcha/api/siteverify?"
 			+ "secret=" + keys.captcha.secret
 		  + "&response=" + captchaToken;
-			//+ "&remoteip=" + ip;
-
 		console.log("SPRAWDZANIE CAPTCHY POD ADRESEM:" + verificationUrl + "\n");
 
 		//Wyslanie zapytania do googla
@@ -49,15 +68,49 @@ export default {
 	    body = JSON.parse(body);
 
 	    if(body.success !== undefined && !body.success) {
-	      console.log("BŁAD CAPTCHY:" + body + "\n");
-	    } else console.log("CAPTCHA WESZŁA\n");
-		});
+				return res.send({
+						message: 'Captcha error',
+						type: 'negative'
+					});
+
+			};
+
+			}
+		);
 
 	  const user = new User({ nick, email })
-	  User.register(user, password)
-	  return res.send('User created successfully. Now you can log in.')
+	  User.register(user, password).catch(err => {
+			return res.send({
+				message: 'Użytkownik o takich danych już istnieje',
+				type: 'negative'
+			})
+
+		}).then(()=>{
+			return res.send(
+				{
+					message: 'User created successfully. Now you can log in.',
+					type: 'positive'
+				});
+		})
+
+
 		// } else { console.log(resultRegister.error) }
 	},
+	async getUserByToken(req, res, next)
+	{
+
+		var token = req.body.data;
+		//console.log(token);
+		//conole.log(process.env.JWT_PUBLIC)
+		var result = jwt.verify(token, process.env.JWT_SECRET,
+			function(err, decoded)
+			{
+				console.log("ID: " + decoded.id);
+				return res.send(decoded.id);
+			});
+		//console.log(JSON.stringify(result));
+		//return res.send(result);
+	}
 }
 
 passport.use(
