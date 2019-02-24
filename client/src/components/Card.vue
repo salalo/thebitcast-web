@@ -1,31 +1,41 @@
 <template>
 	<div
-		class="card--expanded"
+		class="card--expanded row"
 		v-if="isActive"
 		v-on:click="expandCard()"
-		v-bind:class="{ expanded: isActive }"
+		v-bind:class="{ expanded: !isActive }"
 	>
-		<div class="card--expanded__header">
-			Joe Rogan
-		</div>
-		<div class="card--expanded__info">
+		<div class="card--expanded__left">
 
-			<div class="card--expanded__info-title">
+			<div class="card--expanded__left-title">
 				Killing few ppl with my super abilities, just look at me, cmon.
 			</div>
 
-			<div class="card--expanded__info-description">
-				Joseph James Rogan is an American stand-up comedian, mixed martial arts color commentator, podcast host, businessman and former television host and actor. Rogan began a career in comedy in August 1988 in the Boston area. Wikipedia
-				Joseph James Rogan is an American stand-up comedian, mixed martial arts color commentator, podcast host, businessman and former television host and actor. Rogan began a career in comedy in August 1988 in the Boston area. Wikipedia
-			</div>
+			<div class="card--expanded__left-creator">Karol Paciorek</div>
 
-			<div class="card--expanded__info-details">
-				<span>999K play</span>
+			<div class="card--expanded__left-details">
 				<span>99:59:59</span>
 				<span>31.12.19</span>
+				<span>999K play</span>
 			</div>
 
-			<div class="card--expanded__info-buttons">
+			<div class="card--expanded__left-playbtn">
+				<font-awesome-icon
+					:icon="['fas', 'play']"
+					class="card--expanded__left-playbtn--font"
+					v-on:click="isActive = false"
+					v-bind:class="{ hidden: !isActive}"
+				/>
+			</div>
+		</div>
+
+		<div class="card--expanded__right">
+			
+			<div class="card--expanded__right-description">
+				Joseph James Rogan is an American stand-up comedian, mixed martial arts color commentator, podcast host, businessman and former television host and actor. Rogan began a career in comedy in August 1988 in the Boston area.
+			</div>
+
+			<div class="card--expanded__right-buttons">
         <font-awesome-icon
 					:icon="[bookmarksPrefab, 'bookmark']"
 					v-on:click="addToBookmarks()"
@@ -127,56 +137,91 @@ export default {
 @import '@/stylesheets/master.scss';
 
 .card--expanded {
-	height: 500px;
+	height: 240px;
+	width: 436px;
+	z-index: 100;
+	position: relative;
   background-color: #fff;
-	width: 350px;
 	box-shadow: 1px 10px 20px rgba(0, 0, 0, .3);
 
-	&__header {
-    width: 100%;
-    height: 150px;
-    color: $white;
-    font-size: 30px;
-    font-weight: 600;
-    text-indent: 10px;
-    background: linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6) ), url('../assets/creatorsAvatar.jpg');
-    background-position: center top;
-    background-size: cover;
-    line-height: 150px;
-  }
-  &__info {
-    color: rgba(0, 0, 0, .95);
-    padding: 10px;
-    font-size: 14px;
+	&__left {
+		width: 200px;
+		height: 100%;
+    font-size: 13px;
+		float: left;
+		color: $white;
+		background: linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6) ),url('../assets/crAvatar.jpg') center no-repeat;
+		background-size: cover;
+		box-shadow: 0 0 10px rgba(0, 0, 0, .3);
 
-    &-title {
+
+		&-title {
       font-size: 15px;
-      font-weight: 500;
-      width: 90%;
+      font-weight: 400;
+      padding: 15px;
     }
-    &-description { margin: 20px 0; }
-    &-details {
-      border-top: 1px solid $lighter-grey;
-      border-bottom: 1px solid $lighter-grey;
-      font-weight: 500;
-      padding: 2px;
 
-      :first-child { float: left; }
-      :nth-child(2) { margin-left: 70px; }
-      :last-child { float: right; }
+    &-creator {
+    	color: $main;
+    	padding:  0 15px;
+    	font-size: 15px;
     }
-    &-buttons {
+
+    &-details {
+    	float: right;
+			position: relative;
+			bottom: -75px;
+			right: 15px;
+			font-weight: 300;
+
+    	span {
+    		float: right;
+    		clear: right;
+    		margin-bottom: 3px;
+    	}
+    }
+    &-playbtn {
+    	width: 40px;
+    	height: 40px;
+    	background-color: $main;
+    	box-shadow: 0 4px 20px rgba(0, 0, 0, .3);
+    	border-radius: 100%;
+    	position: relative;
+    	top: 80px;
+    	left: 20px;
+
+    	&--font {
+				font-size: 16px;
+				position: relative;
+				top: calc(50% - 8px);
+				left: calc(50% - 6px);
+    	}
+    }
+	}
+
+	&__right {
+		width: 236px;
+		height: 100%;
+		float: right;
+		color: $grey;
+
+		&-description {
+			padding: 15px;
+			font-size: 13px;
+		}
+
+		&-buttons {
       color: $main;
-      font-size: 22px;
+      font-size: 20px;
       text-align: center;
+      padding: 15px;
       &:hover { cursor: pointer; }
-      .icon { margin: 25px 20px 0 20px; }
+      .icon { margin: 20px 15px 0 15px; }
     }
-  }
+	}
 }
 
 .card {
-	// margin-left: 150px;
 	width: 200px;
 	height: 240px;
 	box-shadow: 0 4px 20px rgba(0, 0, 0, .3);

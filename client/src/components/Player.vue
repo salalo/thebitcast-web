@@ -45,22 +45,23 @@
 				class="icon icon__options player__options-bookmarks alt"
 			/>
 
-			<div class="player__options-multL mult">
-				<span>0.25</span>
-				<span>0.5</span>
-				<span>0.75</span>
-			</div>
-			<div class="player__options-multR mult">
-				<span>1.25</span>
-				<span>1.5</span>
-				<span>1.75</span>
-			</div>
-
 			<q-slider
 				:min="0"
 				:max="100"
-				class="player__options-slider"
+				class="player__options-sliderVol"
 				value=100
+			/>
+
+			<q-slider
+				:min="0.5"
+				:max="2"
+				step="0.25"
+				class="player__options-sliderMul"
+				value=1
+				snap
+				label
+				markers
+				color="red"
 			/>
 		</div>
 	</div>
@@ -117,58 +118,39 @@ export default {
 		&-volume {
 			float: left;
 			&:hover {
-				~.player__options-slider {
+				~.player__options-sliderVol {
 					opacity: 1;
-					@include transition(0s, opacity .5s);
+					@include transition(0s, opacity .3s);
 				}
 			}
 		}
-		&-slider {
+		&-sliderVol {
 			opacity: 0;
-			@include transition(.5s, opacity .7s);
+			@include transition(.5s, opacity .5s);
 			&:hover { opacity: 1; }
 
-			width: 100px;
+			width: 110px;
 			color: $main;
-			margin: -25px 0 0 25px;
+			margin: -25px 0 0 30px;
+		}
+
+		&-sliderMul {
+			opacity: 0;
+			@include transition(.5s, opacity .5s);
+			&:hover { opacity: 1; }
+
+			width: 120px;
+			color: $main;
+			margin: -28px 0 0 185px;
 		}
 
 		&-mult {
 			&:hover {
-				~.mult {
+				~.player__options-sliderMul {
 					opacity: 1;
-					@include transition(0s, opacity .5s);
+					@include transition(0s, opacity .3s);
 				}
 			}
-		}
-		&-multL {
-			margin-left: 30px;
-			float: left;
-		}
-		&-multR {
-			margin-right: 30px;
-			float: right;
-		}
-		.mult {
-			@include transition(.5s, opacity .7s);
-			opacity: 0;
-			&:hover { opacity: 1; }
-
-			display: inline-block;
-			font-size: 12px;
-			font-weight: 300;
-			margin-top: -1px;
-
-			span {
-				margin: 0 5px 0 5px;
-				&:hover {
-					cursor: pointer;
-				}
-			}
-			background-color: $lighter-main;
-			color: #fff;
-			border-radius: 5px;
-			padding: 2px;
 		}
 
 		&-bookmarks { float: right; }

@@ -8,8 +8,6 @@
 					:label="googleBtnState"
 					class="button button__google"
 				>
-
-
 					<font-awesome-icon :icon="['fab', 'google']" class="icon alt"/>
 				</q-btn>
 			</a>
@@ -216,6 +214,10 @@ export default {
 		},
 
 		changeFormState() {
+			this.User.nick = '';
+			this.User.email = '';
+			this.User.password = '';
+
 			if (this.registerBtnState === "SIGN UP") {
 				this.isActive = true;
 				this.formHeight = 350;

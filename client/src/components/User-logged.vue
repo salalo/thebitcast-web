@@ -1,7 +1,7 @@
 <template>
 	<div class="user-logged row">
     <div class="avatar" v-on:click="Logout()"></div>
-    <span>Joe Rogannnnnnn</span>
+    <span>aaaaaaaaaa</span>
 
     <font-awesome-icon
       :icon="['fas', 'chevron-down']"
@@ -12,6 +12,7 @@
 
 <script>
 import VueCookies from 'vue-cookies';
+import axios from 'axios';
 
 export default {
   methods: {
@@ -19,7 +20,22 @@ export default {
       VueCookies.remove("token")
       location.reload()
     }
-  }
+  },
+
+  // mounted() {
+  //   axios.post('http://localhost:8081/auth/getuser', VueCookies.get('token'))
+  //     .then(res => {
+  //       //id -> dane użytkownika
+  //       axios.get('http://localhost:8081/users/' + res.data)
+  //         .then(res => {
+  //           //Przypisanie danych użytkownika
+  //           this.actualUser.nick = res.data.nick
+  //           this.actualUser.email = res.data.email
+  //         })
+  //         .catch(err => console.log(err))
+  //     })
+  //     .catch(err => console.log(err))
+  // }
 }
 </script>
 

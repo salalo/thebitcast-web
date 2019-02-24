@@ -77,7 +77,7 @@ export default {
 				console.log("ID: " + decoded.id);
 				return res.send(decoded.id);
 			});
-		//console.log(JSON.stringify(result));
+		console.log(JSON.stringify(result));
 		//return res.send(result);
 	}
 }

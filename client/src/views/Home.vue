@@ -1,5 +1,5 @@
 <template>
-	<mobile v-if="isMobile()" class="mobile-only" />
+	<mobile v-if="isMobile()"/>
 	<desktop v-else/>
 </template>
 
