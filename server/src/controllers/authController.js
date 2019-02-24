@@ -1,7 +1,7 @@
 import passport from 'passport'
 import googleStrategy from 'passport-google-oauth20'
 import facebookStrategy from 'passport-facebook'
-// import Joi from 'joi'
+import Joi from 'joi'
 import jwt from 'jsonwebtoken'
 import request from 'request'
 
@@ -33,7 +33,7 @@ export default {
 		})
 
 		//Sprawdzenie danych
-		/*
+/*
 		const schemaRegister = Joi.object().keys({
 		   nick: Joi.string().min(4).required(),
 		   email: Joi.string().lowercase().trim().required(),
@@ -43,11 +43,14 @@ export default {
 
 		const resultRegister = Joi.validate(User, schemaRegister)
 
-		 if (resultRegister.error)
-		 	res.send({
+		 if (resultRegister.error )
+	 		{
+		 		return res.send(resultRegister.error)/*{
 				message: 'Wprowadź poprawne dane',
 				type: 'negative'
 			})
+
+		}
 */
 
 		//Sprawdzenie captchy
@@ -65,10 +68,11 @@ export default {
 	    body = JSON.parse(body);
 
 	    if(body.success !== undefined && !body.success) {
-				res.send({
+				return res.send({
 						message: 'Captcha error',
 						type: 'negative'
 					});
+
 			};
 
 			}
@@ -76,10 +80,11 @@ export default {
 
 	  const user = new User({ nick, email })
 	  User.register(user, password).catch(err => {
-			res.send({
+			return res.send({
 				message: 'Użytkownik o takich danych już istnieje',
 				type: 'negative'
 			})
+
 		}).then(()=>{
 			return res.send(
 				{
@@ -90,6 +95,21 @@ export default {
 
 
 		// } else { console.log(resultRegister.error) }
+	},
+	async getUserByToken(req, res, next)
+	{
+
+		var token = req.body.data;
+		//console.log(token);
+		//conole.log(process.env.JWT_PUBLIC)
+		var result = jwt.verify(token, process.env.JWT_SECRET,
+			function(err, decoded)
+			{
+				console.log("ID: " + decoded.id);
+				return res.send(decoded.id);
+			});
+		//console.log(JSON.stringify(result));
+		//return res.send(result);
 	}
 }
 

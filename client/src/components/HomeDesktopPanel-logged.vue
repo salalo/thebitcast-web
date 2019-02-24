@@ -51,6 +51,7 @@ import Card from './Card.vue';
 import 'swiper/dist/css/swiper.css';
 import { swiper, swiperSlide } from 'vue-awesome-swiper';
 import VueCookies from 'vue-cookies';
+import axios from 'axios';
 
 export default {
 	data() {
@@ -67,6 +68,11 @@ export default {
 
 	mounted()
 	{
+		axios.post('http://localhost:8081/auth/getuser', VueCookies.get('token')
+		).then(res => {
+console.log('http://localhost:8081/users/' + res.data);
+			axios.get('http://localhost:8081/users/' + res.data).then(res => {console.log(res.data)});
+		})
 
 		if(VueCookies.get("logging") == "true")
 		{

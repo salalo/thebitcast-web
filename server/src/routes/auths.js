@@ -9,6 +9,8 @@ export default () => {
 
   api.post('/create', AuthController.register)
 
+	api.post('/getuser', AuthController.getUserByToken)
+
 	// Auth using google oauth2.0
 	api.get('/google', passport.authenticate('google', {
 	  scope: ['profile', 'email']
@@ -26,6 +28,8 @@ export default () => {
 	api.get('/facebook/cb', passport.authenticate('facebook', { session: false }), (req, res) => {
 	  res.redirect('http://localhost:8080')
 	})
-	
+
+
+
 	return api
 }

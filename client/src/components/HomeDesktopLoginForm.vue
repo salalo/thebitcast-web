@@ -195,10 +195,10 @@ serverError: "",
 
 					axios.post('http://localhost:8081/auth/login', logingUser)
 						.then(res => {
-							
+
 							VueCookies.set("token", res);
 							VueCookies.set("logging", "true")
-							// console.log("JWT TOKEN: " + res);
+							console.log("JWT TOKEN: " + res);
 
 							location.reload()
 
@@ -207,7 +207,7 @@ serverError: "",
 							console.log(err)
 							this.$q.notify({
 								message: `Błędny login lub hasło`,
-								//DO DODANIA JAKAŚ PASUJĄCA IKONKA
+								type: 'negative'
 							})
 						})
 				} else {
