@@ -1,6 +1,6 @@
 <template>
 	<div class="user-logged row">
-    <div class="avatar"></div>
+    <div class="avatar" v-on:click="Logout()"></div>
     <span>Joe Rogannnnnnn</span>
 
     <font-awesome-icon
@@ -11,7 +11,16 @@
 </template>
 
 <script>
-export default {}
+import VueCookies from 'vue-cookies';
+
+export default {
+  methods: {
+    Logout() {
+      VueCookies.remove("token")
+      location.reload()
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>

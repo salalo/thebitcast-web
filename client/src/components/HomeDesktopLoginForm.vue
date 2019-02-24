@@ -134,7 +134,7 @@ export default {
 			status: "",
 			sucessfulServerResponse: "",
 			newCaptchaToken: "",
-serverError: "",
+			serverError: "",
 
 			User: {
 				nick: '',
@@ -149,13 +149,14 @@ serverError: "",
 		QInput,
 		QBtn,
 	},
-	methods: {
 
+	methods: {
 		startCaptcha() {
 			this.$recaptcha('login').then((token) => {
-				this.newCaptchaToken = token;
-				this.sendUser();
-			})},
+				this.newCaptchaToken = token
+				this.sendUser()
+			}
+		)},
 
 		sendUser() {
 			let newUser = {
@@ -165,14 +166,13 @@ serverError: "",
 				captchaToken: this.newCaptchaToken,
 			}
 
-
 			let logingUser = {
 				email: this.User.email,
 				password: this.User.password
 			}
 
-			const resultRegister = Joi.validate(newUser, schemaRegister);
-			const resultLogin = Joi.validate(logingUser, schemaLogin);
+			const resultRegister = Joi.validate(newUser, schemaRegister)
+			const resultLogin = Joi.validate(logingUser, schemaLogin)
 
 
 			if (this.fontStateAction === "/auth/create") {
@@ -180,40 +180,38 @@ serverError: "",
 					/* eslint-disable */
 					axios.post('http://localhost:8081/auth/create', newUser)
 						.then(res => {
+
+							VueCookies.set("token", res)
+							VueCookies.set("logging", "true")
+							location.reload()
+
 							this.$q.notify({
 								message: res.data.message,
 								type: res.data.type
 							})
 						})
 						.catch(err => console.log(err))
-				} else { console.log(resultRegister.error); }
+				} else { console.log(resultRegister.error) }
 			}
 
 			else if (this.fontStateAction === "/auth/login") {
 				if (resultLogin.error === null) {
 					/* eslint-disable */
-
 					axios.post('http://localhost:8081/auth/login', logingUser)
 						.then(res => {
 
-							VueCookies.set("token", res);
+							VueCookies.set("token", res)
 							VueCookies.set("logging", "true")
-							console.log("JWT TOKEN: " + res);
-
 							location.reload()
-
 						})
 						.catch(err => {
 							console.log(err)
 							this.$q.notify({
-								message: `Błędny login lub hasło`,
+								message: `Wrong login or password.`,
 								type: 'negative'
 							})
 						})
-				} else {
-
-					console.log(resultLogin.error);
-				 }
+				} else { console.log(resultLogin.error) }
 			}
 		},
 

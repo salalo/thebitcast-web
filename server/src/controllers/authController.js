@@ -1,7 +1,7 @@
 import passport from 'passport'
 import googleStrategy from 'passport-google-oauth20'
 import facebookStrategy from 'passport-facebook'
-import Joi from 'joi'
+// import Joi from 'joi'
 import jwt from 'jsonwebtoken'
 import request from 'request'
 
@@ -17,41 +17,16 @@ export default {
 
 	async register(req, res, next) {
 
+		const { nick, email, password, captchaToken } = req.body;
 
-	  const { nick, email, password, captchaToken } = req.body;
+		// const schemaRegister = Joi.object().keys({
+		//    nick: Joi.string().min(4).required(),
+		//    email: Joi.string().lowercase().trim().required(),
+		//    password: Joi.string().trim().min(6).required(),
+		//  	captchaToken: Joi.string().trim().required()
+		//  })
 
-		//Sprawdzenie długości
-		if(nick.length < 4)
-			res.send({
-				message: 'Nazwa użytkownika musi mieć przynajmniej 4 znaki',
-				type: 'negative'
-			})
-		if(password.length < 6)
-		res.send({
-			message: 'Hasło musi mieć przynajmniej 6 znaków',
-			type: 'negative'
-		})
-
-		//Sprawdzenie danych
-/*
-		const schemaRegister = Joi.object().keys({
-		   nick: Joi.string().min(4).required(),
-		   email: Joi.string().lowercase().trim().required(),
-		   password: Joi.string().trim().min(6).required(),
-		 	captchaToken: Joi.string().trim().required()
-		 })
-
-		const resultRegister = Joi.validate(User, schemaRegister)
-
-		 if (resultRegister.error )
-	 		{
-		 		return res.send(resultRegister.error)/*{
-				message: 'Wprowadź poprawne dane',
-				type: 'negative'
-			})
-
-		}
-*/
+		// const resultRegister = Joi.validate(User, schemaRegister)
 
 		//Sprawdzenie captchy
 		const ip = req.headers['x-forwarded-for'] || (req.connection && req.connection.remoteAddress) || '';
@@ -69,42 +44,36 @@ export default {
 
 	    if(body.success !== undefined && !body.success) {
 				return res.send({
-						message: 'Captcha error',
-						type: 'negative'
-					});
-
+					message: 'Captcha error',
+					type: 'negative'
+				});
 			};
-
-			}
-		);
+		});
 
 	  const user = new User({ nick, email })
 	  User.register(user, password).catch(err => {
 			return res.send({
-				message: 'Użytkownik o takich danych już istnieje',
+				message: 'User with given data is already created.',
 				type: 'negative'
 			})
-
-		}).then(()=>{
+		})
+		.then(()=>{
 			return res.send(
 				{
-					message: 'User created successfully. Now you can log in.',
+					message: 'User created successfully',
 					type: 'positive'
-				});
+				}
+			);
 		})
-
-
-		// } else { console.log(resultRegister.error) }
 	},
-	async getUserByToken(req, res, next)
-	{
+
+	async getUserByToken(req, res, next) {
 
 		var token = req.body.data;
 		//console.log(token);
 		//conole.log(process.env.JWT_PUBLIC)
 		var result = jwt.verify(token, process.env.JWT_SECRET,
-			function(err, decoded)
-			{
+			function(err, decoded) {
 				console.log("ID: " + decoded.id);
 				return res.send(decoded.id);
 			});

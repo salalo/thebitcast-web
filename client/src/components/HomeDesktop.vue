@@ -49,15 +49,19 @@ export default {
 
 	mounted(){
 		//Token -> id
-		axios.post('http://localhost:8081/auth/getuser', VueCookies.get('token')
-		).then(res => {
-			//id -> dane użytkownika
-			axios.get('http://localhost:8081/users/' + res.data).then(res => {
-				//Przypisanie danych użytkownika
-				this.actualUser.nick = res.data.nick
-				this.actualUser.email = res.data.email
-			});
-		})
+		// axios.post('http://localhost:8081/auth/getuser', VueCookies.get('token')
+		// ).then(res => {
+		// 	//id -> dane użytkownika
+		// 	axios.get('http://localhost:8081/users/' + res.data).then(res => {
+		// 		//Przypisanie danych użytkownika
+		// 		this.actualUser.nick = res.data.nick
+		// 		this.actualUser.email = res.data.email
+		// 	});
+		// })
+
+
+
+		
 		// Notify.create({
 		//   message: 'Danger, Will Robinson! Danger!'
 		// })
