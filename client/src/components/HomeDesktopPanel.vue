@@ -41,6 +41,7 @@
 					<swiper-slide><card/></swiper-slide>
 					<swiper-slide><card/></swiper-slide>
 					<swiper-slide><card/></swiper-slide>
+					
 				</swiper>
 
 			</div>

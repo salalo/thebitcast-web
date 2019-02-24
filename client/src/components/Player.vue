@@ -123,17 +123,15 @@ export default {
 				}
 			}
 		}
-
 		&-slider {
 			opacity: 0;
 			@include transition(.5s, opacity .7s);
 			&:hover { opacity: 1; }
-			
+
 			width: 100px;
 			color: $main;
 			margin: -25px 0 0 25px;
 		}
-
 
 		&-mult {
 			&:hover {
@@ -168,7 +166,7 @@ export default {
 				}
 			}
 			background-color: $lighter-main;
-			color: $white;
+			color: #fff;
 			border-radius: 5px;
 			padding: 2px;
 		}

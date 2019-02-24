@@ -83,7 +83,10 @@ export default {
 
 	methods: {
 		expandCard() {
-			this.isActive = true;
+			if (!this.isActive)
+				this.isActive = true;
+			else
+				this.isActive = false;
 		},
 
     addToBookmarks() {
