@@ -62,18 +62,13 @@ export default {
 				slidesPerView: 7,
 				spaceBetween: 30,
 				freeMode: true
-			}
+			},
+
 		}
 	},
 
 	mounted()
 	{
-		axios.post('http://localhost:8081/auth/getuser', VueCookies.get('token')
-		).then(res => {
-console.log('http://localhost:8081/users/' + res.data);
-			axios.get('http://localhost:8081/users/' + res.data).then(res => {console.log(res.data)});
-		})
-
 		if(VueCookies.get("logging") == "true")
 		{
 			this.$q.notify({

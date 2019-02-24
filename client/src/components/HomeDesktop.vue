@@ -18,6 +18,7 @@ import Panel from './HomeDesktopPanel.vue';
 import PanelLogged from './HomeDesktopPanel-logged.vue';
 import TopbarLogged from './HomeDesktopPanelTopbar-logged.vue';
 import VueCookies from 'vue-cookies';
+import axios from 'axios'
 // import { Notify } from "quasar-framework/dist/quasar.mat.esm";
 
 export default {
@@ -37,11 +38,26 @@ export default {
 
 	data() {
 		return {
-			logged: false
+			logged: false,
+
+			actualUser: {
+				nick: '',
+				email: ''
+			}
 		}
 	},
 
 	mounted(){
+		//Token -> id
+		axios.post('http://localhost:8081/auth/getuser', VueCookies.get('token')
+		).then(res => {
+			//id -> dane użytkownika
+			axios.get('http://localhost:8081/users/' + res.data).then(res => {
+				//Przypisanie danych użytkownika
+				this.actualUser.nick = res.data.nick
+				this.actualUser.email = res.data.email
+			});
+		})
 		// Notify.create({
 		//   message: 'Danger, Will Robinson! Danger!'
 		// })
