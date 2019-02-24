@@ -180,9 +180,10 @@ serverError: "",
 					/* eslint-disable */
 					axios.post('http://localhost:8081/auth/create', newUser)
 						.then(res => {
-							VueCookies.set("token", res);
-							// console.log("JWT TOKEN: " + res);
-							location.reload()
+							this.$q.notify({
+								message: res.data.message,
+								type: res.data.type
+							})
 						})
 						.catch(err => console.log(err))
 				} else { console.log(resultRegister.error); }
@@ -194,6 +195,7 @@ serverError: "",
 
 					axios.post('http://localhost:8081/auth/login', logingUser)
 						.then(res => {
+							
 							VueCookies.set("token", res);
 							VueCookies.set("logging", "true")
 							// console.log("JWT TOKEN: " + res);

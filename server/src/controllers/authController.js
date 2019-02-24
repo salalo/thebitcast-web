@@ -17,30 +17,46 @@ export default {
 
 	async register(req, res, next) {
 
-		// const schemaRegister = Joi.object().keys({
-		//   nick: Joi.string().min(4).required(),
-		//   email: Joi.string().lowercase().trim().required(),
-		//   password: Joi.string().trim().min(6).required(),
-		// 	captchaToken: Joi.string().trim().required()
-		// })
 
-		// const resultRegister = Joi.validate(User, schemaRegister)
-
-		// if (resultRegister.error === null) {
 	  const { nick, email, password, captchaToken } = req.body;
 
-		//Sprawdzenie captchy
-		console.log("CAPTCHA - TOKEN: " + captchaToken);
-		console.log("CAPTCHA - KLUCZ PRYWATNY: " + keys.captcha.secret);
+		//Sprawdzenie długości
+		if(nick.length < 4)
+			res.send({
+				message: 'Nazwa użytkownika musi mieć przynajmniej 4 znaki',
+				type: 'negative'
+			})
+		if(password.length < 6)
+		res.send({
+			message: 'Hasło musi mieć przynajmniej 6 znaków',
+			type: 'negative'
+		})
 
+		//Sprawdzenie danych
+		/*
+		const schemaRegister = Joi.object().keys({
+		   nick: Joi.string().min(4).required(),
+		   email: Joi.string().lowercase().trim().required(),
+		   password: Joi.string().trim().min(6).required(),
+		 	captchaToken: Joi.string().trim().required()
+		 })
+
+		const resultRegister = Joi.validate(User, schemaRegister)
+
+		 if (resultRegister.error)
+		 	res.send({
+				message: 'Wprowadź poprawne dane',
+				type: 'negative'
+			})
+*/
+
+		//Sprawdzenie captchy
 		const ip = req.headers['x-forwarded-for'] || (req.connection && req.connection.remoteAddress) || '';
 
 		//Zapytanie do googla
 		var verificationUrl = "https://www.google.com/recaptcha/api/siteverify?"
 			+ "secret=" + keys.captcha.secret
 		  + "&response=" + captchaToken;
-			//+ "&remoteip=" + ip;
-
 		console.log("SPRAWDZANIE CAPTCHY POD ADRESEM:" + verificationUrl + "\n");
 
 		//Wyslanie zapytania do googla
@@ -49,15 +65,32 @@ export default {
 	    body = JSON.parse(body);
 
 	    if(body.success !== undefined && !body.success) {
-	      console.log("BŁAD CAPTCHY:" + body + "\n");
-	    } else console.log("CAPTCHA WESZŁA\n");
-		});
+				res.send({
+						message: 'Captcha error',
+						type: 'negative'
+					});
+			};
+
+			}
+		);
 
 	  const user = new User({ nick, email })
-	  User.register(user, password)
-	  return res.send('User created successfully. Now you can log in.')
+	  User.register(user, password).catch(err => {
+			res.send({
+				message: 'Użytkownik o takich danych już istnieje',
+				type: 'negative'
+			})
+		}).then(()=>{
+			return res.send(
+				{
+					message: 'User created successfully. Now you can log in.',
+					type: 'positive'
+				});
+		})
+
+
 		// } else { console.log(resultRegister.error) }
-	},
+	}
 }
 
 passport.use(
