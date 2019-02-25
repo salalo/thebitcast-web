@@ -98,7 +98,7 @@ export default {
 	}
 }
 .popular {
-	margin-top: 100px;
+	margin-top: 50px;
 	// span { top: calc(50% - 180px); } for 3 row
 	span { top: calc(50% + 10px); }
 }

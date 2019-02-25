@@ -36,23 +36,23 @@
 			</div>
 
 			<div class="card--expanded__right-buttons">
-        <font-awesome-icon
+				<font-awesome-icon
 					:icon="[bookmarksPrefab, 'bookmark']"
 					v-on:click="addToBookmarks()"
 					class="icon alt"
 				/> 
-        <font-awesome-icon :icon="['fas', 'share']" class="icon alt"/>
+				<font-awesome-icon :icon="['fas', 'share']" class="icon alt"/>
 
-        <font-awesome-icon
-          :icon="[thumbsUpPrefab, 'thumbs-up']"
-          v-on:click="likePodcast()"
-          class="icon alt"
-        />
-        <font-awesome-icon
-          :icon="[thumbsDownPrefab, 'thumbs-down']"
-          v-on:click="dislikePodcast()"
-          class="icon alt fa-flip-horizontal"
-        />
+				<font-awesome-icon
+					:icon="[thumbsUpPrefab, 'thumbs-up']"
+					v-on:click="likePodcast()"
+					class="icon alt"
+				/>
+				<font-awesome-icon
+					:icon="[thumbsDownPrefab, 'thumbs-down']"
+					v-on:click="dislikePodcast()"
+					class="icon alt fa-flip-horizontal"
+				/>
 			</div>
 		</div>
 	</div>
@@ -84,10 +84,10 @@ export default {
 
 	data() {
 		return {
-      bookmarksPrefab: 'far',
+			bookmarksPrefab: 'far',
 			thumbsUpPrefab: 'far',
 			thumbsDownPrefab: 'far',
-      isActive: false
+			isActive: false
 		}
 	},
 
@@ -99,35 +99,35 @@ export default {
 				this.isActive = false;
 		},
 
-    addToBookmarks() {
-      if (this.bookmarksPrefab === 'fas')
-        this.bookmarksPrefab = 'far';
+		addToBookmarks() {
+			if (this.bookmarksPrefab === 'fas')
+				this.bookmarksPrefab = 'far';
 
-      else
-        this.bookmarksPrefab = 'fas';
-    },
+			else
+				this.bookmarksPrefab = 'fas';
+		},
 
-    likePodcast() {
-      if (this.thumbsUpPrefab === 'fas')
-        this.thumbsUpPrefab = 'far';
+		likePodcast() {
+			if (this.thumbsUpPrefab === 'fas')
+				this.thumbsUpPrefab = 'far';
 
-      else {
-        this.thumbsUpPrefab = 'fas';
-        // undislike on like
-        this.thumbsDownPrefab = 'far';
-      }
-    },
+			else {
+				this.thumbsUpPrefab = 'fas';
+				// undislike on like
+				this.thumbsDownPrefab = 'far';
+			}
+		},
 
-    dislikePodcast() {
-      if (this.thumbsDownPrefab === 'fas')
-        this.thumbsDownPrefab = 'far';
+		dislikePodcast() {
+			if (this.thumbsDownPrefab === 'fas')
+				this.thumbsDownPrefab = 'far';
 
-      else {
-        this.thumbsDownPrefab = 'fas';
-        // unlike on dislike click
-        this.thumbsUpPrefab = 'far';
-      }
-    }
+			else {
+				this.thumbsDownPrefab = 'fas';
+				// unlike on dislike click
+				this.thumbsUpPrefab = 'far';
+			}
+		}
 	}
 }
 </script>
@@ -141,13 +141,13 @@ export default {
 	width: 436px;
 	z-index: 100;
 	position: relative;
-  background-color: #fff;
+	background-color: #fff;
 	box-shadow: 1px 10px 20px rgba(0, 0, 0, .3);
 
 	&__left {
 		width: 200px;
 		height: 100%;
-    font-size: 13px;
+		font-size: 13px;
 		float: left;
 		color: $white;
 		background: linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6) ),url('../assets/crAvatar.jpg') center no-repeat;
@@ -156,47 +156,47 @@ export default {
 
 
 		&-title {
-      font-size: 15px;
-      font-weight: 400;
-      padding: 15px;
-    }
+			font-size: 15px;
+			font-weight: 400;
+			padding: 15px;
+		}
 
-    &-creator {
-    	color: $main;
-    	padding:  0 15px;
-    	font-size: 15px;
-    }
+		&-creator {
+			color: $main;
+			padding:  0 15px;
+			font-size: 15px;
+		}
 
-    &-details {
-    	float: right;
+		&-details {
+			float: right;
 			position: relative;
 			bottom: -75px;
 			right: 15px;
 			font-weight: 300;
 
-    	span {
-    		float: right;
-    		clear: right;
-    		margin-bottom: 3px;
-    	}
-    }
-    &-playbtn {
-    	width: 40px;
-    	height: 40px;
-    	background-color: $main;
-    	box-shadow: 0 4px 20px rgba(0, 0, 0, .3);
-    	border-radius: 100%;
-    	position: relative;
-    	top: 80px;
-    	left: 20px;
+			span {
+				float: right;
+				clear: right;
+				margin-bottom: 3px;
+			}
+		}
+		&-playbtn {
+			width: 40px;
+			height: 40px;
+			background-color: $main;
+			box-shadow: 0 4px 20px rgba(0, 0, 0, .3);
+			border-radius: 100%;
+			position: relative;
+			top: 80px;
+			left: 20px;
 
-    	&--font {
+			&--font {
 				font-size: 16px;
 				position: relative;
 				top: calc(50% - 8px);
 				left: calc(50% - 6px);
-    	}
-    }
+			}
+		}
 	}
 
 	&__right {
@@ -211,13 +211,13 @@ export default {
 		}
 
 		&-buttons {
-      color: $main;
-      font-size: 20px;
-      text-align: center;
-      padding: 15px;
-      &:hover { cursor: pointer; }
-      .icon { margin: 20px 15px 0 15px; }
-    }
+			color: $main;
+			font-size: 20px;
+			text-align: center;
+			padding: 15px;
+			&:hover { cursor: pointer; }
+			.icon { margin: 20px 15px 0 15px; }
+		}
 	}
 }
 
