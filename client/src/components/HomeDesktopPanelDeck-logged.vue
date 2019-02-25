@@ -7,8 +7,8 @@
 
 			<font-awesome-icon
 				:icon="['fas', 'plus']"
-				class="icon"
-				v-on:click.prevent="selectDeck()"
+				class="icon deck-container--inner__icon"
+				v-on:click="selectDeck()"
 			/>
 		</div>
 		<div class="deck-selector__container">
@@ -27,7 +27,9 @@ export default {
 	data() {
 		return {
 			isActive: false,
+			deckInUse: '',
 			selectedDecks: [ 'Recommended' ],
+			selectedDecks2: [ 'Most popular' ],
 			decks: [
 				{ deck: 'Art' },
 				{ deck: 'Business' },
@@ -53,44 +55,86 @@ export default {
 
 	methods: {
 		selectDeck() {
+
 			let deckSelectorContainer = document.getElementsByClassName('deck-selector__container')[0];
 			deckSelectorContainer.style.display = "block";
 
 			window.onclick = e => {
-				if(e.target == deckSelectorContainer)
+
+				if(e.target === document.getElementsByClassName('deck-container--inner__icon')[0] || e.target === document.getElementsByTagName('path')[0]){
+					this.deckInUse = 'top'
+					console.log(this.deckInUse)
+				}
+																																				// hard way -> console.log(document.getElementsByTagName('path')) -> will change
+				else if(e.target === document.getElementsByClassName('deck-container--inner__icon')[1] || e.target === document.getElementsByTagName('path')[11]){
+					this.deckInUse = 'bottom'
+					console.log(this.deckInUse)
+				}
+
+				else if(e.target == deckSelectorContainer)
 					deckSelectorContainer.style.display = "none";
 			}
 		},
 
 		addDeck() {
-			console.log(event.target)
-			if(!this.selectedDecks.includes(event.target.innerHTML)) {
+			console.log("deck top: " + this.selectedDecks)
+			console.log("deck bottom: " + this.selectedDecks2)
 
-				if(this.selectedDecks.length < 3)
-					this.selectedDecks.push(event.target.innerHTML)
+			if(this.deckInUse === 'top') {
 
+				if(!this.selectedDecks.includes(event.target.innerHTML)) {
+
+					if(this.selectedDecks.length < 3)
+						this.selectedDecks.push(event.target.innerHTML)
+
+					else {
+						this.$q.notify({
+							message: "Buy premium to add more decks.",
+							type: 'info', // 'positive', 'negative', 'warning', 'info'
+							timeout: 3000
+						})
+					}
+				}
 				else {
 					this.$q.notify({
-						message: "Buy premium to add more decks.",
+						message: "This deck is already is use.",
 						type: 'info', // 'positive', 'negative', 'warning', 'info'
 						timeout: 3000
 					})
 				}
 			}
-			else {
-				this.$q.notify({
-					message: "This deck is already is use.",
-					type: 'info', // 'positive', 'negative', 'warning', 'info'
-					timeout: 3000
-				})
+
+			else if(this.deckInUse === 'bottom') {
+
+				if(!this.selectedDecks2.includes(event.target.innerHTML)) {
+
+					if(this.selectedDecks2.length < 3)
+						this.selectedDecks2.push(event.target.innerHTML)
+
+					else {
+						this.$q.notify({
+							message: "Buy premium to add more decks.2",
+							type: 'info', // 'positive', 'negative', 'warning', 'info'
+							timeout: 3000
+						})
+					}
+				}
+				else {
+					this.$q.notify({
+						message: "This deck is already is use.2",
+						type: 'info', // 'positive', 'negative', 'warning', 'info'
+						timeout: 3000
+					})
+				}
 			}
 		}
 	},
 
 	mounted() {
-		if (this.selectedDecks == "Recommended" || this.selectedDecks == "Popular") {
-			document.getElementsByClassName('deck')
-		}
+		let deckBottom = document.getElementsByClassName('deck')[1];
+		deckBottom.innerHTML = "Most popular";
+
+
 	}
 }
 	
