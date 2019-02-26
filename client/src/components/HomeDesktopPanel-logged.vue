@@ -2,7 +2,7 @@
 	<div class="container">
 		<div class="stack">
 			<div class="recommended">
-				<users-deck></users-deck>
+				<users-deck-top></users-deck-top>
 
 				<swiper :options="swiperOption">
 					<swiper-slide><card/></swiper-slide>
@@ -19,7 +19,7 @@
 			</div>
 
 			<div class="popular">
-				<users-deck></users-deck>
+				<users-deck-bottom></users-deck-bottom>
 
 				<swiper :options="swiperOption">
 					<swiper-slide><card/></swiper-slide>
@@ -42,7 +42,9 @@
 import Card from './Card.vue';
 import 'swiper/dist/css/swiper.css';
 import { swiper, swiperSlide } from 'vue-awesome-swiper';
-import Deck from './HomeDesktopPanelDeck-logged.vue';
+import DeckTop from './HomeDesktopPanelDeckTop-logged.vue';
+import DeckBottom from './HomeDesktopPanelDeckBottom-logged.vue';
+
 
 export default {
 	data() {
@@ -59,7 +61,8 @@ export default {
 
 	components: {
 		'card': Card,
-		'users-deck': Deck,
+		'users-deck-top': DeckTop,
+		'users-deck-bottom': DeckBottom,
 		swiper,
 		swiperSlide
 	}

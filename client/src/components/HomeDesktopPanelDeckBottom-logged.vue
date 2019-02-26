@@ -1,7 +1,11 @@
 <template>
 	<div class="deck-container--outter">
 		<div class="deck-container--inner">
-			<div class="deck" v-for="item in selectedDecks">
+			<div
+				class="deck"
+				v-for="item in selectedDecks2"
+				v-bind:key="item"
+			>
 				{{ item }}
 			</div>
 
@@ -11,9 +15,13 @@
 				v-on:click="selectDeck()"
 			/>
 		</div>
-		<div class="deck-selector__container">
+		<div class="deck-selector__container-bottom">
 			<div class="deck-selector">
-				<div v-for="deck in decks" v-on:click="addDeck(deck, $event)">
+				<div
+					v-for="deck in decks"
+					v-on:click="addDeck(deck, $event)"
+					v-bind:key="deck"
+				>
 					{{ deck.deck }}
 				</div>
 			</div>
@@ -26,9 +34,6 @@
 export default {
 	data() {
 		return {
-			isActive: false,
-			deckInUse: '',
-			selectedDecks: [ 'Recommended' ],
 			selectedDecks2: [ 'Most popular' ],
 			decks: [
 				{ deck: 'Art' },
@@ -55,86 +60,36 @@ export default {
 
 	methods: {
 		selectDeck() {
-
-			let deckSelectorContainer = document.getElementsByClassName('deck-selector__container')[0];
-			deckSelectorContainer.style.display = "block";
+			document.getElementsByClassName('deck-selector__container-bottom')[0].style.display = "block";
 
 			window.onclick = e => {
-
-				if(e.target === document.getElementsByClassName('deck-container--inner__icon')[0] || e.target === document.getElementsByTagName('path')[0]){
-					this.deckInUse = 'top'
-					console.log(this.deckInUse)
-				}
-																																				// hard way -> console.log(document.getElementsByTagName('path')) -> will change
-				else if(e.target === document.getElementsByClassName('deck-container--inner__icon')[1] || e.target === document.getElementsByTagName('path')[11]){
-					this.deckInUse = 'bottom'
-					console.log(this.deckInUse)
-				}
-
-				else if(e.target == deckSelectorContainer)
-					deckSelectorContainer.style.display = "none";
+				if(e.target === document.getElementsByClassName('deck-selector__container-bottom')[0])
+					document.getElementsByClassName('deck-selector__container-bottom')[0].style.display = "none";
 			}
 		},
 
 		addDeck() {
-			console.log("deck top: " + this.selectedDecks)
-			console.log("deck bottom: " + this.selectedDecks2)
+			if(!this.selectedDecks2.includes(event.target.innerHTML)) {
 
-			if(this.deckInUse === 'top') {
+				if(this.selectedDecks2.length < 3)
+					this.selectedDecks2.push(event.target.innerHTML)
 
-				if(!this.selectedDecks.includes(event.target.innerHTML)) {
-
-					if(this.selectedDecks.length < 3)
-						this.selectedDecks.push(event.target.innerHTML)
-
-					else {
-						this.$q.notify({
-							message: "Buy premium to add more decks.",
-							type: 'info', // 'positive', 'negative', 'warning', 'info'
-							timeout: 3000
-						})
-					}
-				}
 				else {
 					this.$q.notify({
-						message: "This deck is already is use.",
+						message: "Buy premium to add more decks.",
 						type: 'info', // 'positive', 'negative', 'warning', 'info'
 						timeout: 3000
 					})
 				}
 			}
-
-			else if(this.deckInUse === 'bottom') {
-
-				if(!this.selectedDecks2.includes(event.target.innerHTML)) {
-
-					if(this.selectedDecks2.length < 3)
-						this.selectedDecks2.push(event.target.innerHTML)
-
-					else {
-						this.$q.notify({
-							message: "Buy premium to add more decks.2",
-							type: 'info', // 'positive', 'negative', 'warning', 'info'
-							timeout: 3000
-						})
-					}
-				}
-				else {
-					this.$q.notify({
-						message: "This deck is already is use.2",
-						type: 'info', // 'positive', 'negative', 'warning', 'info'
-						timeout: 3000
-					})
-				}
+			else {
+				this.$q.notify({
+					message: "This deck is already is use.",
+					type: 'info', // 'positive', 'negative', 'warning', 'info'
+					timeout: 3000
+				})
 			}
 		}
-	},
-
-	mounted() {
-		let deckBottom = document.getElementsByClassName('deck')[1];
-		deckBottom.innerHTML = "Most popular";
-
-
 	}
 }
 	
@@ -186,7 +141,7 @@ export default {
 	}
 }
 
-.deck-selector__container {
+.deck-selector__container-bottom {
 	overflow-y: scroll;
 	display: none;
 	z-index: 99999;
