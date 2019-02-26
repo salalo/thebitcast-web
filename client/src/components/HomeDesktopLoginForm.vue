@@ -90,14 +90,14 @@
 				>By creating an account you're okay with our <router-link to="/privacy-policy">Privacy & Policy</router-link>.
 			</div>
 
-			<div
+<!-- 			<div
 				class="policy-reg"
 				v-bind:class="{ hidden: isActive }"
 				style="text-align: center"
 			>This site is protected by reCAPTCHA and the Google 
 				<a href="https://policies.google.com/privacy">Privacy Policy</a> and
 				<a href="https://policies.google.com/terms">Terms of Service</a> apply.
-			</div>
+			</div> -->
 
 		</form>
 		<div class="form-state">{{formStateText}} <a href="#" v-on:click="changeFormState">{{formStateHyperlink}}</a>.</div>
@@ -137,7 +137,7 @@ export default {
 			formStateText: "Already registered?",
 			formStateHyperlink: "Sign in",
 			fontStateAction: "/auth/create",
-			formHeight: 490,
+			formHeight: 450,
 			status: "",
 			sucessfulServerResponse: "",
 			newCaptchaToken: "",
@@ -239,7 +239,7 @@ export default {
 			}
 			else {
 				this.isActive = false;
-				this.formHeight = 490;
+				this.formHeight = 450;
 				this.googleBtnState = "Sign up with Google";
 				this.registerBtnState = "SIGN UP";
 				this.formStateText = "Already registered?";
