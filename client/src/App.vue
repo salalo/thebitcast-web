@@ -34,4 +34,5 @@ html, body {
   margin: 0 !important;
   height: 100vh;
 }
+.grecaptcha-badge { visibility: hidden; }
 </style>
