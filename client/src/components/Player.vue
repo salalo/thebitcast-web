@@ -48,16 +48,18 @@
 			<q-slider
 				:min="0"
 				:max="100"
+				:value="volume"
+				@change="val => { volume = val }"
 				class="player__options-sliderVol"
-				value=100
 			/>
 
 			<q-slider
 				:min="0.5"
 				:max="2"
+				@change="value => { speedMul = value }"
 				step="0.25"
 				class="player__options-sliderMul"
-				value=1
+				:value="speedMul"
 				snap
 				label
 				markers
@@ -75,7 +77,9 @@ export default {
 	data() {
 		return {
 			prefab: 'far',
-			isActive: false
+			isActive: false,
+			volume: 100,
+			speedMul: 1
 		}
 	},
 
@@ -98,6 +102,14 @@ export default {
 				// find in db and remove
 			}
 		}
+	},
+	mounted() {
+		this.volume = localStorage.getItem('player-volume')
+		this.speedMul = localStorage.getItem('player-speed-multiplier')
+	},
+	updated() {
+		localStorage.setItem('player-volume', this.volume)
+		localStorage.setItem('player-speed-multiplier', this.speedMul)
 	}
 };
 </script>
