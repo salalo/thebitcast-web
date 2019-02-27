@@ -36,7 +36,27 @@ import {
   faFlag,
   faVolumeUp,
   faTachometerAlt,
-  faPlus
+  faPlus,
+
+  faPaintBrush,
+  faDollarSign,
+  faCarSide,
+  faSmileBeam,
+  faGraduationCap,
+  faFilm,
+  faGamepad,
+  faBriefcaseMedical,
+  faBaby,
+  faMusic,
+  faNewspaper,
+  faBrain,
+  faCross,
+  faFlask,
+  faUsers,
+  faFootballBall,
+  faMicrochip,
+  faCameraRetro
+
 } from "@fortawesome/free-solid-svg-icons"
 
 import {
@@ -81,7 +101,26 @@ library.add(
   faFlag,
   faVolumeUp,
   faTachometerAlt,
-  faPlus
+  faPlus,
+
+  faPaintBrush,
+  faDollarSign,
+  faCarSide,
+  faSmileBeam,
+  faGraduationCap,
+  faFilm,
+  faGamepad,
+  faBriefcaseMedical,
+  faBaby,
+  faMusic,
+  faNewspaper,
+  faBrain,
+  faCross,
+  faFlask,
+  faUsers,
+  faFootballBall,
+  faMicrochip,
+  faCameraRetro
 )
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
