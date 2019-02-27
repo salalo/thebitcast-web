@@ -1,5 +1,5 @@
 <template>
-	<div class="container">
+	<div class="container" id="card-panel-container">
 		<div class="stack">
 			<div class="recommended">
 				<users-deck-top></users-deck-top>
@@ -75,6 +75,7 @@ export default {
 
 // minus width of Sidebar
 .container {
+	@include transition(0s, transform .5s);
 	width: calc(100vw - 300px);
 	height: calc(100vh - 80px);
 	position: fixed;

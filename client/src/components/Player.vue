@@ -143,7 +143,7 @@ export default {
 
 			width: 110px;
 			color: $main;
-			margin: -25px 0 0 30px;
+			margin: -25px 0 0 20px;
 		}
 
 		&-sliderMul {

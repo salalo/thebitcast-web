@@ -5,18 +5,25 @@ Vue.use(Vuex)
 
 export const store = new Vuex.Store({
 	state: {
-		formType: "register"
+		formType: "register",
+		categoriesBarShown: false
 	},
 
 	getters: {
 		FORMTYPE: state => {
-			return state.formType;
+			return state.formType
+		},
+		CATBARSHOWN: state => {
+			return state.categoriesBarShown
 		}
   },
 
 	mutations: {
 		CHANGE_FORMTYPE: (state, payload) => {
 			state.formType = payload
+		},
+		CHANGE_CATBAR: (state, payload) => {
+			state.categoriesBarShown = payload
 		}
 	}
 })
