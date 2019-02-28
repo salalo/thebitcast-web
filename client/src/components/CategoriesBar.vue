@@ -1,8 +1,11 @@
 <template>
   <div class="categories-bar">
-    <a v-for="icon in categories">
-      <font-awesome-icon :icon="['fas',  icon.icon ]" class="icon" />
-      <span>{{ icon.text }}</span>
+    <a
+      v-for="category in categories"
+      v-bind:key="category"
+    >
+      <font-awesome-icon :icon="['fas',  category.icon]" class="icon" />
+      <span :class="category.className">{{ category.text }}</span>
     </a>
   </div>
 </template>
@@ -13,24 +16,24 @@ export default {
   data() {
     return {
       categories: [
-        { icon: 'paint-brush', text: 'Art' },
-        { icon: 'dollar-sign', text: 'Business' },
-        { icon: 'car-side', text: 'Cars & motorization' },
-        { icon: 'smile-beam', text: 'Comedy' },
-        { icon: 'graduation-cap', text: 'Education' },
-        { icon: 'film', text: 'Film' },
-        { icon: 'gamepad', text: 'Games & hobbies' },
-        { icon: 'briefcase-medical', text: 'Health' },
-        { icon: 'baby', text: 'Kids & family' },
-        { icon: 'music', text: 'Music' },
-        { icon: 'newspaper', text: 'News & politycs' },
-        { icon: 'brain', text: 'Psychology' },
-        { icon: 'cross', text: 'Religion & spirituality' },
-        { icon: 'flask', text: 'Science' },
-        { icon: 'users', text: 'Society & culture' },
-        { icon: 'football-ball', text: 'Sport' },
-        { icon: 'microchip', text: 'Technology' },
-        { icon: 'camera-retro', text: 'Tourism' },
+        { icon: 'paint-brush', text: 'Art', className: 'art' },
+        { icon: 'dollar-sign', text: 'Business', className: 'business' },
+        { icon: 'car-side', text: 'Cars & motorization', className: 'cars' },
+        { icon: 'smile-beam', text: 'Comedy', className: 'comedy' },
+        { icon: 'graduation-cap', text: 'Education', className: 'education' },
+        { icon: 'film', text: 'Film', className: 'film' },
+        { icon: 'gamepad', text: 'Games & hobbies', className: 'games' },
+        { icon: 'briefcase-medical', text: 'Health', className: 'health' },
+        { icon: 'baby', text: 'Kids & family', className: 'kids' },
+        { icon: 'music', text: 'Music', className: 'music' },
+        { icon: 'newspaper', text: 'News & politycs', className: 'news' },
+        { icon: 'brain', text: 'Psychology', className: 'psychology' },
+        { icon: 'cross', text: 'Religion & spirituality', className: 'religion' },
+        { icon: 'flask', text: 'Science', className: 'science' },
+        { icon: 'users', text: 'Society & culture', className: 'society' },
+        { icon: 'football-ball', text: 'Sport', className: 'sport' },
+        { icon: 'microchip', text: 'Technology', className: 'technology' },
+        { icon: 'camera-retro', text: 'Tourism', className: 'tourism' },
       ]
     }
   }
@@ -75,17 +78,30 @@ a {
   }
 
   .icon {
-    margin-left: 50px;
+    margin: 0 50px;
     font-size: 18px;
     line-height: 40px;
     vertical-align: middle;
   }
   span {
-    margin-left: 50px;
     line-height: 40px;
     font-size: 16px;
     vertical-align: middle;
   }
 }
+
+.tourism,
+.technology,
+.sport,
+.music,
+.health,
+.film,
+.comedy,
+.art { margin-left: 5px; }
+
+.psychology, .news { margin-left: 2px; }
+.religion, .kids { margin-left: 9px; }
+.science { margin-left: 7px; }
+.business { margin-left: 12px; }
 
 </style>

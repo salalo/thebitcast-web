@@ -6,56 +6,56 @@
       <div class="taker">
         <router-link to="/">
           <font-awesome-icon :icon="['fas', 'home']" class="icon alt" />
-          <span>Home</span>        
+          <span class="taker-home">Home</span>        
         </router-link>
         <a @click="changeCategoriesBar()">
           <font-awesome-icon :icon="['fas', 'table']" class="icon alt" />
-          <span>Categories</span>        
+          <span class="taker-categories">Categories</span>        
         </a>
         <router-link to="#">
           <font-awesome-icon :icon="['fas', 'heart']" class="icon alt" />
-          <span>Following</span>        
+          <span class="taker-following">Following</span>        
         </router-link>
         <router-link to="#">
           <font-awesome-icon :icon="['fas', 'bookmark']" class="icon alt" />
-          <span>Bookmarks</span>    
+          <span class="taker-bookmarks">Bookmarks</span>    
         </router-link>
       </div>
 
       <div class="giver">
         <router-link to="#">
           <font-awesome-icon :icon="['fas', 'cloud-upload-alt']" class="icon alt" />
-          <span>Upload podcast</span>
+          <span class="giver-upload">Upload podcast</span>
         </router-link>
         <router-link to="#">
           <font-awesome-icon :icon="['fas', 'chart-line']" class="icon alt" />
-          <span>Statistics panel</span>
+          <span class="giver-statistics">Statistics panel</span>
         </router-link>
       </div>
 
       <div class="info">
         <router-link to="/about-us">
           <font-awesome-icon :icon="['fas', 'handshake']" class="icon alt" />
-          <span>Our mission</span>
+          <span class="info-mission">Our mission</span>
         </router-link>
         <router-link to="/premium">
           <font-awesome-icon :icon="['fas', 'star']" class="icon alt" />
-          <span>Premium</span>
+          <span class="info-premium">Premium</span>
         </router-link>
       </div>
 
       <div class="essentials">
         <router-link to="/feedback">  
           <font-awesome-icon :icon="['fas', 'comment']" class="icon alt" />
-          <span>Feedback</span>
+          <span class="essentials-feedback">Feedback</span>
         </router-link>
         <router-link to="/support">  
           <font-awesome-icon :icon="['fas', 'question']" class="icon alt" />
-          <span>Support & help</span>
+          <span class="essentials-support">Support & help</span>
         </router-link>
         <router-link to="/report">  
           <font-awesome-icon :icon="['fas', 'flag']" class="icon alt" />
-          <span>Report</span>
+          <span class="essentials-report">Report</span>
         </router-link>
       </div>
 
@@ -179,5 +179,24 @@ a {
 // @media (max-width: 1100px) {
 //   .container { display: none; }
 // }
+
+.taker {
+  &-categories { margin-left: 3px; }
+  &-following { margin-left: 3px; }
+  &-bookmarks { margin-left: 7px; }
+}
+.giver {
+  &-upload { margin-left: -1px; }
+  &-statistics { margin-left: 3px; }
+}
+.info {
+  &-mission { margin-left: -1px; }
+  &-premium { margin-left: 1px; }
+}
+.essentials {
+  &-feedback { margin-left: 3px; }
+  &-support { margin-left: 8px; }
+  &-report { margin-left: 3px; }
+}
 
 </style>
