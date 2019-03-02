@@ -35,7 +35,7 @@
 
 		<div class="row player__options">
 
-			<font-awesome-icon :icon="['fas', 'volume-up']" class="icon icon__options player__options-volume alt"/>
+			<font-awesome-icon :icon="['fas', volumeIcon]" class="icon icon__options player__options-volume alt"/>
 
 			<font-awesome-icon :icon="['fas', 'tachometer-alt']" class="icon icon__options player__options-mult alt"/>
 
@@ -79,7 +79,8 @@ export default {
 			prefab: 'far',
 			isActive: false,
 			volume: 100,
-			speedMul: 1
+			speedMul: 1,
+			volumeIcon: 'volume-up'
 		}
 	},
 
@@ -107,7 +108,14 @@ export default {
 		this.volume = localStorage.getItem('player-volume')
 		this.speedMul = localStorage.getItem('player-speed-multiplier')
 	},
+	
 	updated() {
+		if(this.volume === 0)
+			this.volumeIcon = 'volume-mute'
+
+		else
+			this.volumeIcon = 'volume-up'
+
 		localStorage.setItem('player-volume', this.volume)
 		localStorage.setItem('player-speed-multiplier', this.speedMul)
 	}

@@ -8,10 +8,10 @@
 		<div class="card--expanded__left">
 
 			<div class="card--expanded__left-title">
-				Killing few ppl with my super abilities, just look at me, cmon.
+				Placeholder for title of currently expanded card.
 			</div>
 
-			<div class="card--expanded__left-creator">Karol Paciorek</div>
+			<div class="card--expanded__left-creator">James Smith</div>
 
 			<div class="card--expanded__left-details">
 				<span>99:59:59</span>
@@ -69,10 +69,10 @@
 		<div class="card__info" v-on:click="expandCard()">
 
 			<div class="card__info-title">
-				Killing few ppl with my super abilities, just look...
+				Placeholder for title of currently expanded card.
 			</div>
 			
-			<div class="card__info-creator">Joe Rogan</div>
+			<div class="card__info-creator">James Smith</div>
 
 		</div>
 	</div>

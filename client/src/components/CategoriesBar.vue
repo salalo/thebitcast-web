@@ -4,8 +4,10 @@
       v-for="category in categories"
       v-bind:key="category"
     >
-      <font-awesome-icon :icon="['fas',  category.icon]" class="icon" />
+
+      <font-awesome-icon :icon="['fas', category.icon]" class="icon" />
       <span :class="category.className">{{ category.text }}</span>
+      <font-awesome-icon :icon="['fas', category.circle]" class="live-dot" />
     </a>
   </div>
 </template>
@@ -23,7 +25,10 @@ export default {
         { icon: 'graduation-cap', text: 'Education', className: 'education' },
         { icon: 'film', text: 'Film', className: 'film' },
         { icon: 'gamepad', text: 'Games & hobbies', className: 'games' },
+        { icon: 'leaf', text: 'Nature', className: 'nature' },
+        { icon: 'satellite-dish', text: 'Live', className: 'live', circle: 'circle' },
         { icon: 'briefcase-medical', text: 'Health', className: 'health' },
+        { icon: 'book', text: 'History', className: 'history' },
         { icon: 'baby', text: 'Kids & family', className: 'kids' },
         { icon: 'music', text: 'Music', className: 'music' },
         { icon: 'newspaper', text: 'News & politycs', className: 'news' },
@@ -32,6 +37,7 @@ export default {
         { icon: 'flask', text: 'Science', className: 'science' },
         { icon: 'users', text: 'Society & culture', className: 'society' },
         { icon: 'football-ball', text: 'Sport', className: 'sport' },
+        { icon: 'microphone-alt', text: 'Stories', className: 'stories' },
         { icon: 'microchip', text: 'Technology', className: 'technology' },
         { icon: 'camera-retro', text: 'Tourism', className: 'tourism' },
       ]
@@ -53,7 +59,9 @@ export default {
   width: 300px;
   height: calc(100vh - 80px);
   position: fixed;
+  padding: 30px 0;
   bottom: 0;
+  overflow-y: auto;
   
   div {
     overflow: hidden;
@@ -65,7 +73,7 @@ export default {
 a {
   // minus width of scrollbar
   @include transition(0s, color 1s);
-  width: calc(100%);
+  width: calc(100% - 7px);
   height: 40px;
   text-decoration: none;
   color: $grey;
@@ -90,6 +98,22 @@ a {
   }
 }
 
+.live-dot {
+  font-size: 8px;
+  margin-left: 20px;
+  color: rgb(255, 0, 0);
+  margin-bottom: 2px;
+
+  animation: pulsate 1s ease-in;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+@keyframes pulsate {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
 .tourism,
 .technology,
 .sport,
@@ -97,11 +121,13 @@ a {
 .health,
 .film,
 .comedy,
-.art { margin-left: 5px; }
+.art,
+.live { margin-left: 5px; }
 
-.psychology, .news { margin-left: 2px; }
+.psychology, .news, .nature { margin-left: 2px; }
 .religion, .kids { margin-left: 9px; }
-.science { margin-left: 7px; }
+.science, .history { margin-left: 7px; }
 .business { margin-left: 12px; }
+.stories { margin-left: 10px; }
 
 </style>

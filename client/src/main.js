@@ -37,6 +37,7 @@ import {
   faVolumeUp,
   faTachometerAlt,
   faPlus,
+  faVolumeMute,
 
   faPaintBrush,
   faDollarSign,
@@ -55,7 +56,13 @@ import {
   faUsers,
   faFootballBall,
   faMicrochip,
-  faCameraRetro
+  faCameraRetro,
+  faBook,
+  faStories,
+  faMicrophoneAlt,
+  faLeaf,
+  faSatelliteDish,
+  faCircle
 
 } from "@fortawesome/free-solid-svg-icons"
 
@@ -102,6 +109,7 @@ library.add(
   faVolumeUp,
   faTachometerAlt,
   faPlus,
+  faVolumeMute,
 
   faPaintBrush,
   faDollarSign,
@@ -120,7 +128,12 @@ library.add(
   faUsers,
   faFootballBall,
   faMicrochip,
-  faCameraRetro
+  faCameraRetro,
+  faBook,
+  faMicrophoneAlt,
+  faLeaf,
+  faSatelliteDish,
+  faCircle
 )
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)

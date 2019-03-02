@@ -1,5 +1,6 @@
 <template>
-	<div v-if="GetToken() != null">
+	<!-- GetToken() != null -->
+	<div v-if="true">
 		<panel-logged />
 		<sidebar-logged />
 		<topbar-logged />

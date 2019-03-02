@@ -28,6 +28,10 @@
           <span class="giver-upload">Upload podcast</span>
         </router-link>
         <router-link to="#">
+          <font-awesome-icon :icon="['fas', 'satellite-dish']" class="icon alt" />
+          <span class="giver-live">Start live</span>
+        </router-link>
+        <router-link to="#">
           <font-awesome-icon :icon="['fas', 'chart-line']" class="icon alt" />
           <span class="giver-statistics">Statistics panel</span>
         </router-link>
@@ -90,11 +94,20 @@ export default {
   methods: {
     changeCategoriesBar() {
       this.isActive.categories = !this.isActive.categories
-
       let cardPanel = document.getElementById('card-panel-container')
       let categoriesSidebar = document.getElementsByClassName('categories-bar')[0]
+      let topbar = document.getElementsByClassName('topbar-logged')[0]
 
       if(this.isActive.categories) {
+        window.onclick = e => {
+          if(e.target === cardPanel || e.target === topbar) {
+            this.$store.commit('CHANGE_CATBAR', false)
+            cardPanel.style.transform = "translateX(0)"
+            categoriesSidebar.style.transform = "translateX(0)"
+            this.isActive.categories = false
+          }
+        }
+
         this.$store.commit('CHANGE_CATBAR', true)
         categoriesSidebar.style.transform = "translateX(300px)"
         cardPanel.style.transform = "translateX(300px)"
@@ -188,6 +201,7 @@ a {
 .giver {
   &-upload { margin-left: -1px; }
   &-statistics { margin-left: 3px; }
+  &-live { margin-left: 3px; }
 }
 .info {
   &-mission { margin-left: -1px; }

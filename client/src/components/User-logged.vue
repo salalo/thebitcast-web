@@ -1,7 +1,7 @@
 <template>
 	<div class="user-logged row">
     <div class="avatar" v-on:click="Logout()"></div>
-    <span>aaaaaaaaaa</span>
+    <span>James Smith</span>
 
     <font-awesome-icon
       :icon="['fas', 'chevron-down']"

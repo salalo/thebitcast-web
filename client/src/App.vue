@@ -12,7 +12,12 @@ export default {}
 
 @import '@/stylesheets/master.scss';
 
-::-webkit-scrollbar{ background: transparent; }
+::-webkit-scrollbar { width: 7px; }
+::-webkit-scrollbar-track { background: $white; }
+::-webkit-scrollbar-thumb {
+  background: $main;
+  border-radius: 5px;
+}
 
 html, body {
   padding: 0 !important;
