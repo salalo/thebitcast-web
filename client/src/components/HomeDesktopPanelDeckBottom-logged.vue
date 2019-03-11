@@ -137,7 +137,7 @@ export default {
 	@include transition(0s, color .4s);
 	color: $lighter-main;
 	font-size: 20px;
-	margin: 0 5px -5px 5px;
+	margin: 0 5px -3px 5px;
 
 	&:hover {
 		cursor: pointer;

@@ -62,7 +62,8 @@ import {
   faMicrophoneAlt,
   faLeaf,
   faSatelliteDish,
-  faCircle
+  faCircle,
+  faMugHot
 
 } from "@fortawesome/free-solid-svg-icons"
 
@@ -133,7 +134,8 @@ library.add(
   faMicrophoneAlt,
   faLeaf,
   faSatelliteDish,
-  faCircle
+  faCircle,
+  faMugHot
 )
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)

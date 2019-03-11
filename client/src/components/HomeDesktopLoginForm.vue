@@ -37,6 +37,9 @@
 				dark
 				:required=!isActive
 				minlength=4
+				maxlength=30
+				pattern="(?=.*[a-z])(?=.*[A-Z]).{4,30}"
+				title="Must contain at one uppercase and lowercase letter, and at least 4 limited to 30 characters."
 				value=""
 				type="text"
 				v-model="User.nick"
@@ -48,11 +51,13 @@
 			<q-input
 				dark
 				required
+				minlength=5
+				maxlength=30
 				value=""
 				type="email"
 				name="email"
 				autocomplete="off"
-				v-model="User.email"
+				v-model.trim="User.email"
 				float-label="Email"
 				color="red-6"
 				class="input"
@@ -61,11 +66,13 @@
 				dark
 				required
 				minlength=6
+				pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,30}"
+				title="Must contain at least one number and one uppercase and lowercase letter, and at least 6 limited to 30 characters."
 				value=""
 				type="password"
 				name="password"
 				autocomplete="off"
-				v-model="User.password"
+				v-model.trim="User.password"
 				float-label="Password"
 				color="red-6"
 				class="input"
@@ -115,17 +122,16 @@ import VueCookies from "vue-cookies"
 
 Vue.use(VueReCaptcha, { siteKey: '6Lcvt4wUAAAAACOvd54WTCBGMeegcNdFj1JdokMr' })
 
-
 const schemaRegister = Joi.object().keys({
-	nick: Joi.string().min(4).required(),
-	email: Joi.string().lowercase().trim().required(),
-	password: Joi.string().trim().min(6).required(),
-	captchaToken: Joi.string().trim().required()
+	nick: Joi.string().alphanum().min(4).max(30).required(),
+	email: Joi.string().email().lowercase().trim().min(5).required(),
+	password: Joi.string().trim().regex(/^[a-zA-Z0-9]{6,30}$/).required(),
+	captchaToken: Joi.string()
 });
 
 const schemaLogin = Joi.object().keys({
-	email: Joi.string().lowercase().trim().required(),
-	password: Joi.string().trim().min(6).required()
+	email: Joi.string().email().lowercase().trim().min(5).required(),
+	password: Joi.string().trim().regex(/^[a-zA-Z0-9]{6,30}$/).required(),
 });
 
 export default {
@@ -181,13 +187,11 @@ export default {
 			const resultRegister = Joi.validate(newUser, schemaRegister)
 			const resultLogin = Joi.validate(logingUser, schemaLogin)
 
-
 			if (this.fontStateAction === "/auth/create") {
 				if (resultRegister.error === null) {
 					/* eslint-disable */
 					axios.post('http://localhost:8081/auth/create', newUser)
 						.then(res => {
-
 							VueCookies.set("token", res)
 							VueCookies.set("logging", "true")
 							location.reload()
@@ -223,6 +227,7 @@ export default {
 		},
 
 		changeFormState() {
+			// clean form on change
 			this.User.nick = '';
 			this.User.email = '';
 			this.User.password = '';

@@ -2,7 +2,7 @@ import User from '../models/user.js'
 
 export default {
 	async findOne(req, res, next) {
-		console.log(req.params._id);
+		// console.log(req.params._id);
 		const user = await User.findOne({ _id: req.params._id })
 		if (!user) return next()
 		return res.status(200).send({ data: user })

@@ -1,6 +1,5 @@
 <template>
-	<!-- GetToken() != null -->
-	<div v-if="true">
+	<div v-if="GetToken() != null">
 		<panel-logged />
 		<sidebar-logged />
 		<topbar-logged />
@@ -19,7 +18,6 @@ import Panel from './HomeDesktopPanel.vue';
 import PanelLogged from './HomeDesktopPanel-logged.vue';
 import TopbarLogged from './HomeDesktopPanelTopbar-logged.vue';
 import VueCookies from 'vue-cookies';
-import axios from 'axios';
 
 export default {
 	components: {

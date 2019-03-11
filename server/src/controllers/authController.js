@@ -2,6 +2,7 @@ import passport from 'passport'
 import googleStrategy from 'passport-google-oauth20'
 import facebookStrategy from 'passport-facebook'
 // import Joi from 'joi'
+import session from 'express-session'
 import jwt from 'jsonwebtoken'
 import request from 'request'
 
@@ -12,6 +13,8 @@ import User from '../models/user.js'
 export default {
 	async login(req, res, next) {
 		const token = jwt.sign({ id: req.user._id }, process.env.JWT_SECRET)
+		// add user._id to session		
+		console.log(req.user._id)
 		return res.send(token)
 	},
 
@@ -29,17 +32,16 @@ export default {
 		// const resultRegister = Joi.validate(User, schemaRegister)
 
 		//Sprawdzenie captchy
-		const ip = req.headers['x-forwarded-for'] || (req.connection && req.connection.remoteAddress) || '';
+		// const ip = req.headers['x-forwarded-for'] || (req.connection && req.connection.remoteAddress) || '';
 
 		//Zapytanie do googla
 		var verificationUrl = "https://www.google.com/recaptcha/api/siteverify?"
 			+ "secret=" + keys.captcha.secret
 		  + "&response=" + captchaToken;
-		console.log("SPRAWDZANIE CAPTCHY POD ADRESEM:" + verificationUrl + "\n");
+		console.log("SPRAWDZANIE CAPTCHY POD ADRESEM:" + verificationUrl + "\n\n");
 
 		//Wyslanie zapytania do googla
-		request(verificationUrl,function(error, response, body) {
-
+		request(verificationUrl, (error, response, body) => {
 	    body = JSON.parse(body);
 
 	    if(body.success !== undefined && !body.success) {
@@ -51,34 +53,22 @@ export default {
 		});
 
 	  const user = new User({ nick, email })
-	  User.register(user, password).catch(err => {
-			return res.send({
-				message: 'User with given data is already created.',
-				type: 'negative'
+		User.register(user, password)
+			.then(() => {
+				// add user._id to session
+				console.log("USER: ", user._id)
+				return res.send({
+						message: 'User created successfully',
+						type: 'positive'
+					}
+				);
 			})
-		})
-		.then(()=>{
-			return res.send(
-				{
-					message: 'User created successfully',
-					type: 'positive'
-				}
-			);
-		})
-	},
-
-	async getUserByToken(req, res, next) {
-
-		var token = req.body.data;
-		//console.log(token);
-		//conole.log(process.env.JWT_PUBLIC)
-		var result = jwt.verify(token, process.env.JWT_SECRET,
-			function(err, decoded) {
-				console.log("ID: " + decoded.id);
-				return res.send(decoded.id);
-			});
-		console.log(JSON.stringify(result));
-		//return res.send(result);
+			.catch(() => {
+				return res.send({
+					message: 'User with given data is already created.',
+					type: 'negative'
+				})
+			})
 	}
 }
 
@@ -93,6 +83,7 @@ passport.use(
 			.then(currentUser => {
 				if (currentUser) {
 					console.log('logged in using google')
+
 					done(null, currentUser)
 				}
 				else {

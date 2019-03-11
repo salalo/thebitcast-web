@@ -35,6 +35,7 @@ export default {
         { icon: 'brain', text: 'Psychology', className: 'psychology' },
         { icon: 'cross', text: 'Religion & spirituality', className: 'religion' },
         { icon: 'flask', text: 'Science', className: 'science' },
+        { icon: 'mug-hot', text: 'Small talk', className: 'sm-talk' },
         { icon: 'users', text: 'Society & culture', className: 'society' },
         { icon: 'football-ball', text: 'Sport', className: 'sport' },
         { icon: 'microphone-alt', text: 'Stories', className: 'stories' },
