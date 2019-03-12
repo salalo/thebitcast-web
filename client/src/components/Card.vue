@@ -238,7 +238,8 @@ export default {
 
 		img {
 			@include transition(0s, filter .4s ease);
-
+			object-fit: cover;
+			object-position: center;
 			height: 150px;
 			width: 100%;
 		}

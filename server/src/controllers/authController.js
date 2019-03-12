@@ -13,7 +13,7 @@ import User from '../models/user.js'
 export default {
 	async login(req, res, next) {
 		const token = jwt.sign({ id: req.user._id }, process.env.JWT_SECRET)
-		// add user._id to session		
+		// add user._id to session
 		console.log(req.user._id)
 		return res.send(token)
 	},
