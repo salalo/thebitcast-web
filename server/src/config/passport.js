@@ -1,13 +1,12 @@
 import passport from 'passport'
 import passportJWT from 'passport-jwt';
-import User from '../models/user.js'
+import usersModel from '../models/user.js'
 
 const JWTStrategy = passportJWT.Strategy;
 const ExtractJWT = passportJWT.ExtractJwt;
 
-
 function verifyCallback(payload, done) {
-  return User.findOne({_id: payload.id})
+  return usersModel.findOne({_id: payload.id})
 	  .then(user => {
 	    return done(null, user)
 	  })
@@ -22,6 +21,6 @@ export default () => {
     secretOrKey: process.env.JWT_SECRET
   }
 
-  passport.use(User.createStrategy())
+  passport.use(usersModel.createStrategy())
   passport.use(new JWTStrategy(config, verifyCallback))
 }

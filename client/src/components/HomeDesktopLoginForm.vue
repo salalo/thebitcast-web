@@ -38,8 +38,8 @@
 				:required=!isActive
 				minlength=4
 				maxlength=30
-				pattern="(?=.*[a-z])(?=.*[A-Z]).{4,30}"
-				title="Must contain at one uppercase and lowercase letter, and at least 4 limited to 30 characters."
+				pattern="(?=.*[a-z]).{4,20}"
+				title="Must contain at least 4 characters limited to 20."
 				value=""
 				type="text"
 				v-model="User.nick"
@@ -66,8 +66,8 @@
 				dark
 				required
 				minlength=6
-				pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,30}"
-				title="Must contain at least one number and one uppercase and lowercase letter, and at least 6 limited to 30 characters."
+				pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,40}"
+				title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 limited to 40 characters."
 				value=""
 				type="password"
 				name="password"
@@ -77,7 +77,6 @@
 				color="red-6"
 				class="input"
 			/>
-
 
 			<a class="forgot-passwd" href="#" v-bind:class="{ hidden: !isActive}">Forgot your password?</a>
 
@@ -123,16 +122,16 @@ import VueCookies from "vue-cookies"
 Vue.use(VueReCaptcha, { siteKey: '6Lcvt4wUAAAAACOvd54WTCBGMeegcNdFj1JdokMr' })
 
 const schemaRegister = Joi.object().keys({
-	nick: Joi.string().alphanum().min(4).max(30).required(),
+	nick: Joi.string().alphanum().min(4).max(20).required(),
 	email: Joi.string().email().lowercase().trim().min(5).required(),
-	password: Joi.string().trim().regex(/^[a-zA-Z0-9]{6,30}$/).required(),
+	password: Joi.string().trim().min(8).max(40).required(),
 	captchaToken: Joi.string()
-});
+})
 
 const schemaLogin = Joi.object().keys({
 	email: Joi.string().email().lowercase().trim().min(5).required(),
-	password: Joi.string().trim().regex(/^[a-zA-Z0-9]{6,30}$/).required(),
-});
+	password: Joi.string().trim().min(8).max(40).required(),
+})
 
 export default {
 	data() {
@@ -155,7 +154,7 @@ export default {
 				password: '',
 				captchaToken: '6Lf-EYwUAAAAAMX3WFNl82HQMQF3r2D7_qMUd2VQ'
 			}
-		};
+		}
 	},
 
 	components: {
@@ -228,29 +227,29 @@ export default {
 
 		changeFormState() {
 			// clean form on change
-			this.User.nick = '';
-			this.User.email = '';
-			this.User.password = '';
+			this.User.nick = ''
+			this.User.email = ''
+			this.User.password = ''
 
 			if (this.registerBtnState === "SIGN UP") {
-				this.isActive = true;
-				this.formHeight = 350;
-				this.googleBtnState = "Sign in with Google";
-				this.registerBtnState = "SIGN IN";
-				this.formStateText = "Not registered yet?";
-				this.formStateHyperlink = "Create one";
-				this.fontStateAction = "/auth/login";
-				this.$store.commit('CHANGE_FORMTYPE', 'login');
+				this.isActive = true
+				this.formHeight = 350
+				this.googleBtnState = "Sign in with Google"
+				this.registerBtnState = "SIGN IN"
+				this.formStateText = "Not registered yet?"
+				this.formStateHyperlink = "Create one"
+				this.fontStateAction = "/auth/login"
+				this.$store.commit('CHANGE_FORMTYPE', 'login')
 			}
 			else {
 				this.isActive = false;
 				this.formHeight = 450;
-				this.googleBtnState = "Sign up with Google";
-				this.registerBtnState = "SIGN UP";
-				this.formStateText = "Already registered?";
-				this.formStateHyperlink = "Sign in";
-				this.fontStateAction = "/auth/create";
-				this.$store.commit('CHANGE_FORMTYPE', 'register');
+				this.googleBtnState = "Sign up with Google"
+				this.registerBtnState = "SIGN UP"
+				this.formStateText = "Already registered?"
+				this.formStateHyperlink = "Sign in"
+				this.fontStateAction = "/auth/create"
+				this.$store.commit('CHANGE_FORMTYPE', 'register')
 			}
 		}
 	}
