@@ -1,81 +1,60 @@
 <template>
-	<div
+	<article
 		class="card--expanded row"
 		v-if="isActive"
 		v-on:click="expandCard()"
 		v-bind:class="{ expanded: !isActive }"
 	>
-		<div class="card--expanded__left">
+		<aside class="card--expanded__left">
 
-			<div class="card--expanded__left-title">
+			<p class="card--expanded__left-title">
 				Placeholder for title of currently expanded card.
-			</div>
+			</p>
 
-			<div class="card--expanded__left-creator">James Smith</div>
+			<span class="card--expanded__left-creator">James Smith</span>
 
-			<div class="card--expanded__left-details">
+			<footer class="card--expanded__left-details">
 				<span>99:59:59</span>
 				<span>31.12.19</span>
 				<span>999K play</span>
-			</div>
+			</footer>
 
-			<div class="card--expanded__left-playbtn">
-				<font-awesome-icon
-					:icon="['fas', 'play']"
-					class="card--expanded__left-playbtn--font"
-					v-on:click="isActive = false"
-					v-bind:class="{ hidden: !isActive}"
-				/>
-			</div>
-		</div>
+			<i class="material-icons">play_circle_filled</i>
+		</aside>
 
-		<div class="card--expanded__right">
+		<aside class="card--expanded__right">
 			
-			<div class="card--expanded__right-description">
+			<p class="card--expanded__right-description">
 				Joseph James Rogan is an American stand-up comedian, mixed martial arts color commentator, podcast host, businessman and former television host and actor. Rogan began a career in comedy in August 1988 in the Boston area.
-			</div>
+			</p>
 
-			<div class="card--expanded__right-buttons">
-				<font-awesome-icon
-					:icon="[bookmarksPrefab, 'bookmark']"
-					v-on:click="addToBookmarks()"
-					class="icon alt"
-				/> 
-				<font-awesome-icon :icon="['fas', 'share']" class="icon alt"/>
+			<section class="card--expanded__right-buttons">
+				<i class="material-icons icon">bookmark_outline</i>
+				<i class="material-icons icon">share</i>
+				<i class="material-icons icon">thumb_up</i>
+				<i class="material-icons icon">thumb_down</i>
+			</section>
+		</aside>
+	</article>
 
-				<font-awesome-icon
-					:icon="[thumbsUpPrefab, 'thumbs-up']"
-					v-on:click="likePodcast()"
-					class="icon alt"
-				/>
-				<font-awesome-icon
-					:icon="[thumbsDownPrefab, 'thumbs-down']"
-					v-on:click="dislikePodcast()"
-					class="icon alt fa-flip-horizontal"
-				/>
-			</div>
-		</div>
-	</div>
-
-	<div class="card" v-else>
-		<div class="card__avatar">
+	<article class="card" v-else>
+		<header class="card__avatar">
 			<img src="../assets/crAvatar.jpg" alt="avatar">
-			<font-awesome-icon
-				:icon="['fas', 'play']"
+			<i
+				class="material-icons card__avatar-play-btn"
 				v-on:click="playThePodcast()"
-				class="icon alt card__avatar-play-btn"
-			/>
-		</div>
-		<div class="card__info" v-on:click="expandCard()">
+			>play_circle_filled</i>
+		</header>
+		<footer class="card__info" v-on:click="expandCard()">
 
 			<div class="card__info-title">
 				Placeholder for title of currently expanded card.
 			</div>
 			
-			<div class="card__info-creator">James Smith</div>
+			<span class="card__info-creator">James Smith</span>
 
-		</div>
-	</div>
+		</footer>
+	</article>
 </template>
 
 <script>
@@ -180,23 +159,6 @@ export default {
 				margin-bottom: 3px;
 			}
 		}
-		&-playbtn {
-			width: 40px;
-			height: 40px;
-			background-color: $main;
-			box-shadow: 0 4px 20px rgba(0, 0, 0, .3);
-			border-radius: 100%;
-			position: relative;
-			top: 80px;
-			left: 20px;
-
-			&--font {
-				font-size: 16px;
-				position: relative;
-				top: calc(50% - 8px);
-				left: calc(50% - 6px);
-			}
-		}
 	}
 
 	&__right {
@@ -216,7 +178,7 @@ export default {
 			text-align: center;
 			padding: 15px;
 			&:hover { cursor: pointer; }
-			.icon { margin: 20px 15px 0 15px; }
+			.icon { margin: 20px 13px 0 13px; }
 		}
 	}
 }
@@ -254,9 +216,9 @@ export default {
 
 			color: $main;
 			position: absolute;
-			top: calc(150px * .5 - 15px);
-			left: calc(50% - 15px);
-			font-size: 30px;
+			top: calc(150px * .5 - 20px);
+			left: calc(50% - 20px);
+			font-size: 45px;
 		}
 		&-details {
 			opacity: 0;

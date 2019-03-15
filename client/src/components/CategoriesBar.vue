@@ -5,9 +5,9 @@
       v-bind:key="category"
     >
 
-      <font-awesome-icon :icon="['fas', category.icon]" class="icon" />
-      <span :class="category.className">{{ category.text }}</span>
-      <font-awesome-icon :icon="['fas', category.circle]" class="live-dot" />
+      <i class="material-icons icon">{{category.icon}}</i>
+      <span>{{ category.text }}</span>
+      <i class="material-icons live-dot">{{category.circle}}</i>
     </a>
   </div>
 </template>
@@ -18,29 +18,29 @@ export default {
   data() {
     return {
       categories: [
-        { icon: 'paint-brush', text: 'Art', className: 'art' },
-        { icon: 'dollar-sign', text: 'Business', className: 'business' },
-        { icon: 'car-side', text: 'Cars & motorization', className: 'cars' },
-        { icon: 'smile-beam', text: 'Comedy', className: 'comedy' },
-        { icon: 'graduation-cap', text: 'Education', className: 'education' },
-        { icon: 'film', text: 'Film', className: 'film' },
-        { icon: 'gamepad', text: 'Games & hobbies', className: 'games' },
-        { icon: 'leaf', text: 'Nature', className: 'nature' },
-        { icon: 'satellite-dish', text: 'Live', className: 'live', circle: 'circle' },
-        { icon: 'briefcase-medical', text: 'Health', className: 'health' },
-        { icon: 'book', text: 'History', className: 'history' },
-        { icon: 'baby', text: 'Kids & family', className: 'kids' },
-        { icon: 'music', text: 'Music', className: 'music' },
-        { icon: 'newspaper', text: 'News & politycs', className: 'news' },
-        { icon: 'brain', text: 'Psychology', className: 'psychology' },
-        { icon: 'cross', text: 'Religion & spirituality', className: 'religion' },
-        { icon: 'flask', text: 'Science', className: 'science' },
-        { icon: 'mug-hot', text: 'Small talk', className: 'sm-talk' },
-        { icon: 'users', text: 'Society & culture', className: 'society' },
-        { icon: 'football-ball', text: 'Sport', className: 'sport' },
-        { icon: 'microphone-alt', text: 'Stories', className: 'stories' },
-        { icon: 'microchip', text: 'Technology', className: 'technology' },
-        { icon: 'camera-retro', text: 'Tourism', className: 'tourism' },
+        { icon: 'brush', text: 'Art' },
+        { icon: 'attach_money', text: 'Business' },
+        { icon: 'directions_car', text: 'Cars & motorization' },
+        { icon: 'mood', text: 'Comedy' },
+        { icon: 'school', text: 'Education' },
+        { icon: 'movie', text: 'Film' },
+        { icon: 'gamepad', text: 'Games & hobbies' },
+        { icon: 'spa', text: 'Nature' },
+        { icon: 'wifi_tethering', text: 'Live', circle: 'lens' },
+        { icon: 'local_hospital', text: 'Health' },
+        { icon: 'import_contacts', text: 'History' },
+        { icon: 'child_care', text: 'Kids & family' },
+        { icon: 'music_note', text: 'Music' },
+        { icon: 'receipt', text: 'News & politycs' },
+        { icon: 'accessibility_new', text: 'Psychology' },
+        { icon: 'location_city', text: 'Religion & spirituality' },
+        { icon: 'touch_app', text: 'Science' },
+        { icon: 'free_breakfast', text: 'Small talk' },
+        { icon: 'group', text: 'Society & culture' },
+        { icon: 'fitness_center', text: 'Sport' },
+        { icon: 'mic', text: 'Stories' },
+        { icon: 'memory', text: 'Technology' },
+        { icon: 'photo_camera', text: 'Tourism' },
       ]
     }
   }
@@ -88,8 +88,6 @@ a {
 
   .icon {
     margin: 0 50px;
-    font-size: 18px;
-    line-height: 40px;
     vertical-align: middle;
   }
   span {
@@ -114,21 +112,5 @@ a {
   from { opacity: 1; }
   to { opacity: 0; }
 }
-
-.tourism,
-.technology,
-.sport,
-.music,
-.health,
-.film,
-.comedy,
-.art,
-.live { margin-left: 5px; }
-
-.psychology, .news, .nature { margin-left: 2px; }
-.religion, .kids { margin-left: 9px; }
-.science, .history { margin-left: 7px; }
-.business { margin-left: 12px; }
-.stories { margin-left: 10px; }
 
 </style>

@@ -1,32 +1,31 @@
 <template>
-	<div class="container">
+	<aside>
+		<header>
+			<img src="../../public/logos/logo_red_64.png">
 
-<!-- <span>The</span> BITCAST -->
-		<div class="logo"><img src="../../public/logos/logo_red_64.png"></div>
+			<p class="info">
+				Our mission is to promote podcasting, let every single creator<br>
+				earn on every podcast, grow their business and<br>
+				patronize charity activities.<br><br>
+				We encourage you to <router-link to="/about-us">get more info about us</router-link>.
+			</p>
+		</header>
 
-		<div class="info">
-			Our mission is to promote podcasting, let every single creator<br>
-			earn on every podcast, grow their business and<br>
-			patronize charity activities.<br><br>
-			We encourage you to <router-link to="/about-us">get more info about us</router-link>.
-		</div>
+		<login-form></login-form>
 
-		<login-form class="login-form"></login-form>
-
-		<div class="footer">
+		<footer>
 			<span>© 2019 TheBitCast</span>
 			<router-link to="/about-us">About us</router-link>
 			<router-link to="/contact">Contact</router-link>
 			<router-link to="/copyright">Copyright</router-link>
 			<router-link to="/privacy-policy">Privacy & policy</router-link>
-		</div>
-
-	</div>
+		</footer>
+	</aside>
 </template>
 
 <script>
 
-import LoginForm from './HomeDesktopLoginForm.vue';
+import LoginForm from './HomeDesktopSidebarLoginForm.vue';
 
 export default {
 	components: {
@@ -40,25 +39,19 @@ export default {
 
 @import '@/stylesheets/master.scss';
 
-.container {
+aside {
 	background-color: $grey;
 	clear: both;
+	float: left;
 	position: relative;
 	color: $white;
 	width: 640px;
 	height: 100vh;
 }
-.logo {
+img {
+	display: block;
+	margin: auto;
 	margin-top: 3vh;
-
-	img {
-    display: block;
-    margin: auto;
-	}
-}
-.login-form {
-	margin: 0 auto;
-	margin-top: 9vh;
 }
 .info {
 	margin-top: 3vh;
@@ -71,7 +64,7 @@ a {
 	color: $main;
 	text-decoration: none;
 }
-.footer {
+footer {
 	position: absolute;
 	bottom: 20px;
 	font-size: 12px;

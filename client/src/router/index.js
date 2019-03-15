@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Samples from '@/components/Samples.vue'
 import Home from '@/views/Home.vue'
 import AboutUs from '@/views/AboutUs.vue'
 import Contact from '@/views/Contact.vue'
@@ -19,11 +18,6 @@ export default new Router({
     {
       path: '/',
 			component: Home
-    },
-
-    {
-      path: '/samples',
-      component: Samples
     },
 
     {

@@ -1,8 +1,9 @@
 <template>
-	<div v-if="GetToken() != null">
+<!-- GetToken() != null -->
+	<div v-if="false">
 		<panel-logged />
 		<sidebar-logged />
-		<topbar-logged />
+		<!-- <topbar-logged /> -->
 	</div>
 
 	<div class="row" v-else>
@@ -28,8 +29,7 @@ export default {
 		'topbar-logged': TopbarLogged
 	},
 	methods:{
-		GetToken:function()
-		{
+		GetToken:function() {
 			return VueCookies.get("token");
 		}
 	},

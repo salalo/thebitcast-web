@@ -1,78 +1,77 @@
 <template>
-  <div>
+  <nav>
     <categories-bar/>
 
     <div class="container">
       <div class="taker">
         <router-link to="/">
-          <font-awesome-icon :icon="['fas', 'home']" class="icon alt" />
+          <i class="material-icons icon">home</i>
           <span class="taker-home">Home</span>        
         </router-link>
         <a @click="changeCategoriesBar()">
-          <font-awesome-icon :icon="['fas', 'table']" class="icon alt" />
+          <i class="material-icons icon">view_list</i>
           <span class="taker-categories">Categories</span>        
         </a>
         <router-link to="#">
-          <font-awesome-icon :icon="['fas', 'heart']" class="icon alt" />
+          <i class="material-icons icon">favorite</i>
           <span class="taker-following">Following</span>        
         </router-link>
         <router-link to="#">
-          <font-awesome-icon :icon="['fas', 'bookmark']" class="icon alt" />
+          <i class="material-icons icon">bookmark</i>
           <span class="taker-bookmarks">Bookmarks</span>    
         </router-link>
       </div>
 
       <div class="giver">
         <router-link to="#">
-          <font-awesome-icon :icon="['fas', 'cloud-upload-alt']" class="icon alt" />
+          <i class="material-icons icon">cloud_upload</i>
           <span class="giver-upload">Upload podcast</span>
         </router-link>
         <router-link to="#">
-          <font-awesome-icon :icon="['fas', 'satellite-dish']" class="icon alt" />
+          <i class="material-icons icon">wifi_tethering</i>
           <span class="giver-live">Start live</span>
         </router-link>
         <router-link to="#">
-          <font-awesome-icon :icon="['fas', 'chart-line']" class="icon alt" />
+          <i class="material-icons icon">trending_up</i>
           <span class="giver-statistics">Statistics panel</span>
         </router-link>
       </div>
 
       <div class="info">
         <router-link to="/about-us">
-          <font-awesome-icon :icon="['fas', 'handshake']" class="icon alt" />
+          <i class="material-icons icon">record_voice_over</i>
           <span class="info-mission">Our mission</span>
         </router-link>
         <router-link to="/premium">
-          <font-awesome-icon :icon="['fas', 'star']" class="icon alt" />
+          <i class="material-icons icon">star</i>
           <span class="info-premium">Premium</span>
         </router-link>
       </div>
 
       <div class="essentials">
         <router-link to="/feedback">  
-          <font-awesome-icon :icon="['fas', 'comment']" class="icon alt" />
+          <i class="material-icons icon">feedback</i>
           <span class="essentials-feedback">Feedback</span>
         </router-link>
         <router-link to="/support">  
-          <font-awesome-icon :icon="['fas', 'question']" class="icon alt" />
+          <i class="material-icons icon">contact_support</i>
           <span class="essentials-support">Support & help</span>
         </router-link>
         <router-link to="/report">  
-          <font-awesome-icon :icon="['fas', 'flag']" class="icon alt" />
+          <i class="material-icons icon">report</i>
           <span class="essentials-report">Report</span>
         </router-link>
       </div>
 
-      <div class="footer">
+      <footer>
         <span>&copy; 2019 TheBitCast</span>
         <router-link to="/about-us">About us</router-link>
         <router-link to="/contact">Contact</router-link>
         <router-link to="/copyright">Copyright</router-link>
         <router-link to="/privacy-policy">Privacy & policy</router-link>
-      </div>
-
+      </footer>
     </div>
-  </div>
+  </nav>
 </template>
 
 <script>
@@ -136,6 +135,7 @@ export default {
   height: calc(100vh - 80px);
   position: fixed;
   bottom: 0;
+  padding: 0;
   
   div {
     overflow: hidden;
@@ -154,7 +154,6 @@ a {
   &:hover { background-color: $dark-white; }
   .icon {
     margin: 0 50px;
-    font-size: 18px;
     line-height: 40px;
     vertical-align: middle;
   }
@@ -167,7 +166,7 @@ a {
 
 .info { .icon, span { color: $main; } }
 
-.footer {
+footer {
   position: absolute;
   bottom: 20px;
   padding: 0 !important;
@@ -192,25 +191,5 @@ a {
 // @media (max-width: 1100px) {
 //   .container { display: none; }
 // }
-
-.taker {
-  &-categories { margin-left: 3px; }
-  &-following { margin-left: 3px; }
-  &-bookmarks { margin-left: 7px; }
-}
-.giver {
-  &-upload { margin-left: -1px; }
-  &-statistics { margin-left: 3px; }
-  &-live { margin-left: 3px; }
-}
-.info {
-  &-mission { margin-left: -1px; }
-  &-premium { margin-left: 1px; }
-}
-.essentials {
-  &-feedback { margin-left: 3px; }
-  &-support { margin-left: 8px; }
-  &-report { margin-left: 3px; }
-}
 
 </style>

@@ -96,8 +96,15 @@ export default {
 				})
 			}
 		})
+	},
+	
+	async getUserId(req, res, next)
+	{
+		res.send(req.user._id);
 	}
 }
+
+
 
 
 // Setup passport google authentication 

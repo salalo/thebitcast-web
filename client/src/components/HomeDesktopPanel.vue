@@ -1,14 +1,14 @@
 <template>
-	<div class="container">
+	<main>
 
 		<topbar></topbar>
 
-		<div class="recommended">
+		<section class="recommended">
 			<span>Recommended</span>
 
 			<div class="rocommended__horizontal">
 
-				<swiper :options="swiperOption" class="rocommended__horizontal-swiper">
+				<swiper :options="swiperOption">
 					<swiper-slide><card/></swiper-slide>
 					<swiper-slide><card/></swiper-slide>
 					<swiper-slide><card/></swiper-slide>
@@ -20,17 +20,15 @@
 					<swiper-slide><card/></swiper-slide>
 					<swiper-slide><card/></swiper-slide>
 				</swiper>
-
 			</div>
-		</div>
+		</section>
 
-
-		<div class="popular">
+		<section class="popular">
 			<span>Most popular</span>
 
 			<div class="popular__horizontal">
 
-				<swiper :options="swiperOption" class="rocommended__horizontal-swiper">
+				<swiper :options="swiperOption">
 					<swiper-slide><card/></swiper-slide>
 					<swiper-slide><card/></swiper-slide>
 					<swiper-slide><card/></swiper-slide>
@@ -41,12 +39,10 @@
 					<swiper-slide><card/></swiper-slide>
 					<swiper-slide><card/></swiper-slide>
 					<swiper-slide><card/></swiper-slide>
-					
 				</swiper>
-
 			</div>
-		</div>
-	</div>
+		</section>
+	</main>
 </template>
 
 <script>
@@ -83,7 +79,11 @@ export default {
 @import '@/stylesheets/master.scss';
 
 // minus width of Sidebar
-.container { width: calc(100vw - 640px); }
+main {
+	width: calc(100vw - 640px);
+	float: right;
+	padding: 0;
+}
 
 .recommended, .popular {
 	width: 100%;
@@ -94,14 +94,14 @@ export default {
 	flex-direction: column;
 
 	span {
-		position: absolute;
-		font-size: 20px;
-		top: 160px;
+		// position: absolute;
+		font-size: 18px;
+		// top: 160px;
 	}
 }
 .popular {
-	margin-top: -100px;
-	span { top: 560px; }
+	// margin-top: -100px;
+	// span { top: 560px; }
 }
 
 .swiper-slide {

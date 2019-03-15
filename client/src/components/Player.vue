@@ -1,5 +1,5 @@
 <template>
-	<div class="player">
+	<v-app class="player">
 		<div class="row player__btns">
 
 			<font-awesome-icon :icon="['fas', 'chevron-left']" class="icon alt"/>
@@ -45,13 +45,18 @@
 				class="icon icon__options player__options-bookmarks alt"
 			/>
 
-			<q-slider
+			<!-- <q-slider
 				:min="0"
 				:max="100"
 				:value="volume"
 				@change="val => { volume = val }"
 				class="player__options-sliderVol"
-			/>
+			/> -->
+      <v-flex xs12>
+        <v-slider
+          v-model="slider"
+        ></v-slider>
+      </v-flex>
 
 			<q-slider
 				:min="0.5"
@@ -66,12 +71,12 @@
 				color="red"
 			/>
 		</div>
-	</div>
+	</v-app>
 </template>
 
 <script>
 
-import { QSlider } from "quasar-framework/dist/quasar.mat.esm";
+// import { QSlider } from "quasar-framework/dist/quasar.mat.esm";
 
 export default {
 	data() {
@@ -84,9 +89,9 @@ export default {
 		}
 	},
 
-  components: {
-    QSlider,
-	},
+  // components: {
+  //   QSlider,
+	// },
 
 	methods: {
 		addToBookmarks() {

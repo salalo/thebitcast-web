@@ -1,7 +1,7 @@
 <template>
-	<div class="container" id="card-panel-container">
+	<main id="card-panel-container">
 		<div class="stack">
-			<div class="recommended">
+			<section class="recommended">
 				<users-deck-top></users-deck-top>
 
 				<swiper :options="swiperOption">
@@ -16,9 +16,9 @@
 					<swiper-slide><card/></swiper-slide>
 					<swiper-slide><card/></swiper-slide>
 				</swiper>
-			</div>
+			</section>
 
-			<div class="popular">
+			<section class="popular">
 				<users-deck-bottom></users-deck-bottom>
 
 				<swiper :options="swiperOption">
@@ -33,9 +33,9 @@
 					<swiper-slide><card/></swiper-slide>
 					<swiper-slide><card/></swiper-slide>
 				</swiper>
-			</div>
+			</section>
 		</div>
-	</div>
+	</main>
 </template>
 
 <script>
@@ -74,7 +74,7 @@ export default {
 @import '@/stylesheets/master.scss';
 
 // minus width of Sidebar
-.container {
+main {
 	@include transition(0s, transform .5s);
 	width: calc(100vw - 300px);
 	height: calc(100vh - 80px);

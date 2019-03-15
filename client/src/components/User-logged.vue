@@ -3,10 +3,7 @@
 		<div class="avatar" v-on:click="Logout()"></div>
 		<span>James Smith</span>
 
-		<font-awesome-icon
-			:icon="['fas', 'chevron-down']"
-			class="icon alt drop-down-icon"
-		/>
+		<i class="material-icons">keyboard_arrow_down</i>
 	</div>
 </template>
 
@@ -23,9 +20,18 @@ export default {
 	},
 
 	mounted() {
-		axios.get('http://localhost:8081/users/5c86ae0ff465230c78370541')
-			.then(res => console.log(res))
-			.catch(err => console.log(err))
+		
+		var actualId;
+
+		axios.get('localhost:8081/auth/getId')
+			.then(res => actualId = res.body)
+			.catch(err => console.log(err));
+
+		console.log(actualId);
+
+		// axios.get('http://localhost:8081/users/5c86ae0ff465230c78370541')
+		// 	.then(res => console.log(res))
+		// 	.catch(err => console.log(err))
 	},
 }
 </script>

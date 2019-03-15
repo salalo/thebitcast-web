@@ -24,7 +24,7 @@ html, body {
   margin: 0 !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow: hidden;
+  overflow: hidden !important;
   -webkit-touch-callout: none;
     -webkit-user-select: none;
      -khtml-user-select: none;
@@ -38,6 +38,7 @@ html, body {
   padding: 0 !important;
   margin: 0 !important;
   height: 100vh;
+  font-family: 'Roboto';
 }
 .grecaptcha-badge { visibility: hidden; }
 </style>

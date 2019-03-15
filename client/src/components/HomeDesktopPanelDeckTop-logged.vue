@@ -9,11 +9,8 @@
 				{{ item }}
 			</div>
 
-			<font-awesome-icon
-				:icon="['fas', 'plus']"
-				class="icon deck-container--inner__icon"
-				v-on:click="selectDeck()"
-			/>
+			<i class="material-icons icon deck-container--inner__icon" v-on:click="selectDeck()">add_circle_outline</i>
+
 		</div>
 		<div class="deck-selector__container-top">
 			<div class="deck-selector">
@@ -136,8 +133,6 @@ export default {
 .icon {
 	@include transition(0s, color .4s);
 	color: $lighter-main;
-	font-size: 20px;
-	margin: 0 5px -3px 5px;
 
 	&:hover {
 		cursor: pointer;
