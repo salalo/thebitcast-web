@@ -1,9 +1,9 @@
 <template>
 <!-- GetToken() != null -->
-	<div v-if="false">
+	<div v-if="GetToken() != null">
 		<panel-logged />
 		<sidebar-logged />
-		<!-- <topbar-logged /> -->
+		<topbar-logged />
 	</div>
 
 	<div class="row" v-else>
@@ -13,12 +13,13 @@
 </template>
 
 <script>
-import Sidebar from './HomeDesktopSidebar.vue';
-import SidebarLogged from './HomeDesktopSidebar-logged.vue';
-import Panel from './HomeDesktopPanel.vue';
-import PanelLogged from './HomeDesktopPanel-logged.vue';
-import TopbarLogged from './HomeDesktopPanelTopbar-logged.vue';
-import VueCookies from 'vue-cookies';
+import axios from 'axios'
+import Sidebar from './HomeDesktopSidebar.vue'
+import SidebarLogged from './HomeDesktopSidebar-logged.vue'
+import Panel from './HomeDesktopPanel.vue'
+import PanelLogged from './HomeDesktopPanel-logged.vue'
+import TopbarLogged from './HomeDesktopPanelTopbar-logged.vue'
+import VueCookies from 'vue-cookies'
 
 export default {
 	components: {
@@ -28,9 +29,9 @@ export default {
 		'panel-logged': PanelLogged,
 		'topbar-logged': TopbarLogged
 	},
-	methods:{
-		GetToken:function() {
-			return VueCookies.get("token");
+	methods: {
+		GetToken() {
+			return VueCookies.get("token")
 		}
 	},
 
@@ -44,28 +45,6 @@ export default {
 			}
 		}
 	}
-
-	// mounted(){
-
-		// Notify.create({
-		//   message: 'Danger, Will Robinson! Danger!'
-		// })
-
-		// góra, lub dokładniej -> dół
-/*
-		this.$q.notify({
-			// required param
-			message: `A text with your nofification's awesome message`,
-
-			// optional params
-			position: 'bottom',
-			type: 'negative', // 'positive', 'negative', 'warning', 'info'
-			timeout: 3000,
-			icon: 'wifi',
-			// textColor: 'black', // if default 'white' doesn't fit
-		})
-		*/
-	// }
 }
 
 </script>

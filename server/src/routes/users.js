@@ -10,6 +10,8 @@ export default () => {
 	api.get('/', catchAsync(userController.findAll))
 	api.put('/:_id', catchAsync(userController.update))
 	api.delete('/:_id', catchAsync(userController.remove))
+	
 
 	return api
 }
+

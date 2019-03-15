@@ -144,7 +144,7 @@ export default {
 			formStateText: "Already registered?",
 			formStateHyperlink: "Sign in",
 			fontStateAction: "/auth/create",
-			formHeight: 450,
+			formHeight: 465,
 			status: "",
 			sucessfulServerResponse: "",
 			newCaptchaToken: "",
@@ -230,7 +230,7 @@ export default {
 
 			if (this.registerBtnState === "SIGN UP") {
 				this.isActive = true
-				this.formHeight = 350
+				this.formHeight = 360
 				this.googleBtnState = "Sign in with Google"
 				this.registerBtnState = "SIGN IN"
 				this.formStateText = "Not registered yet?"
@@ -240,7 +240,7 @@ export default {
 			}
 			else {
 				this.isActive = false;
-				this.formHeight = 450;
+				this.formHeight = 465;
 				this.googleBtnState = "Sign up with Google"
 				this.registerBtnState = "SIGN UP"
 				this.formStateText = "Already registered?"
@@ -275,7 +275,7 @@ a { text-decoration: none; color: inherit; }
 .login-form {
 	width: 360px;
 	padding: 0 30px;
-	box-shadow: 0 0 20px rgba(0, 0, 0, .4);
+	box-shadow: 0 10px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
 	margin: 0 auto;
 	margin-top: 9vh;
 }

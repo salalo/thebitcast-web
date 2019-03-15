@@ -22,6 +22,8 @@
         </router-link>
       </div>
 
+      <v-divider></v-divider>
+
       <div class="giver">
         <router-link to="#">
           <i class="material-icons icon">cloud_upload</i>
@@ -37,6 +39,8 @@
         </router-link>
       </div>
 
+      <v-divider></v-divider>
+
       <div class="info">
         <router-link to="/about-us">
           <i class="material-icons icon">record_voice_over</i>
@@ -47,6 +51,8 @@
           <span class="info-premium">Premium</span>
         </router-link>
       </div>
+
+      <v-divider></v-divider>
 
       <div class="essentials">
         <router-link to="/feedback">  
@@ -62,6 +68,8 @@
           <span class="essentials-report">Report</span>
         </router-link>
       </div>
+
+      <v-divider></v-divider>
 
       <footer>
         <span>&copy; 2019 TheBitCast</span>
@@ -129,9 +137,8 @@ export default {
 
 .container {
   background-color: #fff;
-	box-shadow: 0 0 10px rgba(0, 0, 0, .3);
+	box-shadow: 0 0 10px rgba(0, 0, 0, .7);
   width: 300px;
-  z-index: 200;
   height: calc(100vh - 80px);
   position: fixed;
   bottom: 0;
@@ -140,7 +147,6 @@ export default {
   div {
     overflow: hidden;
     padding: 15% 0;
-    border-bottom: 1px solid $dark-white;
   }
 }
 
@@ -164,7 +170,11 @@ a {
   }
 }
 
-.info { .icon, span { color: $main; } }
+.info {
+  .icon, span { color: $main; }
+  // v-app setst to blue
+  background-color: #fff !important;
+}
 
 footer {
   position: absolute;

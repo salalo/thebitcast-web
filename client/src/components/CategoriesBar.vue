@@ -54,7 +54,6 @@ export default {
 
 .categories-bar {
   @include transition(0s, transform .5s);
-  z-index: 100;
   background-color: #fff;
   box-shadow: 0 0 0 rgba(0, 0, 0, 0), 2px 0 10px rgba(0, 0, 0, .1);
   width: 300px;

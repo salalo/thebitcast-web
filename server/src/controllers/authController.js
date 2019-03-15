@@ -14,10 +14,9 @@ export default {
 	// Login function
 	async login(req, res, next) {
 
-		const TOKEN_JWT = jwt.sign({ id: req.user._id }, process.env.JWT_SECRET) // sign and get new TOKEN_JWT
+		const TOKEN_JWT = await jwt.sign({ id: req.user._id }, process.env.JWT_SECRET) // sign and get new TOKEN_JWT
 		console.log("authController[LOGIN1]:", req.user._id) // add user._id to session [LOG1]
 		return res.send(TOKEN_JWT) // return TOKEN_JWT to frontend
-
 	},
 	
 
@@ -96,14 +95,8 @@ export default {
 				})
 			}
 		})
-	},
-	
-	async getUserId(req, res, next)
-	{
-		res.send(req.user._id);
 	}
 }
-
 
 
 
@@ -115,12 +108,13 @@ passport.use(
 		callbackURL: '/auth/google/cb'
 	},
 	(accessToken, refreshToken, profile, done) => {
-		
 		usersModel.findOne({ googleID: profile.id })
 			.then(currentUser => {
 				if (currentUser) {
-
 					// Log user in
+					const TOKEN_JWT = jwt.sign({ id: currentUser._id }, process.env.JWT_SECRET)
+					console.log("GOOGLE login token:", TOKEN_JWT)
+					
 					done(null, currentUser)
 				}
 				else {
@@ -132,7 +126,12 @@ passport.use(
 						googleID: profile.id,
 
 					}).save()
-						.then(newUser => done(null, newUser))
+						.then(newUser => {
+							const TOKEN_JWT = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET)
+							console.log("GOOGLE register token:", TOKEN_JWT)
+
+							done(null, newUser)
+						})
 						.catch(err => console.error("authController [GOOGLE1]:", err))
 				}
 			})
@@ -152,8 +151,10 @@ passport.use(
 		usersModel.findOne({ facebookID: profile.id })
 			.then(currentUser => {
 				if (currentUser) {
-
 					// Log user in
+					const TOKEN_JWT = jwt.sign({ id: currentUser._id }, process.env.JWT_SECRET)
+					console.log("FB login token:", TOKEN_JWT)
+
 					done(null, currentUser)
 				}
 				else {
@@ -165,7 +166,12 @@ passport.use(
 						facebookID: profile.id
 
 					}).save()
-						.then(newUser => done(null, newUser))
+						.then(newUser => {
+							const TOKEN_JWT = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET)
+							console.log("FB register token:", TOKEN_JWT)
+
+							done(null, newUser)
+						})
 						.catch(err => console.error("authController [FB1]:", err))
 				}
 			})

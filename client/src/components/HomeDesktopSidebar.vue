@@ -3,7 +3,7 @@
 		<header>
 			<img src="../../public/logos/logo_red_64.png">
 
-			<p class="info">
+			<p>
 				Our mission is to promote podcasting, let every single creator<br>
 				earn on every podcast, grow their business and<br>
 				patronize charity activities.<br><br>
@@ -47,13 +47,14 @@ aside {
 	color: $white;
 	width: 640px;
 	height: 100vh;
+	box-shadow: 0 0 10px rgba(0, 0, 0, .8);
 }
 img {
 	display: block;
 	margin: auto;
 	margin-top: 3vh;
 }
-.info {
+p {
 	margin-top: 3vh;
 	text-align: center;
 	font-size: 17px;
@@ -87,14 +88,14 @@ footer {
 		a { margin-left: 10px; }
 	}
 
-	.info {
+	p {
 		margin-top: 5vh;
 		font-size: 14px;
 	}
 }
 @media (max-height: 800px) {
 	.logo { margin: 10px 0 0 20px; }
-	.info { margin-top: 4vh; }
+	p { margin-top: 4vh; }
 	.login-form { margin-top: 4vh; }
 	.footer { bottom: 10px; }
 }

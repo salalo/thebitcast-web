@@ -7,9 +7,6 @@ export default () => {
 
 	//localhost:8081/auth/login
 	api.post('/login', passport.authenticate('local', { session: false }), AuthController.login)
-	
-	//localhost:8081/auth/getId
-	api.get('/getId', passport.authenticate('local', { session: false }), AuthController.getUserId)
 
 	//localhost:8081/auth/create
 	api.post('/create', AuthController.register)
@@ -38,6 +35,6 @@ export default () => {
 	api.get('/facebook/cb', passport.authenticate('facebook', { session: false }), (req, res) => {
 		res.redirect('http://localhost:8080')
 	})
-
+	
 	return api
 }

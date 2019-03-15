@@ -13,12 +13,11 @@ import auths from './routes/auths.js'
 import keys from './config/keys.js'
 import passportAuth from './config/passport.js'
 import { notFound, catchErrors } from './middlewares/errors.js'
-// import authController from './controllers/authController.js'
 
 const app = express()
 passportAuth()
 
-app.use(function (req, res, next) {
+app.use((req, res, next) => {
   // Website you wish to allow to connect
   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080')
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE')
@@ -31,10 +30,11 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 // connect to database
-mongoose.connect(keys.mongodb.DB, { useNewUrlParser: true }).then(
-  () => { console.log('\nConnected successfully!') },
-  err => console.log('\nCan not connect to the database\n\n' + err)
-)
+mongoose.connect(keys.mongodb.DB, { useNewUrlParser: true })
+	.then(
+  	() => { console.log('\nConnected successfully!') },
+  	err => console.log('\nCan not connect to the database\n\n' + err)
+	)
 
 app.set('view engine', 'pug')
 app.set('views', join(__dirname, 'views'))

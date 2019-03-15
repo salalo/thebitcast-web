@@ -99,10 +99,10 @@ main {
 		// top: 160px;
 	}
 }
-.popular {
-	// margin-top: -100px;
-	// span { top: 560px; }
-}
+// .popular {
+// 	margin-top: -100px;
+// 	span { top: 560px; }
+// }
 
 .swiper-slide {
   justify-content: center;

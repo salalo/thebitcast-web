@@ -1,33 +1,32 @@
-import usersModel from '../models/user.js'
+import User from '../models/user.js'
 
 export default {
-
 	async findOne(req, res, next) {
-		const USER = await usersModel.findOne({ _id: req.params._id })
+		const user = await User.findOne({ _id: req.params._id })
 		if (!user) return next()
-		return res.status(200).send({ data: USER })  // Response to postman
+		return res.status(200).send({ data: user })
 	},
 
 	async findAll(req, res) {
-		const USERS = await usersModel.find().sort({ createdAt: 'desc' })  // Response to postman
-		return res.status(200).send({ data: USERS })
+		const users = await User.find().sort({ createdAt: 'desc' })
+		return res.status(200).send({ data: users })
 	},
 
 	async update(req, res, next) {
-		const USER = await usersModel.find({ _id: req.params._id })
-		if (!USER) return next()
+		const user = await User.find({ _id: req.params._id })
+		if (!user) return next()
 
-		USER._id = req.body._id
-		await USER.save()
+		user.id = req.body.id
+		await user.save()
 
-		return res.status(200).send({ data: USER, message: `User was updated` })  // Response to postman
+		return res.status(200).send({ data: user, message: `User was updated` })
 	},
 
 	async remove(req, res, next) {
-		const USER = await usersModel.findOne({ _id: req.params._id })
-		if (!USER) return next()
-		await USER.remove()
+		const user = await User.findOne({ _id: req.params._id })
+		if (!user) return next()
+		await user.remove()
 
-		return res.status(200).send({ message: `User was removed` })  // Response to postman
+		return res.status(200).send({ message: `User was removed` })
 	}
 }
