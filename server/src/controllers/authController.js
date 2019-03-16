@@ -2,7 +2,6 @@ import passport from 'passport'
 import googleStrategy from 'passport-google-oauth20'
 import facebookStrategy from 'passport-facebook'
 import Joi from 'joi'
-// import session from 'express-session'
 import jwt from 'jsonwebtoken'
 import request from 'request'
 
@@ -14,9 +13,8 @@ export default {
 	// Login function
 	async login(req, res, next) {
 
-		const TOKEN_JWT = await jwt.sign({ id: req.user._id }, process.env.JWT_SECRET) // sign and get new TOKEN_JWT
-		console.log("authController[LOGIN1]:", req.user._id) // add user._id to session [LOG1]
-		return res.send(TOKEN_JWT) // return TOKEN_JWT to frontend
+		jwt.verify()
+		// return res.send(TOKEN_JWT) // return TOKEN_JWT to frontend
 	},
 	
 
@@ -58,7 +56,7 @@ export default {
 				request(verificationUrl, (error, resa, body) => {
 					body = JSON.parse(body)
 
-					//If captcha error
+					//Captcha error
 					if(body.success !== undefined && !body.success) {
 						// Send notification to frontend 
 						res.status(400).send({
@@ -69,15 +67,15 @@ export default {
 
 					//If captcha works
 					else{
-
 						// Create user object from request data
 						const USER = new usersModel({ nick, email })
 						
+						// Creating a jwt token
+						const TOKEN_JWT = jwt.sign({ id: USER._id }, process.env.JWT_SECRET) // sign and get new TOKEN_JWT
+						console.log("authController[REG78]:", TOKEN_JWT, USER._id) // add user._id to session
+
 						usersModel.register(USER, password)
 							.then(() => {
-
-								// Users id is in USER._id
-
 								// Send notification to frontend
 								res.send({
 										message: 'User created successfully',
@@ -100,7 +98,7 @@ export default {
 
 
 
-// Setup passport google authentication 
+// Setup passport google authentication
 passport.use(
 	new googleStrategy({
 		clientID: keys.google.clientID,
@@ -111,29 +109,20 @@ passport.use(
 		usersModel.findOne({ googleID: profile.id })
 			.then(currentUser => {
 				if (currentUser) {
-					// Log user in
-					const TOKEN_JWT = jwt.sign({ id: currentUser._id }, process.env.JWT_SECRET)
-					console.log("GOOGLE login token:", TOKEN_JWT)
-					
 					done(null, currentUser)
-				}
-				else {
-
+				} else {
 					// Register user
 					new usersModel({
-						nick: "nick-dump_" + profile.id,
+						// nick: "nick-dump_" + profile.id,
 						email: profile.emails[0].value,
 						googleID: profile.id,
 
 					}).save()
 						.then(newUser => {
-							const TOKEN_JWT = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET)
-							console.log("GOOGLE register token:", TOKEN_JWT)
-
 							done(null, newUser)
 						})
 						.catch(err => console.error("authController [GOOGLE1]:", err))
-				}
+					}
 			})
 			.catch(err => console.error("authController [GOOGLE2]:", err))
 	})
@@ -151,25 +140,16 @@ passport.use(
 		usersModel.findOne({ facebookID: profile.id })
 			.then(currentUser => {
 				if (currentUser) {
-					// Log user in
-					const TOKEN_JWT = jwt.sign({ id: currentUser._id }, process.env.JWT_SECRET)
-					console.log("FB login token:", TOKEN_JWT)
-
 					done(null, currentUser)
-				}
-				else {
-
+				} else {
 					// Register user
 					new usersModel({
-						nick: "nick-dump_" + profile.id,
-						email: "email-dump_" + profile.id,
+						// nick: "nick-dump_" + profile.id,
+						// email: "email-dump_" + profile.id,
 						facebookID: profile.id
 
 					}).save()
 						.then(newUser => {
-							const TOKEN_JWT = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET)
-							console.log("FB register token:", TOKEN_JWT)
-
 							done(null, newUser)
 						})
 						.catch(err => console.error("authController [FB1]:", err))

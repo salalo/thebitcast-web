@@ -93,7 +93,7 @@ main {
   transform: translateY(-50%);
 }
 
-.recommended, .popular, .suggestions {
+.recommended, .popular {
 
 	span{
 		font-size: 20px;

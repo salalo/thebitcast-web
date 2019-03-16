@@ -6,7 +6,7 @@ export default () => {
 	const api = Router()
 
 	//localhost:8081/auth/login
-	api.post('/login', passport.authenticate('local', { session: false }), AuthController.login)
+	api.get('/login', passport.authenticate('local', { session: false }), AuthController.login)
 
 	//localhost:8081/auth/create
 	api.post('/create', AuthController.register)

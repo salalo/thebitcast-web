@@ -1,6 +1,5 @@
 <template>
-<!-- GetToken() != null -->
-	<div v-if="GetToken() != null">
+	<div v-if="true">
 		<panel-logged />
 		<sidebar-logged />
 		<topbar-logged />
@@ -9,6 +8,7 @@
 	<div class="row" v-else>
 		<sidebar />
 		<panel />
+		<topbar />
 	</div>
 </template>
 
@@ -19,6 +19,7 @@ import SidebarLogged from './HomeDesktopSidebar-logged.vue'
 import Panel from './HomeDesktopPanel.vue'
 import PanelLogged from './HomeDesktopPanel-logged.vue'
 import TopbarLogged from './HomeDesktopPanelTopbar-logged.vue'
+import Topbar from './HomeDesktopPanelTopbar.vue'
 import VueCookies from 'vue-cookies'
 
 export default {
@@ -27,23 +28,8 @@ export default {
 		'sidebar-logged': SidebarLogged,
 		'panel': Panel,
 		'panel-logged': PanelLogged,
-		'topbar-logged': TopbarLogged
-	},
-	methods: {
-		GetToken() {
-			return VueCookies.get("token")
-		}
-	},
-
-	data() {
-		return {
-			logged: false,
-
-			actualUser: {
-				nick: '',
-				email: ''
-			}
-		}
+		'topbar-logged': TopbarLogged,
+		'topbar': Topbar,
 	}
 }
 

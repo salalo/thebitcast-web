@@ -39,15 +39,15 @@
 		</header>
 
 		<!-- var for action and @submit method -->
-		<v-form action="fontStateAction" method="post" @submit.prevent="startCaptcha">
+		<form action="fontStateAction" method="post" @submit.prevent="startCaptcha">
 
 			<v-text-field
 				dark
 				:required=!isActive
 				minlength=4
-				maxlength=30
+				maxlength=20
 				pattern="(?=.*[a-z]).{4,20}"
-				hint="Must contain at least 4 characters limited to 20."
+				title="Must contain at least 4 characters limited to 20."
 				value=""
 				type="text"
 				v-model="User.nick"
@@ -76,13 +76,17 @@
 				dark
 				required
 				minlength=6
+				maxlength=40
 				pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,40}"
-				hint="Must contain at least one number and one uppercase and lowercase letter, and at least 8 limited to 40 characters."
+				title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 limited to 40 characters."
 				value=""
 				type="password"
 				name="password"
 				autocomplete="off"
 				v-model.trim="User.password"
+				:append-icon="show1 ? 'visibility' : 'visibility_off'"
+				@click:append="show1 = !show1"
+        :type="show1 ? 'text' : 'password'"
 				label="Password"
 				color="#F44336"
 				class="input"
@@ -108,7 +112,7 @@
 				>By creating an account you're okay with our <router-link to="/privacy-policy">Privacy & Policy</router-link>.
 			</p>
 
-		</v-form>
+		</form>
 		<p class="form-state">{{formStateText}} <a href="#" v-on:click="changeFormState">{{formStateHyperlink}}</a>.</p>
 	</section>
 </template>
@@ -149,6 +153,13 @@ export default {
 			sucessfulServerResponse: "",
 			newCaptchaToken: "",
 			serverError: "",
+			show1: false,
+      password: 'Password',
+      rules: {
+        required: value => !!value || 'Required.',
+        min: v => v.length >= 8 || 'Min 8 characters',
+        emailMatch: () => ('The email and password you entered don\'t match')
+      },
 
 			User: {
 				nick: '',
@@ -188,14 +199,12 @@ export default {
 					/* eslint-disable */
 					axios.post('http://localhost:8081/auth/create', newUser)
 						.then(res => {
-							VueCookies.set("token", res)
-							VueCookies.set("logging", "true")
-							location.reload()
+							// location.reload()
 
-							this.$q.notify({
-								message: res.data.message,
-								type: res.data.type
-							})
+							// this.$q.notify({
+							// 	message: res.data.message,
+							// 	type: res.data.type
+							// })
 						})
 						.catch(err => console.log(err))
 				} else { console.log(resultRegister.error) }
@@ -205,18 +214,15 @@ export default {
 				if (resultLogin.error === null) {
 					/* eslint-disable */
 					axios.post('http://localhost:8081/auth/login', logingUser)
-						.then(res => {
-
-							VueCookies.set("token", res)
-							VueCookies.set("logging", "true")
+						.then(res => { 
 							location.reload()
 						})
 						.catch(err => {
 							console.log(err)
-							this.$q.notify({
-								message: `Wrong login or password.`,
-								type: 'negative'
-							})
+							// this.$q.notify({
+							// 	message: `Wrong login or password.`,
+							// 	type: 'negative'
+							// })
 						})
 				} else { console.log(resultLogin.error) }
 			}

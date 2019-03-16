@@ -1,8 +1,6 @@
 <template>
 	<main>
 
-		<topbar></topbar>
-
 		<section class="recommended">
 			<span>Recommended</span>
 
@@ -46,11 +44,9 @@
 </template>
 
 <script>
-
-import Topbar from './HomeDesktopPanelTopbar.vue';
-import Card from './Card.vue';
-import 'swiper/dist/css/swiper.css';
-import { swiper, swiperSlide } from 'vue-awesome-swiper';
+import Card from './Card.vue'
+import 'swiper/dist/css/swiper.css'
+import { swiper, swiperSlide } from 'vue-awesome-swiper'
 
 export default {
 	data() {
@@ -66,7 +62,6 @@ export default {
 	},
 
 	components: {
-		'topbar': Topbar,
 		'card': Card,
 		swiper,
 		swiperSlide
@@ -81,28 +76,30 @@ export default {
 // minus width of Sidebar
 main {
 	width: calc(100vw - 640px);
-	float: right;
-	padding: 0;
+	height: calc(100vh - 80px);
+	position: fixed;
+	bottom: 0;
+	right: 0;
 }
 
 .recommended, .popular {
 	width: 100%;
 	height: 50%;
-	padding: 30px 0 0 30px;
+	padding: 0 0 0 30px;
 	display: flex;
   justify-content: center;
 	flex-direction: column;
 
 	span {
-		// position: absolute;
+		position: absolute;
 		font-size: 18px;
-		// top: 160px;
+		top: 160px;
 	}
 }
-// .popular {
-// 	margin-top: -100px;
-// 	span { top: 560px; }
-// }
+.popular {
+	margin-top: -100px;
+	span { top: 560px; }
+}
 
 .swiper-slide {
   justify-content: center;

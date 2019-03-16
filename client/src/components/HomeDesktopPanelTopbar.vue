@@ -47,27 +47,9 @@ export default {
 	
 @import '@/stylesheets/master.scss';
 
-.container {
-	background-color: #fff;
-	height: 80px;
-	box-shadow: 0 0 10px rgba(0, 0, 0, .3);
-}
-
-// HAS TO BE CHANGED
-.search-input {
-	font-size: 15px;
-	color: $grey;
+.topbar-logged {
+	width: calc(100vw - 640px);
 	float: right;
-	height: 50px;
-	margin: 5px 0 0 150px;
-}
-
-// child components
-.playing-info { margin-left: 50px; }
-.player { margin-left: 50px; }
-
-@media (max-width: 1700px) {
-	.search-input { margin: 5px 0 0 50px; }
 }
 
 </style>

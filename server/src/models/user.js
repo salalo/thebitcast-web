@@ -4,13 +4,11 @@ import passportLocalMongoose from 'passport-local-mongoose'
 const userSchema = mongoose.Schema({
   nick: {
     type: String,
-    required: true
   },
   email: {
     type: String,
     lowercase: true,
     trim: true,
-    unique: true
   },
   googleID: {
     type: String
