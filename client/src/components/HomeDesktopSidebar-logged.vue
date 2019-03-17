@@ -43,7 +43,7 @@
 
       <div class="info">
         <router-link to="/about-us">
-          <i class="material-icons icon">record_voice_over</i>
+          <i class="material-icons icon">whatshot</i>
           <span class="info-mission">Our mission</span>
         </router-link>
         <router-link to="/premium">
@@ -137,7 +137,7 @@ export default {
 
 .container {
   background-color: #fff;
-	box-shadow: 0 0 10px rgba(0, 0, 0, .7);
+	box-shadow: 0 0 10px rgba(0, 0, 0, .2);
   width: 300px;
   height: calc(100vh - 80px);
   position: fixed;

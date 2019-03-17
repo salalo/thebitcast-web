@@ -216,9 +216,9 @@ export default {
 
 			color: $main;
 			position: absolute;
-			top: calc(150px * .5 - 20px);
-			left: calc(50% - 20px);
-			font-size: 45px;
+			top: calc(150px * .5 - 27px);
+			left: calc(50% - 27px);
+			font-size: 55px;
 		}
 		&-details {
 			opacity: 0;

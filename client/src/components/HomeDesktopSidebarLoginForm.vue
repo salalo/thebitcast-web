@@ -2,11 +2,10 @@
 	<section class="login-form" v-bind:style="{height: formHeight + 'px'}">
 		<header class="row">
 			<a href="http://localhost:8081/auth/google">
-
 				<v-btn
 					outline
-					lowercase
 					round
+					lowercase
 					class="button button__google"
 					color="#f5f5f5"
 				>
@@ -94,6 +93,7 @@
 			<a class="forgot-passwd" href="#" v-bind:class="{ hidden: !isActive}">Forgot your password?</a>
 				<v-btn
 					dark
+					round
 					color="#F44336"
 					class="button button__reg"
 					type="submit"
@@ -271,7 +271,7 @@ a { text-decoration: none; color: inherit; }
 	text-decoration: none;
 	color: $main;
 	font-size: 12px;
-	font-weight: 200;
+	font-weight: 400;
 	float: right;
 	margin: -10px 0 20px 0;
 
@@ -297,7 +297,7 @@ a { text-decoration: none; color: inherit; }
 		float: left;
 	}
 
-	a { color: $lighter-main; }
+	a { color: $main; }
 }
 .input {
 	margin-top: 20px;
@@ -341,6 +341,9 @@ a { text-decoration: none; color: inherit; }
 	a {
 		text-decoration: none;
 		color: $main;
+		font-weight: 400;
+
+
 
 		&:hover { color: $lighter-main; }
 	}

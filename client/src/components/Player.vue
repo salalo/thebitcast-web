@@ -88,7 +88,10 @@ export default {
 	
 @import '@/stylesheets/master.scss';
 
+header, footer { max-height: 35px; }
+
 .hidden { display: none; }
+
 .player {
 	max-height: 80px;
 	text-align: center;
@@ -105,12 +108,12 @@ export default {
 		float: right;
 		font-size: 11px;
 		font-weight: 400;
-		margin-top: -105px;
+		margin-top: -100px;
 	}
 }
 
 i {
-	font-size: 2rem;
+	font-size: 2.2rem;
 	margin: 10px 0 0 40px;
 	color: $main;
 

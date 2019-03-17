@@ -16,7 +16,7 @@ export default {
 methods: {
 	logout() {
 		axios.get('http://localhost:8081/auth/logout')
-			.then(res => res)
+			.then(res => resolve(res))
 			.catch(err => console.log(err))
 
 		VueCookie.remove("session")

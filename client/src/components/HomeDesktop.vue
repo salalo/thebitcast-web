@@ -41,16 +41,15 @@ export default {
 
 		axios.get('http://localhost:8081/auth/getId')
 			.then(res => {
-				console.log(res.data)
 				if(res.data != 'NotLogged')
 					this.isLogged = true
-				else
-				{
+
+				else {
 					this.isLogged = false
 					VueCookies.remove('session')
 				}
 			})
-			.catch(err => console.log(err))
+			.catch(err => console.log( err))
 	},
 	components: {
 		'sidebar': Sidebar,
