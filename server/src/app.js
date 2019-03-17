@@ -6,6 +6,8 @@ import morgan from 'morgan'
 import passport from 'passport'
 import bodyParser from 'body-parser'
 import mongoose from 'mongoose'
+// import cookieSession from 'cookie-session'
+import session from 'express-session'
 import { join } from 'path'
 
 import users from './routes/users.js'
@@ -26,15 +28,12 @@ app.use((req, res, next) => {
   next()
 })
 
-app.use(passport.initialize())
-app.use(passport.session())
-
 // connect to database
 mongoose.connect(keys.mongodb.DB, { useNewUrlParser: true })
 	.then(
   	() => { console.log('\nConnected successfully!') },
   	err => console.log('\nCan not connect to the database\n\n' + err)
-	)
+  )
 
 app.set('view engine', 'pug')
 app.set('views', join(__dirname, 'views'))
@@ -42,6 +41,29 @@ app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(morgan('dev'))
+
+
+app.set('trust proxy', 1) // trust first proxy
+
+app.use(session({
+  name: 'session',
+  secret: keys.cookie.secret,
+  saveUninitialized: false,
+  resave: false,
+  cookie: {
+    secure: false,
+    httpOnly: false,
+    maxAge: 60 * 60 * 1000 * 365
+  }
+}))
+
+// app.use(cookieSession({
+//   maxAge: 24 * 60 * 60 * 1000 * 365,
+//   keys: keys.cookie.secret
+// }))
+
+app.use(passport.initialize())
+app.use(passport.session())
 
 // routes
 app.use('/auth', auths())

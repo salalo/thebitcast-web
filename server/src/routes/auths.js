@@ -20,7 +20,7 @@ export default () => {
 
 	//Google callback
 	//localhost:8081/auth/google/cb
-	api.get('/google/cb', passport.authenticate('google', { session: false }), (req, res) => {
+	api.get('/google/cb', passport.authenticate('google', { session: true }), (req, res) => {
 		res.redirect('http://localhost:8080')
 	})
 
@@ -32,9 +32,27 @@ export default () => {
 
 	//Facebook callback
 	//localhost:8081/auth/facebook/cb
-	api.get('/facebook/cb', passport.authenticate('facebook', { session: false }), (req, res) => {
+	api.get('/facebook/cb', passport.authenticate('facebook', { session: true }), (req, res) => {
 		res.redirect('http://localhost:8080')
 	})
-	
+
+
+	//Send actual user id if logged
+	//localhost:8081/auth/getId
+	api.get('/getId', (req, res) => {
+		console.log(req.isAuthenticated())
+		if (req.isAuthenticated())
+			res.send(req.user._id)
+		else
+			res.send('NotLogged')
+	})
+
+	//Logout user
+	//localhost:8081/auth/logout
+	api.get('/logout', (req, res) => {
+		req.logout()
+		req.session.destroy()
+	})
+
 	return api
 }

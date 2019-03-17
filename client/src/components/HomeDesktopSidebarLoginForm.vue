@@ -80,7 +80,6 @@
 				pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,40}"
 				title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 limited to 40 characters."
 				value=""
-				type="password"
 				name="password"
 				autocomplete="off"
 				v-model.trim="User.password"

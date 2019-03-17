@@ -96,6 +96,13 @@ export default {
 	}
 }
 
+passport.serializeUser((user, done) => {
+	done(null, user._id)
+})
+
+passport.deserializeUser((id, done) => {
+	usersModel.findById(id, (err, user) => done(null, user))
+})
 
 
 // Setup passport google authentication
@@ -113,21 +120,17 @@ passport.use(
 				} else {
 					// Register user
 					new usersModel({
-						// nick: "nick-dump_" + profile.id,
 						email: profile.emails[0].value,
 						googleID: profile.id,
 
 					}).save()
-						.then(newUser => {
-							done(null, newUser)
-						})
+						.then(newUser => done(null, newUser))
 						.catch(err => console.error("authController [GOOGLE1]:", err))
 					}
 			})
 			.catch(err => console.error("authController [GOOGLE2]:", err))
 	})
 )
-
 
 // Setup passport facebook authentication 
 passport.use(
@@ -149,9 +152,7 @@ passport.use(
 						facebookID: profile.id
 
 					}).save()
-						.then(newUser => {
-							done(null, newUser)
-						})
+						.then(newUser => done(null, newUser))
 						.catch(err => console.error("authController [FB1]:", err))
 				}
 			})
