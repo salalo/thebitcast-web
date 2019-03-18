@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import passportLocalMongoose from 'passport-local-mongoose'
+// import passportLocalMongoose from 'passport-local-mongoose'
 
 const userSchema = mongoose.Schema({
   nick: {
@@ -9,6 +9,9 @@ const userSchema = mongoose.Schema({
     type: String,
     lowercase: true,
     trim: true,
+  },
+  password: {
+    type: String
   },
   googleID: {
     type: String
@@ -21,6 +24,6 @@ const userSchema = mongoose.Schema({
   timestamps: true
 })
 
-userSchema.plugin(passportLocalMongoose, { usernameField: 'email' })
+// userSchema.plugin(passportLocalMongoose, { usernameField: 'email' })
 
 module.exports = mongoose.model('User', userSchema)

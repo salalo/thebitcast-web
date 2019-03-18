@@ -36,12 +36,11 @@ export default {
 
 	beforeCreate() {
 		//Check user is logged and get his id
-		// KURWWA
 		axios.defaults.withCredentials = true
 
 		axios.get('http://localhost:8081/auth/getId')
 			.then(res => {
-				if(res.data != 'NotLogged')
+				if (res.data != 'NotLogged')
 					this.isLogged = true
 
 				else {

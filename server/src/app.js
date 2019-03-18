@@ -6,25 +6,22 @@ import morgan from 'morgan'
 import passport from 'passport'
 import bodyParser from 'body-parser'
 import mongoose from 'mongoose'
-// import cookieSession from 'cookie-session'
 import session from 'express-session'
 import { join } from 'path'
 
 import users from './routes/users.js'
 import auths from './routes/auths.js'
 import keys from './config/keys.js'
-import passportAuth from './config/passport.js'
 import { notFound, catchErrors } from './middlewares/errors.js'
 
 const app = express()
-passportAuth()
 
 app.use((req, res, next) => {
   // Website you wish to allow to connect
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080')
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE')
-  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type')
-  res.setHeader('Access-Control-Allow-Credentials', true)
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:8080")
+  res.setHeader("Access-Control-Allow-Credentials", "true")
+  res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS, POST")
+  res.setHeader("Access-Control-Allow-Headers", "Origin, Content-Type, Accept")
   next()
 })
 
@@ -41,8 +38,6 @@ app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(morgan('dev'))
-
-
 app.set('trust proxy', 1) // trust first proxy
 
 app.use(session({
@@ -56,11 +51,6 @@ app.use(session({
     maxAge: 60 * 60 * 1000 * 365
   }
 }))
-
-// app.use(cookieSession({
-//   maxAge: 24 * 60 * 60 * 1000 * 365,
-//   keys: keys.cookie.secret
-// }))
 
 app.use(passport.initialize())
 app.use(passport.session())

@@ -6,7 +6,9 @@ export default () => {
 	const api = Router()
 
 	//localhost:8081/auth/login
-	api.get('/login', passport.authenticate('local', { session: false }), AuthController.login)
+	api.post('/login', passport.authenticate('local', { session: true }), (req, res) => {
+		res.redirect('http://localhost:8080')
+	})
 
 	//localhost:8081/auth/create
 	api.post('/create', AuthController.register)
@@ -26,9 +28,7 @@ export default () => {
 
 	// Auth using facebook oauth
 	//localhost:8081/auth/facebook
-	api.get('/facebook',
-		passport.authenticate('facebook')
-	)
+	api.get('/facebook', passport.authenticate('facebook'))
 
 	//Facebook callback
 	//localhost:8081/auth/facebook/cb

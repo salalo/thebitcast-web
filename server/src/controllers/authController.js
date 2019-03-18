@@ -1,8 +1,9 @@
 import passport from 'passport'
-import googleStrategy from 'passport-google-oauth20'
-import facebookStrategy from 'passport-facebook'
+import GoogleStrategy from 'passport-google-oauth20'
+import FacebookStrategy from 'passport-facebook'
+import LocalStrategy from 'passport-local'
 import Joi from 'joi'
-import jwt from 'jsonwebtoken'
+import bcrypt from 'bcrypt'
 import request from 'request'
 
 import keys from '../config/keys.js'
@@ -10,21 +11,13 @@ import usersModel from '../models/user.js'
 
 export default {
 
-	// Login function
-	async login(req, res, next) {
-
-		jwt.verify()
-		// return res.send(TOKEN_JWT) // return TOKEN_JWT to frontend
-	},
-	
-
 	// Register function
-	async register(req, res, next) {
+	async register(req, res, done) {
 
 		const { nick, email, password, captchaToken } = req.body // get data from request
 
 		// Create user schema
-		// ON CHANGING THIS CHANGE HOMEDESKTOPLOGINFORM SCHEMA TOO
+		// CHANGING THIS CHANGE HOMEDESKTOPLOGINFORM SCHEMA TOO
 		const REG_SCHEMA = Joi.object().keys({
 			nick: Joi.string().alphanum().min(4).max(20).required(),
 			email: Joi.string().email().lowercase().trim().min(5).required(),
@@ -36,12 +29,12 @@ export default {
 		Joi.validate(req.body, REG_SCHEMA, (err, value) => {
 			
 			if (err) {
-
 				//Validation error
 				res.status(400).send({
 					message: 'Inserted data are not correct.',
 					type: 'negative'
 				})
+				done(null, false)
 			}
 
 			//Validation successfull
@@ -57,38 +50,32 @@ export default {
 					body = JSON.parse(body)
 
 					//Captcha error
-					if(body.success !== undefined && !body.success) {
+					if (body.success !== undefined && !body.success) {
 						// Send notification to frontend 
 						res.status(400).send({
 							message: 'Captcha error',
 							type: 'negative'
 						})
+						done(null, false)
 					}
 
 					//If captcha works
-					else{
-						// Create user object from request data
-						const USER = new usersModel({ nick, email })
-						
-						// Creating a jwt token
-						const TOKEN_JWT = jwt.sign({ id: USER._id }, process.env.JWT_SECRET) // sign and get new TOKEN_JWT
-						console.log("authController[REG78]:", TOKEN_JWT, USER._id) // add user._id to session
+					else {
+						// create user object
+						const USER = new usersModel({ nick, email, password })
 
-						usersModel.register(USER, password)
-							.then(() => {
-								// Send notification to frontend
-								res.send({
-										message: 'User created successfully',
-										type: 'positive'
-									}
-								)
+						// hashing the password
+						bcrypt.hash(password, 10, (err, hash) => {
+							USER.password = hash
+
+							// saving user object to db
+							USER.save()
+							.then(currentUser => {
+								console.log("User registered successfully.")
+								done(null, currentUser)
 							})
-							.catch(() => {
-								res.send({
-									message: 'User with given data is already created.',
-									type: 'negative'
-								})
-							})
+							.catch(err => console.error("User not registered.", err))
+						})
 					}
 				})
 			}
@@ -96,18 +83,46 @@ export default {
 	}
 }
 
-passport.serializeUser((user, done) => {
-	done(null, user._id)
-})
+
+passport.serializeUser((user, done) => done(null, user._id))
 
 passport.deserializeUser((id, done) => {
 	usersModel.findById(id, (err, user) => done(null, user))
 })
 
 
+// Passport local authentication strategy
+passport.use(
+	new LocalStrategy({
+	  usernameField: 'email',
+	  passwordField: 'password',
+	  passReqToCallback: true
+	},
+  (req, email, password, done) => {
+    usersModel.findOne({ email: email })
+    	.then(currentUser => {
+    		if (currentUser) {
+					bcrypt.compare(password, currentUser.password, (err, res) => {
+    				if (!res) {
+	    				console.log("Given password is incorrect.")
+	    				done(null, false)
+    				}
+    				else done(null, currentUser)
+					})
+				}
+    		else if (!currentUser) {
+    			console.log("User with given data does not exist.")
+    			done(null, false)
+    		}
+    	})
+    	.catch(err => console.error("authController [LOCAL1]:", err))
+  })
+)
+
+
 // Setup passport google authentication
 passport.use(
-	new googleStrategy({
+	new GoogleStrategy({
 		clientID: keys.google.clientID,
 		clientSecret: keys.google.clientSecret,
 		callbackURL: '/auth/google/cb'
@@ -134,7 +149,7 @@ passport.use(
 
 // Setup passport facebook authentication 
 passport.use(
-	new facebookStrategy({
+	new FacebookStrategy({
 		clientID: keys.facebook.clientID,
 		clientSecret: keys.facebook.clientSecret,
 		callbackURL: '/auth/facebook/cb'

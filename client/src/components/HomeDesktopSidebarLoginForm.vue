@@ -196,33 +196,29 @@ export default {
 			if (this.fontStateAction === "/auth/create") {
 				if (resultRegister.error === null) {
 					/* eslint-disable */
-					axios.post('http://localhost:8081/auth/create', newUser)
-						.then(res => {
-							// location.reload()
 
-							// this.$q.notify({
-							// 	message: res.data.message,
-							// 	type: res.data.type
-							// })
-						})
+					axios.post('http://localhost:8081/auth/create', newUser)
+						.then(res => console.log("Registered notification"))
 						.catch(err => console.log(err))
+					location.reload()
 				} else { console.log(resultRegister.error) }
 			}
 
 			else if (this.fontStateAction === "/auth/login") {
 				if (resultLogin.error === null) {
 					/* eslint-disable */
+
 					axios.post('http://localhost:8081/auth/login', logingUser)
-						.then(res => { 
-							location.reload()
-						})
+						.then(res => console.log("Logged in"))
 						.catch(err => {
-							console.log(err)
+							console.log("Wrong password notification from backend", err)
 							// this.$q.notify({
 							// 	message: `Wrong login or password.`,
 							// 	type: 'negative'
 							// })
 						})
+					location.reload()
+
 				} else { console.log(resultLogin.error) }
 			}
 		},
