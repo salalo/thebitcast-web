@@ -14,7 +14,7 @@ export default {
 	// Register function
 	async register(req, res, done) {
 
-		const { nick, email, password, captchaToken } = req.body // get data from request
+		const { nick, email, password, captchaToken } = req.body.user // get data from request
 
 		// Create user schema
 		// CHANGING THIS CHANGE HOMEDESKTOPLOGINFORM SCHEMA TOO
@@ -26,15 +26,16 @@ export default {
 		})
 
 		// Validate user schema
-		Joi.validate(req.body, REG_SCHEMA, (err, value) => {
-			
+		Joi.validate(req.body.user, REG_SCHEMA, (err, value) => {
+	
 			if (err) {
 				//Validation error
-				res.status(400).send({
-					message: 'Inserted data are not correct.',
+				res.send({
+					message: 'Inserted data are incorrect.',
 					type: 'negative'
 				})
-				done(null, false)
+				console.log("authController [REG37]: Inserted data are incorrect.")
+				 done(null, false)
 			}
 
 			//Validation successfull
@@ -52,10 +53,11 @@ export default {
 					//Captcha error
 					if (body.success !== undefined && !body.success) {
 						// Send notification to frontend 
-						res.status(400).send({
-							message: 'Captcha error',
+						res.send({
+							message: 'Captcha error.',
 							type: 'negative'
 						})
+						console.log("authController [REG60]: Captcha error")
 						done(null, false)
 					}
 
@@ -71,10 +73,14 @@ export default {
 							// saving user object to db
 							USER.save()
 							.then(currentUser => {
-								console.log("User registered successfully.")
+								 res.send({
+								 	message: 'User registered successfully.',
+								 	type: 'positive'
+								 })
+								console.log("authController [REG80]: User registered successfully.")
 								done(null, currentUser)
 							})
-							.catch(err => console.error("User not registered.", err))
+							.catch(err => console.error("authController [REG82]: User not registered.", err))
 						})
 					}
 				})
@@ -99,19 +105,20 @@ passport.use(
 	  passReqToCallback: true
 	},
   (req, email, password, done) => {
+		console.log(email, password)
     usersModel.findOne({ email: email })
     	.then(currentUser => {
     		if (currentUser) {
 					bcrypt.compare(password, currentUser.password, (err, res) => {
     				if (!res) {
-	    				console.log("Given password is incorrect.")
+	    				console.log("authController [LOCAL3]: Given password is incorrect.")
 	    				done(null, false)
     				}
     				else done(null, currentUser)
 					})
 				}
     		else if (!currentUser) {
-    			console.log("User with given data does not exist.")
+    			console.log("authController [LOCAL2]: User with given data does not exist.")
     			done(null, false)
     		}
     	})

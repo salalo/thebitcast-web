@@ -7,7 +7,7 @@
 				Our mission is to promote podcasting, let every single creator<br>
 				earn on every podcast, grow their business and<br>
 				patronize charity activities.<br><br>
-				We encourage you to <router-link to="/about-us">get more info about us</router-link>.
+				We encourage you to <router-link to="/about-us">get more info about us</router-link>. 🙊
 			</p>
 		</header>
 

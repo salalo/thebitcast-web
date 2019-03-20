@@ -4,11 +4,15 @@ import mongoose from 'mongoose'
 const userSchema = mongoose.Schema({
   nick: {
     type: String,
+    index: true,
+    unique: true
   },
   email: {
     type: String,
     lowercase: true,
     trim: true,
+    index: true,
+    unique: true
   },
   password: {
     type: String

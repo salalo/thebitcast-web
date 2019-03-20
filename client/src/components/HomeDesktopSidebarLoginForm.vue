@@ -91,18 +91,17 @@
       ></v-text-field>
 
 			<a class="forgot-passwd" href="#" v-bind:class="{ hidden: !isActive}">Forgot your password?</a>
-				<v-btn
-					dark
-					round
-					color="#F44336"
-					class="button button__reg"
-					type="submit"
-					name="submit"
-				>
-					{{ registerBtnState }}
-				</v-btn>
+			<v-btn
+				dark
+				round
+				color="#F44336"
+				class="button button__reg"
+				type="submit"
+				name="submit"
+			>
+				{{ registerBtnState }}
+			</v-btn>
 			
-
 			<p class="policy-reg" v-bind:class="{ hidden: isActive }">
 				<input
 					:required=!isActive
@@ -113,16 +112,24 @@
 
 		</form>
 		<p class="form-state">{{formStateText}} <a href="#" v-on:click="changeFormState">{{formStateHyperlink}}</a>.</p>
+
+	  <v-alert
+	  	class="alert"
+      :value="true"
+      type="error"
+    >
+      {{ alertMassage }}
+    </v-alert>
+
 	</section>
 </template>
 
 <script>
 
-import axios from 'axios';
-import Joi from 'joi';
-import { VueReCaptcha } from 'vue-recaptcha-v3';
+import axios from 'axios'
+import Joi from 'joi'
+import { VueReCaptcha } from 'vue-recaptcha-v3'
 import Vue from "vue"
-import VueCookies from "vue-cookies"
 
 Vue.use(VueReCaptcha, { siteKey: '6Lcvt4wUAAAAACOvd54WTCBGMeegcNdFj1JdokMr' })
 
@@ -154,11 +161,13 @@ export default {
 			serverError: "",
 			show1: false,
       password: 'Password',
-      rules: {
-        required: value => !!value || 'Required.',
-        min: v => v.length >= 8 || 'Min 8 characters',
-        emailMatch: () => ('The email and password you entered don\'t match')
-      },
+      alertMassage: '',
+
+      // rules: {
+      //   required: value => !!value || 'Required.',
+      //   min: v => v.length >= 8 || 'Min 8 characters',
+      //   emailMatch: () => ('The email and password you entered don\'t match')
+      // },
 
 			User: {
 				nick: '',
@@ -176,6 +185,17 @@ export default {
 				this.sendUser()
 			}
 		)},
+
+		// alert showing method -> default is error (red) notification
+		showAlert(msg) {
+
+			let alert = document.getElementsByClassName('alert')[0]
+			this.alertMassage = msg
+
+			alert.style.transform = "translateY(-120px)"
+
+		  setTimeout(() => alert.style.transform = "translateY(0)", 5000)
+		},
 
 		sendUser() {
 			let newUser = {
@@ -195,36 +215,43 @@ export default {
 
 			if (this.fontStateAction === "/auth/create") {
 				if (resultRegister.error === null) {
+ 
 					/* eslint-disable */
-
-					axios.post('http://localhost:8081/auth/create', newUser)
-						.then(res => console.log("Registered notification"))
-						.catch(err => console.log(err))
-					location.reload()
-				} else { console.log(resultRegister.error) }
+					axios.post('http://localhost:8081/auth/create', {
+						headers: {
+	  					'Access-Control-Allow-Origin': '*',
+							'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
+						},
+						user: newUser
+					 })
+						.then(res => location.reload())
+						.catch(err => this.showAlert('Couldn\'t register the account, try again later. 🤕'))
+				} else this.showAlert('Data you\'ve inserted is incorrect, stick to requirements please. 😘')
 			}
 
 			else if (this.fontStateAction === "/auth/login") {
 				if (resultLogin.error === null) {
-					/* eslint-disable */
 
-					axios.post('http://localhost:8081/auth/login', logingUser)
-						.then(res => console.log("Logged in"))
-						.catch(err => {
-							console.log("Wrong password notification from backend", err)
-							// this.$q.notify({
-							// 	message: `Wrong login or password.`,
-							// 	type: 'negative'
-							// })
-						})
-					location.reload()
+					axios({
+						method: 'post',
+						url: 'http://localhost:8081/auth/login',
+						data: logingUser,
+						headers: {
+							'Access-Control-Allow-Origin': 'http://localhost:8081',
+							'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
+							"Access-Control-Allow-Credentials": "true",
+							'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
+						}
+					})
+						.then(res => location.reload())
+						.catch(err => this.showAlert('catch: Email or password is incorrect. 🤔'))
 
-				} else { console.log(resultLogin.error) }
+				} else this.showAlert('Else: Email or password is incorrect. 🤔')
 			}
 		},
 
 		changeFormState() {
-			// clean form on change
+			// clean form on state change
 			this.User.nick = ''
 			this.User.email = ''
 			this.User.password = ''
@@ -259,6 +286,13 @@ export default {
 
 @import '@/stylesheets/master.scss';
 
+
+.alert {
+	@include transition(0s, transform .5s);
+	position: fixed;
+	bottom: -70px;
+
+}
 .hidden { display: none; }
 .google-icon { margin-left: 20px; }
 a { text-decoration: none; color: inherit; }

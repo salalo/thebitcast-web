@@ -12,8 +12,12 @@ Vue.use(VeeValidate)
 Vue.config.productionTip = false
 Vue.config.transpileDependencies = [/node_modules[/\\\\]vuetify[/\\\\]/]
 
+
+
 new Vue({
   router,
   store: store,
+  
   render: h => h(App)
+  
 }).$mount('#app')

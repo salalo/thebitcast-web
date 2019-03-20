@@ -40,7 +40,6 @@ export default () => {
 	//Send actual user id if logged
 	//localhost:8081/auth/getId
 	api.get('/getId', (req, res) => {
-		console.log(req.isAuthenticated())
 		if (req.isAuthenticated())
 			res.send(req.user._id)
 		else

@@ -19,7 +19,7 @@ methods: {
 			.then(res => resolve(res))
 			.catch(err => console.log(err))
 
-		VueCookie.remove("session")
+		VueCookie.remove("SESS")
 		location.reload()
 	}
 }

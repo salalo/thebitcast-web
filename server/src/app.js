@@ -41,14 +41,14 @@ app.use(morgan('dev'))
 app.set('trust proxy', 1) // trust first proxy
 
 app.use(session({
-  name: 'session',
+  name: 'SESS',
   secret: keys.cookie.secret,
   saveUninitialized: false,
   resave: false,
   cookie: {
     secure: false,
     httpOnly: false,
-    maxAge: 60 * 60 * 1000 * 365
+    expires: new Date(253402300000000)
   }
 }))
 
