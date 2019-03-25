@@ -17,13 +17,13 @@
 </template>
 
 <script>
-import axios from 'axios'
 import Sidebar from './HomeDesktopSidebar.vue'
 import SidebarLogged from './HomeDesktopSidebar-logged.vue'
 import Panel from './HomeDesktopPanel.vue'
 import PanelLogged from './HomeDesktopPanel-logged.vue'
 import TopbarLogged from './HomeDesktopPanelTopbar-logged.vue'
 import Topbar from './HomeDesktopPanelTopbar.vue'
+import axios from 'axios'
 import VueCookies from 'vue-cookies'
 
 export default {
@@ -47,6 +47,8 @@ export default {
 					this.isLogged = false
 					VueCookies.remove('session')
 				}
+
+				console.log(this.isLogged)
 			})
 			.catch(err => console.log( err))
 	},
