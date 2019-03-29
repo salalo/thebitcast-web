@@ -215,38 +215,31 @@ export default {
 
 			if (this.fontStateAction === "/auth/create") {
 				if (resultRegister.error === null) {
- 
-					/* eslint-disable */
-					axios.post('http://localhost:8081/auth/create', {
-						headers: {
-	  					'Access-Control-Allow-Origin': '*',
-							'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
-						},
-						user: newUser
-					 })
-						.then(res => location.reload())
+
+					axios.post('http://localhost:8081/auth/create', newUser)
+						.then(res => {
+							if(res.data === 'success') {
+								//login after registration
+								
+								axios.post('http://localhost:8081/auth/login', logingUser)
+									.then(res => location.reload())
+									.catch(err => this.showAlert('Email or password is incorrect. 🤔'))
+							}
+							else this.showAlert(res.data)
+						})
 						.catch(err => this.showAlert('Couldn\'t register the account, try again later. 🤕'))
+
 				} else this.showAlert('Data you\'ve inserted is incorrect, stick to requirements please. 😘')
 			}
 
 			else if (this.fontStateAction === "/auth/login") {
 				if (resultLogin.error === null) {
 
-					axios({
-						method: 'post',
-						url: 'http://localhost:8081/auth/login',
-						data: logingUser,
-						headers: {
-							'Access-Control-Allow-Origin': 'http://localhost:8081',
-							'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
-							"Access-Control-Allow-Credentials": "true",
-							'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
-						}
-					})
+					axios.post('http://localhost:8081/auth/login', logingUser)
 						.then(res => location.reload())
-						.catch(err => this.showAlert('catch: Email or password is incorrect. 🤔'))
+						.catch(err => this.showAlert('Email or password is incorrect. 🤔'))
 
-				} else this.showAlert('Else: Email or password is incorrect. 🤔')
+				} else this.showAlert('Email or password is incorrect. 🤔')
 			}
 		},
 

@@ -25,6 +25,8 @@
     "join": "^3.0.0",
     "mongoose-url-slugs": "^1.0.2",
     "morgan": "^1.9.1",
+    "mysql": "^2.16.0",
+    "node-datetime": "^2.1.2",
     "nodemon": "^1.18.7",
     "passport": "^0.4.0",
     "passport-facebook": "^2.1.1",

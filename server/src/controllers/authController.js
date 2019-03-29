@@ -5,16 +5,18 @@ import LocalStrategy from 'passport-local'
 import Joi from 'joi'
 import bcrypt from 'bcrypt'
 import request from 'request'
+import dateTime from 'node-datetime'
 
 import keys from '../config/keys.js'
-import usersModel from '../models/user.js'
+import db from '../config/db.js'
+// import usersModel from '../models/user.js'
 
 export default {
 
 	// Register function
 	async register(req, res, done) {
 
-		const { nick, email, password, captchaToken } = req.body.user // get data from request
+		const { nick, email, password, captchaToken } = req.body // get data from request
 
 		// Create user schema
 		// CHANGING THIS CHANGE HOMEDESKTOPLOGINFORM SCHEMA TOO
@@ -26,14 +28,11 @@ export default {
 		})
 
 		// Validate user schema
-		Joi.validate(req.body.user, REG_SCHEMA, (err, value) => {
+		Joi.validate(req.body, REG_SCHEMA, (err, value) => {
 	
 			if (err) {
 				//Validation error
-				res.send({
-					message: 'Inserted data are incorrect.',
-					type: 'negative'
-				})
+				res.send('Inserted data are incorrect.')
 				console.log("authController [REG37]: Inserted data are incorrect.")
 				 done(null, false)
 			}
@@ -53,10 +52,8 @@ export default {
 					//Captcha error
 					if (body.success !== undefined && !body.success) {
 						// Send notification to frontend 
-						res.send({
-							message: 'Captcha error.',
-							type: 'negative'
-						})
+						res.send('Captcha error')
+
 						console.log("authController [REG60]: Captcha error")
 						done(null, false)
 					}
@@ -64,23 +61,36 @@ export default {
 					//If captcha works
 					else {
 						// create user object
-						const USER = new usersModel({ nick, email, password })
-
+						const USER = { nick, email, password }
+						
 						// hashing the password
 						bcrypt.hash(password, 10, (err, hash) => {
 							USER.password = hash
 
-							// saving user object to db
-							USER.save()
-							.then(currentUser => {
-								 res.send({
-								 	message: 'User registered successfully.',
-								 	type: 'positive'
-								 })
-								console.log("authController [REG80]: User registered successfully.")
-								done(null, currentUser)
+							//Check user is already registered
+							let sql = "SELECT ID FROM Users WHERE nick=\""+USER.nick+"\" OR email=\""+USER.email+"\""
+
+							db.query(sql, (err, result) => {
+								if (err) console.log("authController [REG70]", err)
+								
+								if(result.length == 0) {
+
+									//Add user to DB
+									const dt = dateTime.create()
+									const datetime = dt.format('Y-m-d H:M:S')
+									
+									let sql = "INSERT INTO Users ("+
+										"ID, nick, email, password, register_date, last_login, avatar_href, google_ID, facebook_ID, twitter_ID,"+
+										" facebook_link, twitter_link, instagram_link, gender, description, activated, premium, banned) VALUES"+
+										"(NULL, \"" + USER.nick+"\", \"" + USER.email + "\",\"" + USER.password+"\",\""+datetime+"\",\""+datetime+"\",NULL, NULL, NULL, NULL,"+
+										"NULL, NULL, NULL, NULL, NULL, 0, 0, 0)"
+
+									db.query(sql, (err, result) => {
+										if (err) console.log("authController [REG90]", err)
+										res.send('success')
+									})
+								} else res.send('User already registered.')			
 							})
-							.catch(err => console.error("authController [REG82]: User not registered.", err))
 						})
 					}
 				})
@@ -101,12 +111,10 @@ passport.deserializeUser((id, done) => {
 passport.use(
 	new LocalStrategy({
 	  usernameField: 'email',
-	  passwordField: 'password',
-	  passReqToCallback: true
+	  passwordField: 'password'
 	},
-  (req, email, password, done) => {
-		console.log(email, password)
-    usersModel.findOne({ email: email })
+  (email, password, done) => {
+    /*usersModel.findOne({ email: email })
     	.then(currentUser => {
     		if (currentUser) {
 					bcrypt.compare(password, currentUser.password, (err, res) => {
@@ -122,7 +130,7 @@ passport.use(
     			done(null, false)
     		}
     	})
-    	.catch(err => console.error("authController [LOCAL1]:", err))
+    	.catch(err => console.error("authController [LOCAL1]:", err))*/
   })
 )
 
@@ -134,7 +142,7 @@ passport.use(
 		clientSecret: keys.google.clientSecret,
 		callbackURL: '/auth/google/cb'
 	},
-	(accessToken, refreshToken, profile, done) => {
+	(accessToken, refreshToken, profile, done) => {/*
 		usersModel.findOne({ googleID: profile.id })
 			.then(currentUser => {
 				if (currentUser) {
@@ -148,9 +156,9 @@ passport.use(
 					}).save()
 						.then(newUser => done(null, newUser))
 						.catch(err => console.error("authController [GOOGLE1]:", err))
-					}
+				}
 			})
-			.catch(err => console.error("authController [GOOGLE2]:", err))
+			.catch(err => console.error("authController [GOOGLE2]:", err))*/
 	})
 )
 
@@ -159,9 +167,10 @@ passport.use(
 	new FacebookStrategy({
 		clientID: keys.facebook.clientID,
 		clientSecret: keys.facebook.clientSecret,
-		callbackURL: '/auth/facebook/cb'
+		callbackURL: '/auth/facebook/cb',
+		profileFields: ['id', 'email', 'gender', 'link', 'locale', 'name', 'timezone', 'updated_time', 'verified', 'photos'],
 	},
-	(accessToken, refreshToken, profile, done) => {
+	(accessToken, refreshToken, profile, done) => {/*
 		usersModel.findOne({ facebookID: profile.id })
 			.then(currentUser => {
 				if (currentUser) {
@@ -169,8 +178,8 @@ passport.use(
 				} else {
 					// Register user
 					new usersModel({
-						// nick: "nick-dump_" + profile.id,
-						// email: "email-dump_" + profile.id,
+						nick: profile.displayName || profile._json.first_name + " " + profile._json.last_name,
+						email: profile._json.email,
 						facebookID: profile.id
 
 					}).save()
@@ -178,7 +187,7 @@ passport.use(
 						.catch(err => console.error("authController [FB1]:", err))
 				}
 			})
-			.catch(err => console.error("authController [FB2]:", err))
+			.catch(err => console.error("authController [FB2]:", err))*/
 	})
 )
 

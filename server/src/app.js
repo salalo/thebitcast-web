@@ -5,9 +5,9 @@ import express from 'express'
 import morgan from 'morgan'
 import passport from 'passport'
 import bodyParser from 'body-parser'
-import mongoose from 'mongoose'
 import session from 'express-session'
 import { join } from 'path'
+import cors from 'cors'
 
 import users from './routes/users.js'
 import auths from './routes/auths.js'
@@ -16,21 +16,11 @@ import { notFound, catchErrors } from './middlewares/errors.js'
 
 const app = express()
 
-app.use((req, res, next) => {
-  // Website you wish to allow to connect
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:8080")
-  res.setHeader("Access-Control-Allow-Credentials", "true")
-  res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS, POST")
-  res.setHeader("Access-Control-Allow-Headers", "Origin, Content-Type, Accept")
-  next()
-})
-
-// connect to database
-mongoose.connect(keys.mongodb.DB, { useNewUrlParser: true })
-	.then(
-  	() => { console.log('\nConnected successfully!') },
-  	err => console.log('\nCan not connect to the database\n\n' + err)
-  )
+// CORSSSSSSSSSSSS
+app.use(cors({
+  credentials: true,
+  origin: 'http://localhost:8080'
+}))
 
 app.set('view engine', 'pug')
 app.set('views', join(__dirname, 'views'))
