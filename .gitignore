@@ -19,7 +19,7 @@ server/package.json
 server/package-lock.json
 server/.vscode
 server/.idea
-server/src/config/
+server/src/config/keys.js
 
 .DS_Store
 
