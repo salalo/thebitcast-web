@@ -89,6 +89,7 @@ export default {
 										if (err) console.log("authController [REG90]", err)
 										res.send('success')
 									})
+									
 								} else res.send('User already registered.')			
 							})
 						})

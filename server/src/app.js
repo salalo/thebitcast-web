@@ -16,7 +16,6 @@ import { notFound, catchErrors } from './middlewares/errors.js'
 
 const app = express()
 
-// CORSSSSSSSSSSSS
 app.use(cors({
   credentials: true,
   origin: 'http://localhost:8080'
