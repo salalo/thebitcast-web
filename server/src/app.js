@@ -6,7 +6,6 @@ import session from 'express-session'
 import { join } from 'path'
 import cors from 'cors'
 
-import users from './routes/users.js'
 import auths from './routes/auths.js'
 import keys from './config/keys.js'
 import { notFound, catchErrors } from './middlewares/errors.js'
@@ -43,7 +42,6 @@ app.use(passport.session())
 
 // routes
 app.use('/auth', auths())
-app.use('/users', users())
 
 // err handling
 app.use(notFound)

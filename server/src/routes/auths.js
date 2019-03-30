@@ -6,9 +6,7 @@ export default () => {
 	const api = Router()
 
 	//localhost:8081/auth/login
-	api.post('/login', passport.authenticate('local', { session: true }), (req, res) => {
-		res.redirect('http://localhost:8080')
-	})
+	api.post('/login', passport.authenticate('local', { session: true }), (req, res) => res.sendStatus(200))
 
 	//localhost:8081/auth/create
 	api.post('/create', AuthController.register)
@@ -39,9 +37,9 @@ export default () => {
 
 	//Send actual user id if logged
 	//localhost:8081/auth/getId
-	api.get('/getId', (req, res) => {
+	api.get('/getUser', (req, res) => {
 		if (req.isAuthenticated())
-			res.send(req.user._id)
+			res.send(req.user)
 		else
 			res.send('NotLogged')
 	})

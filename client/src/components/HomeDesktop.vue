@@ -29,23 +29,24 @@ import VueCookies from 'vue-cookies'
 export default {
 
 	data () {
-		return{
+		return {
 			isLogged: null
 		}
 	},
 
 	beforeCreate() {
-		//Check user is logged and get his id
+		//Check user is logged and get its parameters
 		axios.defaults.withCredentials = true
 
-		axios.get('http://localhost:8081/auth/getId')
+		axios.get('http://localhost:8081/auth/getUser')
 			.then(res => {
 				if (res.data != 'NotLogged')
+				{
 					this.isLogged = true
-
+				}
 				else {
 					this.isLogged = false
-					VueCookies.remove('session')
+					VueCookies.remove('SESS')
 				}
 
 				console.log(this.isLogged)

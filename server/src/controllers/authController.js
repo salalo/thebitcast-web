@@ -9,7 +9,6 @@ import dateTime from 'node-datetime'
 
 import keys from '../config/keys.js'
 import db from '../config/db.js'
-// import usersModel from '../models/user.js'
 
 export default {
 
@@ -39,7 +38,6 @@ export default {
 
 			//Validation successfull
 			else {
-
 				// Captcha request address
 				let verificationUrl = "https://www.google.com/recaptcha/api/siteverify?"
 					+ "secret=" + keys.captcha.secret
@@ -101,10 +99,18 @@ export default {
 }
 
 
-passport.serializeUser((user, done) => done(null, user._id))
+passport.serializeUser((user, done) => done(null, user.ID))
 
 passport.deserializeUser((id, done) => {
-	usersModel.findById(id, (err, user) => done(null, user))
+
+	let sql = "SELECT * FROM Users WHERE ID="+id
+
+	db.query(sql, (err, result) => {
+
+		delete result[0].password //Delete password from req.user
+		done(null, result[0])
+
+	})
 })
 
 
@@ -115,24 +121,39 @@ passport.use(
 	  passwordField: 'password'
 	},
   (email, password, done) => {
-    /*usersModel.findOne({ email: email })
-    	.then(currentUser => {
-    		if (currentUser) {
-					bcrypt.compare(password, currentUser.password, (err, res) => {
-    				if (!res) {
-	    				console.log("authController [LOCAL3]: Given password is incorrect.")
-	    				done(null, false)
-    				}
-    				else done(null, currentUser)
-					})
-				}
-    		else if (!currentUser) {
-    			console.log("authController [LOCAL2]: User with given data does not exist.")
-    			done(null, false)
-    		}
-    	})
-    	.catch(err => console.error("authController [LOCAL1]:", err))*/
-  })
+
+		let sql = "SELECT * FROM Users WHERE email=\"" + email + "\""
+
+		db.query(sql, (err, result) => {
+			if (err) console.log("authController [Log1]", err)
+			
+			if(result.length > 0) {
+
+				bcrypt.compare(password, result[0].password, (err, res) => {
+
+					delete result[0].password //Delete password from req.user
+					
+					
+					if (res == false) 
+						done(null, false)
+						
+					else {
+						//Loging in
+
+						const dt = dateTime.create()
+						const datetime = dt.format('Y-m-d H:M:S')
+
+						//Update last login time
+						sql = "UPDATE Users SET last_login=\""+datetime+"\" WHERE ID="+result[0].ID
+						db.query(sql)
+
+						//Log in
+						done(null, result[0])
+					}
+				})
+			} else done(null, false)			
+		})
+	})
 )
 
 
@@ -143,23 +164,52 @@ passport.use(
 		clientSecret: keys.google.clientSecret,
 		callbackURL: '/auth/google/cb'
 	},
-	(accessToken, refreshToken, profile, done) => {/*
-		usersModel.findOne({ googleID: profile.id })
-			.then(currentUser => {
-				if (currentUser) {
-					done(null, currentUser)
-				} else {
-					// Register user
-					new usersModel({
-						email: profile.emails[0].value,
-						googleID: profile.id,
+	(accessToken, refreshToken, profile, done) => {
 
-					}).save()
-						.then(newUser => done(null, newUser))
-						.catch(err => console.error("authController [GOOGLE1]:", err))
-				}
-			})
-			.catch(err => console.error("authController [GOOGLE2]:", err))*/
+		let sql = "SELECT * FROM Users WHERE google_ID=" + profile.id
+
+		db.query(sql, (err, result) => {
+			if (err) console.log("authController [GOOGLE170]", err)
+			
+			if (result.length > 0) {
+				//Login
+				delete result[0].password //Delete password from req.user
+				
+				//Loging in
+				const dt = dateTime.create()
+				const datetime = dt.format('Y-m-d H:M:S')
+
+				//Update last login time
+				sql = "UPDATE Users SET last_login=\""+datetime+"\" WHERE ID="+result[0].ID
+				db.query(sql)
+
+				//Log in
+				done(null, result[0])
+			}  else{
+				//Register
+				console.log(profile)
+			
+				const dt = dateTime.create()
+				const datetime = dt.format('Y-m-d H:M:S')
+
+				sql = "INSERT INTO Users ("+
+					"ID, nick, email, password, register_date, last_login, avatar_href, google_ID, facebook_ID, twitter_ID,"+
+					" facebook_link, twitter_link, instagram_link, gender, description, activated, premium, banned) VALUES"+
+					"(NULL, \"" + profile.displayName+"\", NULL,NULL,\""+datetime+"\",\""+datetime+"\",NULL, \""+profile.id+"\", NULL, NULL,"+
+					"NULL, NULL, NULL, NULL, NULL, 0, 0, 0)"
+					
+					
+				db.query(sql, (err, result) => {
+					if (err) console.log("authController [GOOGLE200]", err)
+
+					sql = "SELECT * FROM Users WHERE google_ID="+profile.id
+					db.query(sql, (err1, result1)=>{
+						done(null, result1[0])
+					})
+					
+				})
+			}			
+		})
 	})
 )
 
@@ -171,50 +221,52 @@ passport.use(
 		callbackURL: '/auth/facebook/cb',
 		profileFields: ['id', 'email', 'gender', 'link', 'locale', 'name', 'timezone', 'updated_time', 'verified', 'photos'],
 	},
-	(accessToken, refreshToken, profile, done) => {/*
-		usersModel.findOne({ facebookID: profile.id })
-			.then(currentUser => {
-				if (currentUser) {
-					done(null, currentUser)
-				} else {
-					// Register user
-					new usersModel({
-						nick: profile.displayName || profile._json.first_name + " " + profile._json.last_name,
-						email: profile._json.email,
-						facebookID: profile.id
+	(accessToken, refreshToken, profile, done) => {
 
-					}).save()
-						.then(newUser => done(null, newUser))
-						.catch(err => console.error("authController [FB1]:", err))
-				}
-			})
-			.catch(err => console.error("authController [FB2]:", err))*/
+		let sql = "SELECT * FROM Users WHERE facebook_ID=" + profile.id
+
+		db.query(sql, (err, result) => {
+			if (err) console.log("authController [FB240]", err)
+			
+			if (result.length > 0) {
+				//Login
+				delete result[0].password //Delete password from req.user
+
+				//Loging in
+				const dt = dateTime.create()
+				const datetime = dt.format('Y-m-d H:M:S')
+
+				//Update last login time
+				sql = "UPDATE Users SET last_login=\""+datetime+"\" WHERE ID="+result[0].ID
+				db.query(sql)
+
+				//Log in
+				done(null, result[0])
+			
+			} else{
+				//Register
+				console.log(profile)
+			
+				const dt = dateTime.create()
+				const datetime = dt.format('Y-m-d H:M:S')
+
+				sql = "INSERT INTO Users ("+
+					"ID, nick, email, password, register_date, last_login, avatar_href, google_ID, facebook_ID, twitter_ID,"+
+					" facebook_link, twitter_link, instagram_link, gender, description, activated, premium, banned) VALUES"+
+					"(NULL, \"" + profile._json.first_name + " " + profile._json.last_name +"\", NULL,NULL,\""+datetime+"\",\""+datetime+"\",NULL, NULL, \""+profile.id+"\", NULL,"+
+					"NULL, NULL, NULL, NULL, NULL, 0, 0, 0)"
+					
+					
+				db.query(sql, (err, result) => {
+					if (err) console.log("authController [FB280]", err)
+
+					sql = "SELECT * FROM Users WHERE facebook_ID="+profile.id
+					db.query(sql, (err1, result1)=>{
+						done(null, result1[0])
+					})
+					
+				})
+			}			
+		})
 	})
 )
-
-// passport.use(
-// 	new twitterStrategy({
-// 		consumerKey: keys.twitter.clientID,
-// 		consumerSecret: keys.twitter.clientSecret,
-// 		callbackURL: '/auth/twitter/cb'
-// 	},
-// 	(accessToken, refreshToken, profile, done) => {
-// 		user.findOne({ twitterID: profile.id })
-// 			.then(currentUser => {
-// 				if (currentUser) {
-// 					console.log('user already exists')
-// 					// log in
-// 					done(null, currentUser)
-// 				}
-// 				else {
-// 					new user({
-// 						nick: profile.displayName,
-// 						twitterID: profile.id
-// 					}).save()
-// 						.then(newUser => done(null, newUser))
-// 						.catch(err => console.error(err))
-// 				}
-// 			})
-// 			.catch(err => console.error(err))
-// 	})
-// )

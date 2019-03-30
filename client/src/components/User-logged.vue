@@ -3,6 +3,7 @@
 		color="grey lighten-4"
 		v-on:click="logout()"
 	>
+		<span>{{actualUser.nick}}</span>
 		<img src="../assets/crAvatar.jpg" alt="avatar" v-on:click="logout()">
 	</v-avatar>
 </template>
@@ -13,18 +14,36 @@ import VueCookie from 'vue-cookies'
 
 export default {
 
-methods: {
-	logout() {
-		axios.get('http://localhost:8081/auth/logout')
-			.then(res => resolve(res))
-			.catch(err => console.log(err))
+	data() {
+		return {
+			actualUser: {
+				nick: ""
+			}
+		}
+	},
 
-		VueCookie.remove("SESS")
-		location.reload()
+	created() {
+		axios.defaults.withCredentials = true
+
+		axios.get('http://localhost:8081/auth/getUser')
+			.then(res => {
+				this.actualUser = res.data
+			})
+			.catch(err => console.log( err))
+	},
+
+	methods: {
+		logout() {
+			axios.get('http://localhost:8081/auth/logout')
+				.then(res => resolve(res))
+				.catch(err => console.log(err))
+
+			VueCookie.remove("SESS")
+			location.reload()
+		}
 	}
 }
 
-}
 </script>
 
 <style lang="scss" scoped>

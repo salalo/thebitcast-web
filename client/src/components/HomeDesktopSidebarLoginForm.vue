@@ -161,7 +161,12 @@ export default {
 			serverError: "",
 			show1: false,
       password: 'Password',
-      alertMassage: '',
+			alertMassage: '',
+			
+			Notifs: {
+				incorrectLoginData: "Email or password is incorrect. 🤔",
+				incorrectRegisterData: "Data you\'ve inserted is incorrect, stick to requirements please. 😘"
+			},
 
       // rules: {
       //   required: value => !!value || 'Required.',
@@ -213,33 +218,30 @@ export default {
 			const resultRegister = Joi.validate(newUser, schemaRegister)
 			const resultLogin = Joi.validate(logingUser, schemaLogin)
 
+			// REGISTRATION POST
 			if (this.fontStateAction === "/auth/create") {
 				if (resultRegister.error === null) {
 
+					// Creating user
 					axios.post('http://localhost:8081/auth/create', newUser)
-						.then(res => {
-							if(res.data === 'success') {
+						.then(reg_res => {
 								//login after registration
-								
 								axios.post('http://localhost:8081/auth/login', logingUser)
-									.then(res => location.reload())
-									.catch(err => this.showAlert('Email or password is incorrect. 🤔'))
-							}
-							else this.showAlert(res.data)
+									.then(login_res => location.reload())
+									.catch(err => console.log(err))
 						})
-						.catch(err => this.showAlert('Couldn\'t register the account, try again later. 🤕'))
-
-				} else this.showAlert('Data you\'ve inserted is incorrect, stick to requirements please. 😘')
+						.catch(err => this.Notifs.incorrectRegisterData)
+				} else this.showAlert(this.Notifs.incorrectRegisterData)
 			}
 
+			// LOGIN POST
 			else if (this.fontStateAction === "/auth/login") {
 				if (resultLogin.error === null) {
-
 					axios.post('http://localhost:8081/auth/login', logingUser)
-						.then(res => location.reload())
-						.catch(err => this.showAlert('Email or password is incorrect. 🤔'))
-
-				} else this.showAlert('Email or password is incorrect. 🤔')
+						.then(login_res => location.reload())
+						.catch(err => this.showAlert(this.Notifs.incorrectLoginData))
+						
+				} else this.showAlert(this.Nofits.incorrectLoginData)
 			}
 		},
 
