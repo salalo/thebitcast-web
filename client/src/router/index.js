@@ -9,6 +9,10 @@ import Feedback from '@/views/Feedback.vue'
 import Support from '@/views/Support.vue'
 import Report from '@/views/Report.vue'
 import Premium from '@/views/Premium.vue'
+import ProfileSettings from '@/components/logged/user_settings/Profile.vue'
+import AccountSettings from '@/components/logged/user_settings/Account.vue'
+import NotificationSettings from '@/components/logged/user_settings/Notifications.vue'
+
 
 Vue.use(Router)
 
@@ -17,7 +21,13 @@ export default new Router({
   routes: [
     {
       path: '/',
-			component: Home
+			component: Home,
+
+      children: [
+        { path: '/profile', component: ProfileSettings },
+        { path: '/account', component: AccountSettings },
+        { path: '/notifs', component: NotificationSettings }
+      ]
     },
 
     {
