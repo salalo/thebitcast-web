@@ -52,6 +52,7 @@
 
 <script>
 import axios from 'axios'
+import VueCookie from 'vue-cookies'
 
 
 export default {
@@ -59,7 +60,7 @@ export default {
 		return {
 			actualUser: {
 				nick: "",
-				email: "kuku@gmail.com"
+				email: ""
 			}
 		}
 	},
@@ -70,6 +71,7 @@ export default {
 		axios.get('http://localhost:8081/auth/getUser')
 			.then(res => {
 				this.actualUser.nick = res.data.nick
+				this.actualUser.email = res.data.email
 			})
 			.catch(err => console.log( err))
 	},

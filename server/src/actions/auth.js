@@ -7,6 +7,7 @@ import bcrypt from 'bcrypt'
 import request from 'request'
 import dateTime from 'node-datetime'
 
+import userActions from './users.js'
 import keys from '../config/keys.js'
 import db from '../config/db.js'
 
@@ -65,30 +66,12 @@ export default {
 						bcrypt.hash(password, 10, (err, hash) => {
 							USER.password = hash
 
-							//Check user is already registered
-							let sql = "SELECT ID FROM Users WHERE nick=\""+USER.nick+"\" OR email=\""+USER.email+"\""
-
-							db.query(sql, (err, result) => {
-								if (err) console.log("authController [REG70]", err)
-								
-								if(result.length == 0) {
-
-									//Add user to DB
-									const dt = dateTime.create()
-									const datetime = dt.format('Y-m-d H:M:S')
-									
-									let sql = "INSERT INTO Users ("+
-										"ID, nick, email, password, register_date, last_login, avatar_href, google_ID, facebook_ID, twitter_ID,"+
-										" facebook_link, twitter_link, instagram_link, gender, description, activated, premium, banned) VALUES"+
-										"(NULL, \"" + USER.nick+"\", \"" + USER.email + "\",\"" + USER.password+"\",\""+datetime+"\",\""+datetime+"\",NULL, NULL, NULL, NULL,"+
-										"NULL, NULL, NULL, NULL, NULL, 0, 0, 0)"
-
-									db.query(sql, (err, result) => {
-										if (err) console.log("authController [REG90]", err)
-										res.send('success')
-									})
-									
-								} else res.send('User already registered.')			
+							userActions.checkUserExists(USER.nick, USER.email, exist => {
+								if(!exist)
+								{
+									userActions.addUser(USER, 'local')
+									res.sendStatus(200)
+								} else res.send('User already registered')
 							})
 						})
 					}
@@ -101,17 +84,9 @@ export default {
 
 passport.serializeUser((user, done) => done(null, user.ID))
 
-passport.deserializeUser((id, done) => {
-
-	let sql = "SELECT * FROM Users WHERE ID="+id
-
-	db.query(sql, (err, result) => {
-
-		delete result[0].password //Delete password from req.user
-		done(null, result[0])
-
-	})
-})
+passport.deserializeUser((id, done) => userActions.getUserByID(id, USER => {
+	done(null, USER)
+}))
 
 
 // Passport local authentication strategy
@@ -121,37 +96,22 @@ passport.use(
 	  passwordField: 'password'
 	},
   (email, password, done) => {
+		userActions.getUserByUnique(email, 'local', result => {
+			if(result)
+			{
+				bcrypt.compare(password, result.password, (err, res) => {
 
-		let sql = "SELECT * FROM Users WHERE email=\"" + email + "\""
-
-		db.query(sql, (err, result) => {
-			if (err) console.log("authController [Log1]", err)
-			
-			if(result.length > 0) {
-
-				bcrypt.compare(password, result[0].password, (err, res) => {
-
-					delete result[0].password //Delete password from req.user
-					
-					
+					delete result.password //Delete password from req.user
 					if (res == false) 
 						done(null, false)
 						
 					else {
 						//Loging in
-
-						const dt = dateTime.create()
-						const datetime = dt.format('Y-m-d H:M:S')
-
-						//Update last login time
-						sql = "UPDATE Users SET last_login=\""+datetime+"\" WHERE ID="+result[0].ID
-						db.query(sql)
-
-						//Log in
-						done(null, result[0])
+						userActions.updateLastLogin(result.ID)
+						done(null, result)
 					}
 				})
-			} else done(null, false)			
+			} else done(null, false)
 		})
 	})
 )
@@ -166,52 +126,25 @@ passport.use(
 	},
 	(accessToken, refreshToken, profile, done) => {
 
-		let sql = "SELECT * FROM Users WHERE google_ID=" + profile.id
+		userActions.getUserByUnique(profile.id, 'google', result => {
+			if(result){
+				//  Login
+				delete result.password //Delete password from req.user
+				userActions.updateLastLogin(result.ID)
+				done(null, result)
 
-		db.query(sql, (err, result) => {
-			if (err) console.log("authController [GOOGLE170]", err)
-			
-			if (result.length > 0) {
-				//Login
-				delete result[0].password //Delete password from req.user
-				
-				//Loging in
-				const dt = dateTime.create()
-				const datetime = dt.format('Y-m-d H:M:S')
-
-				//Update last login time
-				sql = "UPDATE Users SET last_login=\""+datetime+"\" WHERE ID="+result[0].ID
-				db.query(sql)
-
-				//Log in
-				done(null, result[0])
-			}  else{
-				//Register
-				console.log(profile)
-			
-				const dt = dateTime.create()
-				const datetime = dt.format('Y-m-d H:M:S')
-
-				sql = "INSERT INTO Users ("+
-					"ID, nick, email, password, register_date, last_login, avatar_href, google_ID, facebook_ID, twitter_ID,"+
-					" facebook_link, twitter_link, instagram_link, gender, description, activated, premium, banned) VALUES"+
-					"(NULL, \"" + profile.displayName+"\", NULL,NULL,\""+datetime+"\",\""+datetime+"\",NULL, \""+profile.id+"\", NULL, NULL,"+
-					"NULL, NULL, NULL, NULL, NULL, 0, 0, 0)"
-					
-					
-				db.query(sql, (err, result) => {
-					if (err) console.log("authController [GOOGLE200]", err)
-
-					sql = "SELECT * FROM Users WHERE google_ID="+profile.id
-					db.query(sql, (err1, result1)=>{
-						done(null, result1[0])
-					})
-					
+			} else {
+				//  Register
+				userActions.addUser(profile, 'google')
+				userActions.getUserByUnique(profile.id, 'google', result1 => {
+					delete result1.password //Delete password from req.user
+					done(null, result1)
 				})
-			}			
+			}
 		})
 	})
 )
+
 
 // Setup passport facebook authentication 
 passport.use(
@@ -223,50 +156,21 @@ passport.use(
 	},
 	(accessToken, refreshToken, profile, done) => {
 
-		let sql = "SELECT * FROM Users WHERE facebook_ID=" + profile.id
+		userActions.getUserByUnique(profile.id, 'facebook', result => {
+			if(result){
+				//  Login
+				delete result.password //Delete password from req.user
+				userActions.updateLastLogin(result.ID)
+				done(null, result)
 
-		db.query(sql, (err, result) => {
-			if (err) console.log("authController [FB240]", err)
-			
-			if (result.length > 0) {
-				//Login
-				delete result[0].password //Delete password from req.user
-
-				//Loging in
-				const dt = dateTime.create()
-				const datetime = dt.format('Y-m-d H:M:S')
-
-				//Update last login time
-				sql = "UPDATE Users SET last_login=\""+datetime+"\" WHERE ID="+result[0].ID
-				db.query(sql)
-
-				//Log in
-				done(null, result[0])
-			
-			} else{
-				//Register
-				console.log(profile)
-			
-				const dt = dateTime.create()
-				const datetime = dt.format('Y-m-d H:M:S')
-
-				sql = "INSERT INTO Users ("+
-					"ID, nick, email, password, register_date, last_login, avatar_href, google_ID, facebook_ID, twitter_ID,"+
-					" facebook_link, twitter_link, instagram_link, gender, description, activated, premium, banned) VALUES"+
-					"(NULL, \"" + profile._json.first_name + " " + profile._json.last_name +"\", NULL,NULL,\""+datetime+"\",\""+datetime+"\",NULL, NULL, \""+profile.id+"\", NULL,"+
-					"NULL, NULL, NULL, NULL, NULL, 0, 0, 0)"
-					
-					
-				db.query(sql, (err, result) => {
-					if (err) console.log("authController [FB280]", err)
-
-					sql = "SELECT * FROM Users WHERE facebook_ID="+profile.id
-					db.query(sql, (err1, result1)=>{
-						done(null, result1[0])
-					})
-					
+			} else {
+				//  Register
+				userActions.addUser(profile, 'facebook')
+				userActions.getUserByUnique(profile.id, 'facebook', result1 => {
+					delete result1.password //Delete password from req.user
+					done(null, result1)
 				})
-			}			
+			}
 		})
 	})
 )

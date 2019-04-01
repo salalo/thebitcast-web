@@ -48,39 +48,7 @@ export default {
 			volume: 100,
 			speedMul: 1,
 		}
-	},
-
-	// methods: {
-	// 	addToBookmarks() {
-	// 		// if added
-	// 		if (this.prefab === 'fas'){
-	// 			this.prefab = 'far';
-	// 			// get title, ID or URL of podcast
-	// 			// post to users db
-	// 		}
-	// 		// if removed
-	// 		else{
-	// 			this.prefab = 'fas';
-	// 			// get title, ID or URL of podcast
-	// 			// find in db and remove
-	// 		}
-	// 	}
-	// },
-	// mounted() {
-	// 	this.volume = localStorage.getItem('player-volume')
-	// 	this.speedMul = localStorage.getItem('player-speed-multiplier')
-	// },
-	
-	// updated() {
-	// 	if(this.volume === 0)
-	// 		this.volumeIcon = 'volume-mute'
-
-	// 	else
-	// 		this.volumeIcon = 'volume-up'
-
-	// 	localStorage.setItem('player-volume', this.volume)
-	// 	localStorage.setItem('player-speed-multiplier', this.speedMul)
-	// }
+	}
 }
 </script>
 

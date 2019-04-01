@@ -5,9 +5,9 @@
       v-bind:key="category"
     >
 
-      <i class="material-icons icon">{{category.icon}}</i>
+      <i class="material-icons icon">{{ category.icon }}</i>
       <span>{{ category.text }}</span>
-      <i class="material-icons live-dot">{{category.circle}}</i>
+      <i class="material-icons live-dot">{{ category.circle }}</i>
     </a>
   </div>
 </template>

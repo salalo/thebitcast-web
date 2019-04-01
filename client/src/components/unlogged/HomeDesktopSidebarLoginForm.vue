@@ -225,10 +225,12 @@ export default {
 					// Creating user
 					axios.post('http://localhost:8081/auth/create', newUser)
 						.then(reg_res => {
+							if(!reg_res.data){
 								//login after registration
 								axios.post('http://localhost:8081/auth/login', logingUser)
 									.then(login_res => location.reload())
 									.catch(err => console.log(err))
+							}
 						})
 						.catch(err => this.Notifs.incorrectRegisterData)
 				} else this.showAlert(this.Notifs.incorrectRegisterData)

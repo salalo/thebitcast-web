@@ -15,11 +15,6 @@
 				<img src="../../../assets/crAvatar.jpg" alt="avatar">
 			</div>
 
-			<div class="name">
-				<span>Name</span>
-				<span>{{  }}</span>
-			</div>
-
 			<div class="description">
 				<span>Description</span>
 				<span>{{  }}</span>
