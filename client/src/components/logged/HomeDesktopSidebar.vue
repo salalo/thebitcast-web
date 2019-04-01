@@ -84,7 +84,7 @@
 
 <script>
 
-import CategoriesBar from './CategoriesBar.vue'
+import CategoriesBar from './HomeDesktopSidebarCategoriesBar.vue'
 
 export default {
   components: {

@@ -1,10 +1,8 @@
 <template>
-	<main>
-
-		<section class="recommended">
-			<span>Recommended</span>
-
-			<div class="rocommended__horizontal">
+	<main id="card-panel-container">
+		<div class="stack">
+			<section class="recommended">
+				<users-deck-top></users-deck-top>
 
 				<swiper :options="swiperOption">
 					<swiper-slide><card/></swiper-slide>
@@ -18,13 +16,10 @@
 					<swiper-slide><card/></swiper-slide>
 					<swiper-slide><card/></swiper-slide>
 				</swiper>
-			</div>
-		</section>
+			</section>
 
-		<section class="popular">
-			<span>Most popular</span>
-
-			<div class="popular__horizontal">
+			<section class="popular">
+				<users-deck-bottom></users-deck-bottom>
 
 				<swiper :options="swiperOption">
 					<swiper-slide><card/></swiper-slide>
@@ -38,15 +33,18 @@
 					<swiper-slide><card/></swiper-slide>
 					<swiper-slide><card/></swiper-slide>
 				</swiper>
-			</div>
-		</section>
+			</section>
+		</div>
 	</main>
 </template>
 
 <script>
-import Card from './Card.vue'
+import Card from '../Card.vue'
 import 'swiper/dist/css/swiper.css'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
+import DeckTop from './HomeDesktopPanelDeckTop.vue'
+import DeckBottom from './HomeDesktopPanelDeckBottom.vue'
+
 
 export default {
 	data() {
@@ -54,15 +52,17 @@ export default {
 			swiperOption: {
 				direction: 'horizontal',
 				mousewheel: true,
-				slidesPerView: 5.5,
+				slidesPerView: 7,
 				spaceBetween: 30,
 				freeMode: true
-			}
+			},
 		}
 	},
 
 	components: {
 		'card': Card,
+		'users-deck-top': DeckTop,
+		'users-deck-bottom': DeckBottom,
 		swiper,
 		swiperSlide
 	}
@@ -75,30 +75,36 @@ export default {
 
 // minus width of Sidebar
 main {
-	width: calc(100vw - 640px);
+	@include transition(0s, transform .5s);
+	width: calc(100vw - 300px);
 	height: calc(100vh - 80px);
 	position: fixed;
 	bottom: 0;
 	right: 0;
 }
 
-.recommended, .popular {
-	width: 100%;
-	height: 50%;
-	padding: 0 0 0 30px;
-	display: flex;
-  justify-content: center;
-	flex-direction: column;
+.stack {
+	margin-left: 30px;
+	width: inherit;
+	position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
 
-	span {
-		position: absolute;
-		font-size: 18px;
-		top: 160px;
+.recommended, .popular {
+
+	span{
+		font-size: 20px;
+		position: fixed;
+		top: -40px;
 	}
 }
 .popular {
-	margin-top: -100px;
-	span { top: 560px; }
+	margin-top: 50px;
+	// span { top: calc(50% - 180px); } for 3 row
+	span { top: calc(50% + 10px); }
 }
 
 .swiper-slide {

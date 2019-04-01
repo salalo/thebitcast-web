@@ -1,7 +1,7 @@
 <template>
 	<aside>
 		<header>
-			<img src="../../public/logos/logo_red_64.png">
+			<img src="../../../public/logos/logo_red_64.png">
 
 			<p>
 				Our mission is to promote podcasting, let every single creator<br>
@@ -25,7 +25,7 @@
 
 <script>
 
-import LoginForm from './HomeDesktopSidebarLoginForm.vue';
+import LoginForm from './HomeDesktopSidebarLoginForm.vue'
 
 export default {
 	components: {

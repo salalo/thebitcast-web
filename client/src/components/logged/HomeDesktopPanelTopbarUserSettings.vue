@@ -4,7 +4,7 @@
 		v-on:click="logout()"
 	>
 		<span>{{actualUser.nick}}</span>
-		<img src="../assets/crAvatar.jpg" alt="avatar" v-on:click="logout()">
+		<img src="../../assets/crAvatar.jpg" alt="avatar" v-on:click="logout()">
 	</v-avatar>
 </template>
 

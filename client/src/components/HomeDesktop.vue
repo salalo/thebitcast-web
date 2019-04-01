@@ -17,12 +17,12 @@
 </template>
 
 <script>
-import Sidebar from './HomeDesktopSidebar.vue'
-import SidebarLogged from './HomeDesktopSidebar-logged.vue'
-import Panel from './HomeDesktopPanel.vue'
-import PanelLogged from './HomeDesktopPanel-logged.vue'
-import TopbarLogged from './HomeDesktopPanelTopbar-logged.vue'
-import Topbar from './HomeDesktopPanelTopbar.vue'
+import Sidebar from './unlogged/HomeDesktopSidebar.vue'
+import SidebarLogged from './logged/HomeDesktopSidebar.vue'
+import Panel from './unlogged/HomeDesktopPanel.vue'
+import PanelLogged from './logged/HomeDesktopPanel.vue'
+import TopbarLogged from './logged/HomeDesktopPanelTopbar.vue'
+import Topbar from './unlogged/HomeDesktopPanelTopbar.vue'
 import axios from 'axios'
 import VueCookies from 'vue-cookies'
 

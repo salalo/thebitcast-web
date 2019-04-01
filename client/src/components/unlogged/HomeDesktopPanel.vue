@@ -1,8 +1,10 @@
 <template>
-	<main id="card-panel-container">
-		<div class="stack">
-			<section class="recommended">
-				<users-deck-top></users-deck-top>
+	<main>
+
+		<section class="recommended">
+			<span>Recommended</span>
+
+			<div class="rocommended__horizontal">
 
 				<swiper :options="swiperOption">
 					<swiper-slide><card/></swiper-slide>
@@ -16,10 +18,13 @@
 					<swiper-slide><card/></swiper-slide>
 					<swiper-slide><card/></swiper-slide>
 				</swiper>
-			</section>
+			</div>
+		</section>
 
-			<section class="popular">
-				<users-deck-bottom></users-deck-bottom>
+		<section class="popular">
+			<span>Most popular</span>
+
+			<div class="popular__horizontal">
 
 				<swiper :options="swiperOption">
 					<swiper-slide><card/></swiper-slide>
@@ -33,18 +38,15 @@
 					<swiper-slide><card/></swiper-slide>
 					<swiper-slide><card/></swiper-slide>
 				</swiper>
-			</section>
-		</div>
+			</div>
+		</section>
 	</main>
 </template>
 
 <script>
-import Card from './Card.vue';
-import 'swiper/dist/css/swiper.css';
-import { swiper, swiperSlide } from 'vue-awesome-swiper';
-import DeckTop from './HomeDesktopPanelDeckTop-logged.vue';
-import DeckBottom from './HomeDesktopPanelDeckBottom-logged.vue';
-
+import Card from '../Card.vue'
+import 'swiper/dist/css/swiper.css'
+import { swiper, swiperSlide } from 'vue-awesome-swiper'
 
 export default {
 	data() {
@@ -52,17 +54,15 @@ export default {
 			swiperOption: {
 				direction: 'horizontal',
 				mousewheel: true,
-				slidesPerView: 7,
+				slidesPerView: 5.5,
 				spaceBetween: 30,
 				freeMode: true
-			},
+			}
 		}
 	},
 
 	components: {
 		'card': Card,
-		'users-deck-top': DeckTop,
-		'users-deck-bottom': DeckBottom,
 		swiper,
 		swiperSlide
 	}
@@ -75,36 +75,30 @@ export default {
 
 // minus width of Sidebar
 main {
-	@include transition(0s, transform .5s);
-	width: calc(100vw - 300px);
+	width: calc(100vw - 640px);
 	height: calc(100vh - 80px);
 	position: fixed;
 	bottom: 0;
 	right: 0;
 }
 
-.stack {
-	margin-left: 30px;
-	width: inherit;
-	position: absolute;
-  top: 50%;
-  -webkit-transform: translateY(-50%);
-  -moz-transform: translateY(-50%);
-  transform: translateY(-50%);
-}
-
 .recommended, .popular {
+	width: 100%;
+	height: 50%;
+	padding: 0 0 0 30px;
+	display: flex;
+  justify-content: center;
+	flex-direction: column;
 
-	span{
-		font-size: 20px;
-		position: fixed;
-		top: -40px;
+	span {
+		position: absolute;
+		font-size: 18px;
+		top: 160px;
 	}
 }
 .popular {
-	margin-top: 50px;
-	// span { top: calc(50% - 180px); } for 3 row
-	span { top: calc(50% + 10px); }
+	margin-top: -100px;
+	span { top: 560px; }
 }
 
 .swiper-slide {
