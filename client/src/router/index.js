@@ -1,18 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/views/Home.vue'
-import AboutUs from '@/views/AboutUs.vue'
-import Contact from '@/views/Contact.vue'
-import Copyright from '@/views/Copyright.vue'
-import PrivacyPolicy from '@/views/PrivacyPolicy.vue'
-import Feedback from '@/views/Feedback.vue'
-import Support from '@/views/Support.vue'
-import Report from '@/views/Report.vue'
-import Premium from '@/views/Premium.vue'
 import ProfileSettings from '@/components/logged/user_settings/Profile.vue'
 import AccountSettings from '@/components/logged/user_settings/Account.vue'
 import NotificationSettings from '@/components/logged/user_settings/Notifications.vue'
-
 
 Vue.use(Router)
 
@@ -22,7 +13,6 @@ export default new Router({
     {
       path: '/',
 			component: Home,
-
       children: [
         { path: '/profile', component: ProfileSettings },
         { path: '/account', component: AccountSettings },
@@ -32,42 +22,42 @@ export default new Router({
 
     {
       path: '/about-us',
-			component: AboutUs
+			component: () => import('@/views/AboutUs.vue')
     },
 
     {
       path: '/contact',
-      component: Contact
+      component: () => import('@/views/Contact.vue')
     },
 
     {
       path: '/copyright',
-      component: Copyright
+      component: () => import('@/views/Copyright.vue')
     },
 
     {
       path: '/privacy-policy',
-      component: PrivacyPolicy
+      component: () => import('@/views/PrivacyPolicy.vue')
     },
 
     {
       path: '/feedback',
-      component: Feedback
+      component: () => import('@/views/Feedback.vue')
     },
 
     {
       path: '/support',
-      component: Support
+      component: () => import('@/views/Support.vue')
     },
 
     {
       path: '/report',
-      component: Report
+      component: () => import('@/views/Report.vue')
     },
 
     {
       path: '/premium',
-      component: Premium
+      component: () => import('@/views/Premium.vue')
     }
   ]
 })

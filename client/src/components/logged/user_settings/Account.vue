@@ -12,12 +12,12 @@
 		<section>
 			<div class="email">
 				<span>Email</span>
-				<span>{{  }}</span>
+				<span>{{ actualUser.email }}</span>
 			</div>
 
 			<div class="username">
 				<span>Username</span>
-				<span>{{  }}</span>
+				<span>{{ actualUser.nick }}</span>
 			</div>
 
 			<div class="password">
@@ -27,12 +27,12 @@
 
 			<div class="language">
 				<span>Language</span>
-				<span>{{  }}</span>
+				<span>{{ actualUser.language }}</span>
 			</div>
 
 			<div class="location">
 				<span>Location</span>
-				<span>{{  }}</span>
+				<span>{{ actualUser.location }}</span>
 			</div>
 
 			<div class="btn">
@@ -55,7 +55,10 @@ export default {
 		return {
 			actualUser: {
 				nick: "",
-				email: "kuku@gmail.com"
+				email: "",
+				password: "",
+				language: "",
+				location: ""
 			}
 		}
 	},
@@ -66,6 +69,7 @@ export default {
 		axios.get('http://localhost:8081/auth/getUser')
 			.then(res => {
 				this.actualUser.nick = res.data.nick
+				this.actualUser.email = res.data.email
 			})
 			.catch(err => console.log( err))
 	}

@@ -8,7 +8,7 @@
           <i class="material-icons icon">home</i>
           <span class="taker-home">Home</span>        
         </router-link>
-        <a @click="changeCategoriesBar()">
+        <a @click="toggleCategories" v-click-outside="hideCategories">
           <i class="material-icons icon">view_list</i>
           <span class="taker-categories">Categories</span>        
         </a>
@@ -85,6 +85,7 @@
 <script>
 
 import CategoriesBar from './HomeDesktopSidebarCategoriesBar.vue'
+import ClickOutside from 'vue-click-outside'
 
 export default {
   components: {
@@ -99,34 +100,36 @@ export default {
   },
 
   methods: {
-    changeCategoriesBar() {
+    toggleCategories() {
       this.isActive.categories = !this.isActive.categories
       let cardPanel = document.getElementById('card-panel-container')
       let categoriesSidebar = document.getElementsByClassName('categories-bar')[0]
-      let topbar = document.getElementsByClassName('topbar-logged')[0]
 
-      if(this.isActive.categories) {
-        window.onclick = e => {
-          if(e.target === cardPanel || e.target === topbar) {
-            this.$store.commit('CHANGE_CATBAR', false)
-            cardPanel.style.transform = "translateX(0)"
-            categoriesSidebar.style.transform = "translateX(0)"
-            this.isActive.categories = false
-          }
-        }
+      // this.$store.commit('CHANGE_CATBAR', true)
+      categoriesSidebar.style.transform = "translateX(300px)"
+      cardPanel.style.transform = "translateX(300px)"
 
-        this.$store.commit('CHANGE_CATBAR', true)
-        categoriesSidebar.style.transform = "translateX(300px)"
-        cardPanel.style.transform = "translateX(300px)"
-      }
+    },
 
-      else {
-        this.$store.commit('CHANGE_CATBAR', false)
-        cardPanel.style.transform = "translateX(0)"
-        categoriesSidebar.style.transform = "translateX(0)"
-      }
+    hideCategories() {
+      this.isActive.categories = false
+      let cardPanel = document.getElementById('card-panel-container')
+      let categoriesSidebar = document.getElementsByClassName('categories-bar')[0]
+
+      // this.$store.commit('CHANGE_CATBAR', false)
+      cardPanel.style.transform = "translateX(0)"
+      categoriesSidebar.style.transform = "translateX(0)"
     }
-  }
+  },
+
+  mounted () {
+    // prevent click outside event with popupItem.
+    this.popupItem = this.$el
+  },
+
+  directives: {
+    ClickOutside
+  },
 }
 
 </script>

@@ -5,11 +5,9 @@ import LocalStrategy from 'passport-local'
 import Joi from 'joi'
 import bcrypt from 'bcrypt'
 import request from 'request'
-import dateTime from 'node-datetime'
 
 import userActions from './users.js'
 import keys from '../config/keys.js'
-import db from '../config/db.js'
 
 export default {
 
@@ -66,9 +64,8 @@ export default {
 						bcrypt.hash(password, 10, (err, hash) => {
 							USER.password = hash
 
-							userActions.checkUserExists(USER.nick, USER.email, exist => {
-								if(!exist)
-								{
+							userActions.checkLocalUserExists(USER.nick, USER.email, exist => {
+								if(!exist) {
 									userActions.addUser(USER, 'local')
 									res.sendStatus(200)
 								} else res.send('User already registered')
@@ -127,7 +124,7 @@ passport.use(
 	(accessToken, refreshToken, profile, done) => {
 
 		userActions.getUserByUnique(profile.id, 'google', result => {
-			if(result){
+			if (result) {
 				//  Login
 				delete result.password //Delete password from req.user
 				userActions.updateLastLogin(result.ID)
@@ -137,7 +134,7 @@ passport.use(
 				//  Register
 				userActions.addUser(profile, 'google')
 				userActions.getUserByUnique(profile.id, 'google', result1 => {
-					delete result1.password //Delete password from req.user
+					// delete result1.password //Delete password from req.user
 					done(null, result1)
 				})
 			}
@@ -167,7 +164,7 @@ passport.use(
 				//  Register
 				userActions.addUser(profile, 'facebook')
 				userActions.getUserByUnique(profile.id, 'facebook', result1 => {
-					delete result1.password //Delete password from req.user
+					// delete result1.password //Delete password from req.user
 					done(null, result1)
 				})
 			}

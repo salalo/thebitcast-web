@@ -3,27 +3,43 @@
 		<img
 			src="../../assets/crAvatar.jpg"
 			alt="avatar"
-			v-on:click="isHidden = !isHidden"
+			v-click-outside="hide"
+			@click="toggle"
 		>
-		<general-settings v-bind:class="{ hidden: isHidden }"></general-settings>
+		<general-settings v-show="isActive"></general-settings>
 	</v-avatar>
 </template>
 
 <script>
 import axios from 'axios'
 import VueCookie from 'vue-cookies'
+import ClickOutside from 'vue-click-outside'
 import GeneralSettings from './user_settings/General.vue'
 
 export default {
 	data() {
 		return {
-			isHidden: true
+			isActive: false
 		}
 	},
 
 	components: {
 		'general-settings': GeneralSettings
 	},
+
+	methods: {
+    toggle () { this.isActive = !this.isActive },
+    hide () { this.isActive = false }
+  },
+
+  mounted () {
+    // prevent click outside event with popupItem.
+    this.popupItem = this.$el
+  },
+ 
+  directives: {
+    ClickOutside
+  },
 
 	created() {
 		axios.defaults.withCredentials = true

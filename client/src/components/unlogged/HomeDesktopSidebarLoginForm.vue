@@ -42,7 +42,6 @@
 
 			<v-text-field
 				dark
-				:required=!isActive
 				minlength=4
 				maxlength=20
 				pattern="(?=.*[a-z]).{4,20}"
@@ -50,6 +49,7 @@
 				value=""
 				type="text"
 				v-model="User.nick"
+				:required=!isActive
 				label="Name"
 				color="#F44336"
 				class="input"
@@ -225,12 +225,12 @@ export default {
 					// Creating user
 					axios.post('http://localhost:8081/auth/create', newUser)
 						.then(reg_res => {
-							if(!reg_res.data){
+							// if(!reg_res.data){
 								//login after registration
 								axios.post('http://localhost:8081/auth/login', logingUser)
 									.then(login_res => location.reload())
 									.catch(err => console.log(err))
-							}
+							// }
 						})
 						.catch(err => this.Notifs.incorrectRegisterData)
 				} else this.showAlert(this.Notifs.incorrectRegisterData)
