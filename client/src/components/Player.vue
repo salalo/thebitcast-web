@@ -4,9 +4,7 @@
       <i class="material-icons">replay_10</i>
 
       <i class="material-icons" @click="isActive = true" :class="{ hidden: isActive}">pause</i>
-
       <i class="material-icons" @click="isActive = false" :class="{ hidden: !isActive}">play_arrow</i>
-
       <i class="material-icons">forward_10</i>
     </header>
 

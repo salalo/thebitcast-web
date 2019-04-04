@@ -1,5 +1,5 @@
 <template>
-	<section class="login-form" v-bind:style="{height: formHeight + 'px'}">
+	<section class="login-form" :style="{height: formHeight + 'px'}">
 		<header class="row">
 			<a href="http://localhost:8081/auth/google">
 				<v-btn
@@ -53,8 +53,8 @@
 				label="Name"
 				color="#F44336"
 				class="input"
-				v-bind:class="{ hidden: isActive }"
-      ></v-text-field>
+				:class="{ hidden: isActive }"
+			></v-text-field>
 
 			<v-text-field
 				dark
@@ -69,7 +69,7 @@
 				label="Email"
 				color="#F44336"
 				class="input"
-      ></v-text-field>
+			></v-text-field>
 			
 			<v-text-field
 				dark
@@ -84,13 +84,13 @@
 				v-model.trim="User.password"
 				:append-icon="show1 ? 'visibility' : 'visibility_off'"
 				@click:append="show1 = !show1"
-        :type="show1 ? 'text' : 'password'"
+				:type="show1 ? 'text' : 'password'"
 				label="Password"
 				color="#F44336"
 				class="input"
-      ></v-text-field>
+			></v-text-field>
 
-			<a class="forgot-passwd" href="#" v-bind:class="{ hidden: !isActive}">Forgot your password?</a>
+			<a class="forgot-passwd" href="#" :class="{ hidden: !isActive}">Forgot your password?</a>
 			<v-btn
 				dark
 				round
@@ -102,7 +102,7 @@
 				{{ registerBtnState }}
 			</v-btn>
 			
-			<p class="policy-reg" v-bind:class="{ hidden: isActive }">
+			<p class="policy-reg" :class="{ hidden: isActive }">
 				<input
 					:required=!isActive
 					class="policy-reg__checkbox"
@@ -111,15 +111,15 @@
 			</p>
 
 		</form>
-		<p class="form-state">{{formStateText}} <a href="#" v-on:click="changeFormState">{{formStateHyperlink}}</a>.</p>
+		<p class="form-state">{{formStateText}} <a href="#" @click="changeFormState">{{formStateHyperlink}}</a>.</p>
 
-	  <v-alert
-	  	class="alert"
-      :value="true"
-      type="error"
-    >
-      {{ alertMassage }}
-    </v-alert>
+		<v-alert
+			class="alert"
+			:value="true"
+			type="error"
+		>
+			{{ alertMassage }}
+		</v-alert>
 
 	</section>
 </template>
@@ -128,10 +128,6 @@
 
 import axios from 'axios'
 import Joi from 'joi'
-import { VueReCaptcha } from 'vue-recaptcha-v3'
-import Vue from "vue"
-
-Vue.use(VueReCaptcha, { siteKey: '6Lcvt4wUAAAAACOvd54WTCBGMeegcNdFj1JdokMr' })
 
 const schemaRegister = Joi.object().keys({
 	nick: Joi.string().alphanum().min(4).max(20).required(),
@@ -160,19 +156,19 @@ export default {
 			newCaptchaToken: "",
 			serverError: "",
 			show1: false,
-      password: 'Password',
+			password: 'Password',
 			alertMassage: '',
 			
 			Notifs: {
 				incorrectLoginData: "Email or password is incorrect. 🤔",
-				incorrectRegisterData: "Data you\'ve inserted is incorrect, stick to requirements please. 😘"
+				incorrectRegisterData: "Data you've inserted is incorrect, stick to requirements please. 😘"
 			},
 
-      // rules: {
-      //   required: value => !!value || 'Required.',
-      //   min: v => v.length >= 8 || 'Min 8 characters',
-      //   emailMatch: () => ('The email and password you entered don\'t match')
-      // },
+			// rules: {
+			//   required: value => !!value || 'Required.',
+			//   min: v => v.length >= 8 || 'Min 8 characters',
+			//   emailMatch: () => ('The email and password you entered don\'t match')
+			// },
 
 			User: {
 				nick: '',
@@ -199,7 +195,7 @@ export default {
 
 			alert.style.transform = "translateY(-120px)"
 
-		  setTimeout(() => alert.style.transform = "translateY(0)", 5000)
+			setTimeout(() => alert.style.transform = "translateY(0)", 5000)
 		},
 
 		sendUser() {
@@ -224,15 +220,12 @@ export default {
 
 					// Creating user
 					axios.post('http://localhost:8081/auth/create', newUser)
-						.then(reg_res => {
-							// if(!reg_res.data){
-								//login after registration
-								axios.post('http://localhost:8081/auth/login', logingUser)
-									.then(login_res => location.reload())
-									.catch(err => console.log(err))
-							// }
-						})
-						.catch(err => this.Notifs.incorrectRegisterData)
+						.then(
+							axios.post('http://localhost:8081/auth/login', logingUser)
+								.then(location.reload())
+								.catch(err => console.log(err))
+						)
+						.catch(this.Notifs.incorrectRegisterData)
 				} else this.showAlert(this.Notifs.incorrectRegisterData)
 			}
 
@@ -240,8 +233,8 @@ export default {
 			else if (this.fontStateAction === "/auth/login") {
 				if (resultLogin.error === null) {
 					axios.post('http://localhost:8081/auth/login', logingUser)
-						.then(login_res => location.reload())
-						.catch(err => this.showAlert(this.Notifs.incorrectLoginData))
+						.then(location.reload())
+						.catch(this.showAlert(this.Notifs.incorrectLoginData))
 						
 				} else this.showAlert(this.Nofits.incorrectLoginData)
 			}

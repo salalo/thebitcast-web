@@ -1,66 +1,66 @@
 <template>
-	<v-avatar color="grey lighten-4">
-		<img
-			src="../../assets/crAvatar.jpg"
-			alt="avatar"
-			v-click-outside="hide"
-			@click="toggle"
-		>
-		<general-settings v-show="isActive"></general-settings>
-	</v-avatar>
+  <v-avatar color="grey lighten-4">
+    <img src="../../assets/crAvatar.jpg" alt="avatar" v-click-outside="hide" @click="toggle">
+    <generalSettings v-show="isActive"></generalSettings>
+  </v-avatar>
 </template>
 
 <script>
-import axios from 'axios'
-import VueCookie from 'vue-cookies'
-import ClickOutside from 'vue-click-outside'
-import GeneralSettings from './user_settings/General.vue'
+import axios from "axios";
+import ClickOutside from "vue-click-outside";
+import GeneralSettings from "./user_settings/General.vue";
 
 export default {
-	data() {
-		return {
-			isActive: false
-		}
-	},
-
-	components: {
-		'general-settings': GeneralSettings
-	},
-
-	methods: {
-    toggle () { this.isActive = !this.isActive },
-    hide () { this.isActive = false }
+  data() {
+    return {
+      isActive: false
+    };
   },
 
-  mounted () {
+  components: {
+    GeneralSettings
+  },
+
+  methods: {
+    toggle() {
+      this.isActive = !this.isActive;
+    },
+    hide() {
+      this.isActive = false;
+    }
+  },
+
+  mounted() {
     // prevent click outside event with popupItem.
-    this.popupItem = this.$el
+    this.popupItem = this.$el;
   },
- 
+
   directives: {
     ClickOutside
   },
 
-	created() {
-		axios.defaults.withCredentials = true
+  created() {
+    axios.defaults.withCredentials = true;
 
-		axios.get('http://localhost:8081/auth/getUser')
-			.then(res => console.log("get user avatar"))
-			.catch(err => console.log(err))
-	}
-}
-
+    axios
+      .get("http://localhost:8081/auth/getUser")
+      .then(console.log("get user avatar"))
+      .catch(err => console.log(err));
+  }
+};
 </script>
 
 <style lang="scss" scoped>
+@import "@/stylesheets/master.scss";
 
-@import '@/stylesheets/master.scss';
-
-.hidden { display: none; }
-img {
-	&:hover{ cursor: pointer; }
-	object-fit: cover;
-	object-position: center;
+.hidden {
+  display: none;
 }
-
+img {
+  &:hover {
+    cursor: pointer;
+  }
+  object-fit: cover;
+  object-position: center;
+}
 </style>

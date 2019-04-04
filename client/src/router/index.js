@@ -1,18 +1,18 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import Home from '@/views/Home.vue'
-import ProfileSettings from '@/components/logged/user_settings/Profile.vue'
-import AccountSettings from '@/components/logged/user_settings/Account.vue'
-import NotificationSettings from '@/components/logged/user_settings/Notifications.vue'
+import Vue from 'vue';
+import Router from 'vue-router';
+import Home from '@/views/Home.vue';
+import ProfileSettings from '@/components/logged/user_settings/Profile.vue';
+import AccountSettings from '@/components/logged/user_settings/Account.vue';
+import NotificationSettings from '@/components/logged/user_settings/Notifications.vue';
 
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
   mode: 'history',
   routes: [
     {
       path: '/',
-			component: Home,
+      component: Home,
       children: [
         { path: '/profile', component: ProfileSettings },
         { path: '/account', component: AccountSettings },
@@ -22,7 +22,7 @@ export default new Router({
 
     {
       path: '/about-us',
-			component: () => import('@/views/AboutUs.vue')
+      component: () => import('@/views/AboutUs.vue')
     },
 
     {
@@ -60,4 +60,4 @@ export default new Router({
       component: () => import('@/views/Premium.vue')
     }
   ]
-})
+});

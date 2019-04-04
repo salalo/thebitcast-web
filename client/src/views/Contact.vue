@@ -1,11 +1,7 @@
 <template>
-	<div>
-		Contact
-	</div>
+  <div>Contact</div>
 </template>
 
 <style lang="scss" scoped>
-
-@import '@/stylesheets/master.scss';
-
+@import "@/stylesheets/master.scss";
 </style>
