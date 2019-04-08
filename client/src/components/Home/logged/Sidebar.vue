@@ -83,7 +83,7 @@
 </template>
 
 <script>
-import CategoriesBar from "./HomeDesktopSidebarCategoriesBar.vue";
+import CategoriesBar from "./SidebarCategoriesBar.vue";
 import ClickOutside from "vue-click-outside";
 
 export default {

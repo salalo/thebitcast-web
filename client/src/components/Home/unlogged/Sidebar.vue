@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import LoginForm from "./HomeDesktopSidebarLoginForm.vue";
+import LoginForm from "./SidebarLoginForm.vue";
 
 export default {
   components: {

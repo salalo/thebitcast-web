@@ -1,6 +1,6 @@
 <template>
   <div v-if="isLogged">
-    <PanelLogged/>
+    <Panel/>
     <SidebarLogged/>
     <TopbarLogged/>
   </div>
@@ -18,12 +18,11 @@
 </template>
 
 <script>
-import Sidebar from "./unlogged/HomeDesktopSidebar.vue";
-import SidebarLogged from "./logged/HomeDesktopSidebar.vue";
-import Panel from "./unlogged/HomeDesktopPanel.vue";
-import PanelLogged from "./logged/HomeDesktopPanel.vue";
-import TopbarLogged from "./logged/HomeDesktopPanelTopbar.vue";
-import Topbar from "./unlogged/HomeDesktopPanelTopbar.vue";
+import Sidebar from "@/components/Home/unlogged/Sidebar.vue";
+import SidebarLogged from "@/components/Home/logged/Sidebar.vue";
+import Panel from "@/components/shared/Panel/Panel.vue";
+import TopbarLogged from "@/components/Home/logged/PanelTopbar.vue";
+import Topbar from "@/components/Home/unlogged/PanelTopbar.vue";
 import { mapState } from "vuex";
 
 export default {
@@ -36,7 +35,6 @@ export default {
     Sidebar,
     SidebarLogged,
     Panel,
-    PanelLogged,
     TopbarLogged,
     Topbar
   }

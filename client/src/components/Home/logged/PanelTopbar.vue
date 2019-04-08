@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import UserLogged from "./HomeDesktopPanelTopbarUserSettings.vue";
+import UserLogged from "./PanelTopbarUserSettings.vue";
 import Player from "@/components/shared/Player/Player.vue";
 
 export default {

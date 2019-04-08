@@ -82,8 +82,8 @@
 import Card from "@/components/shared/Card/Card.vue";
 import "swiper/dist/css/swiper.css";
 import { swiper, swiperSlide } from "vue-awesome-swiper";
-import DeckTop from "./HomeDesktopPanelDeckTop.vue";
-import DeckBottom from "./HomeDesktopPanelDeckBottom.vue";
+import DeckTop from "../PanelDeckTop.vue";
+import DeckBottom from "../PanelDeckBottom.vue";
 
 export default {
   data() {
@@ -114,7 +114,7 @@ export default {
 // minus width of Sidebar
 main {
   @include transition(0s, transform 0.5s);
-  width: calc(100vw - 300px);
+  width: calc(100vw - 640px);
   height: calc(100vh - 80px);
   position: fixed;
   bottom: 0;
