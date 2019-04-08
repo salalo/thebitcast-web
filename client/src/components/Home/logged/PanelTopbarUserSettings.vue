@@ -40,8 +40,6 @@ export default {
   },
 
   created() {
-    axios.defaults.withCredentials = true;
-
     axios
       .get("http://localhost:8081/auth/getUser")
       .then(console.log("get user avatar"))

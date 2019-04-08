@@ -12,7 +12,7 @@
     <section>
       <div class="avatar">
         <span>Avatar</span>
-        <img src="../../../assets/crAvatar.jpg" alt="avatar">
+        <img src="../../../../assets/crAvatar.jpg" alt="avatar">
       </div>
 
       <div class="description">

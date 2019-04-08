@@ -1,63 +1,63 @@
-import Vue from 'vue';
-import Router from 'vue-router';
-import Home from '@/views/Home.vue';
-import ProfileSettings from '@/components/logged/user_settings/Profile.vue';
-import AccountSettings from '@/components/logged/user_settings/Account.vue';
-import NotificationSettings from '@/components/logged/user_settings/Notifications.vue';
+import Vue from "vue";
+import Router from "vue-router";
+import Home from "@/views/Home.vue";
+import ProfileSettings from "@/components/Home/logged/user_settings/Profile.vue";
+import AccountSettings from "@/components/Home/logged/user_settings/Account.vue";
+import NotificationSettings from "@/components/Home/logged/user_settings/Notifications.vue";
 
 Vue.use(Router);
 
 export default new Router({
-  mode: 'history',
+  mode: "history",
   routes: [
     {
-      path: '/',
+      path: "/",
       component: Home,
       children: [
-        { path: '/profile', component: ProfileSettings },
-        { path: '/account', component: AccountSettings },
-        { path: '/notifs', component: NotificationSettings }
+        { path: "/profile", component: ProfileSettings },
+        { path: "/account", component: AccountSettings },
+        { path: "/notifs", component: NotificationSettings }
       ]
     },
 
     {
-      path: '/about-us',
-      component: () => import('@/views/AboutUs.vue')
+      path: "/about-us",
+      component: () => import("@/views/AboutUs.vue")
     },
 
     {
-      path: '/contact',
-      component: () => import('@/views/Contact.vue')
+      path: "/contact",
+      component: () => import("@/views/Contact.vue")
     },
 
     {
-      path: '/copyright',
-      component: () => import('@/views/Copyright.vue')
+      path: "/copyright",
+      component: () => import("@/views/Copyright.vue")
     },
 
     {
-      path: '/privacy-policy',
-      component: () => import('@/views/PrivacyPolicy.vue')
+      path: "/privacy-policy",
+      component: () => import("@/views/PrivacyPolicy.vue")
     },
 
     {
-      path: '/feedback',
-      component: () => import('@/views/Feedback.vue')
+      path: "/feedback",
+      component: () => import("@/views/Feedback.vue")
     },
 
     {
-      path: '/support',
-      component: () => import('@/views/Support.vue')
+      path: "/support",
+      component: () => import("@/views/Support.vue")
     },
 
     {
-      path: '/report',
-      component: () => import('@/views/Report.vue')
+      path: "/report",
+      component: () => import("@/views/Report.vue")
     },
 
     {
-      path: '/premium',
-      component: () => import('@/views/Premium.vue')
+      path: "/premium",
+      component: () => import("@/views/Premium.vue")
     }
   ]
 });
