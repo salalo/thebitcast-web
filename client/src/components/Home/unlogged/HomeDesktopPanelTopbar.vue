@@ -1,10 +1,5 @@
 <template>
   <v-toolbar light color="#fff" class="topbar-logged" height="80">
-    <!-- <v-toolbar-side-icon></v-toolbar-side-icon> -->
-    <v-toolbar-title class="hidden-md-and-down">Bitcast</v-toolbar-title>
-
-    <v-spacer></v-spacer>
-
     <!-- COMPONENT -->
     <Player></Player>
 
@@ -14,9 +9,11 @@
       <v-btn flat color="#F44336">
         <i class="material-icons">volume_up</i>
       </v-btn>
+
       <v-btn flat color="#F44336">
         <i class="material-icons">timer</i>
       </v-btn>
+
       <v-btn flat color="#F44336" @click="addBookmark()">
         <i class="material-icons">{{ bmIcon }}</i>
       </v-btn>
@@ -24,27 +21,21 @@
 
     <v-spacer></v-spacer>
 
-    <v-toolbar-items class="hidden-md-and-down">
+    <v-toolbar-items class="hidden-sm-and-down">
       <v-text-field
+        height="36"
         append-icon="search"
         class="search"
-        single-line
         value
         label="Search"
         color="#F44336"
       ></v-text-field>
     </v-toolbar-items>
-
-    <v-spacer></v-spacer>
-
-    <!-- COMPONENT -->
-    <UserLogged class="hidden-sm-and-down"></UserLogged>
   </v-toolbar>
 </template>
 
 <script>
-import UserLogged from "./HomeDesktopPanelTopbarUserSettings.vue";
-import Player from "../Player.vue";
+import Player from "@/components/shared/Player/Player.vue";
 
 export default {
   data() {
@@ -54,7 +45,6 @@ export default {
   },
 
   components: {
-    UserLogged,
     Player
   },
 
@@ -84,6 +74,8 @@ export default {
   margin-top: 10px !important;
 }
 .topbar-logged {
+  width: calc(100vw - 640px);
+  float: left;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 </style>

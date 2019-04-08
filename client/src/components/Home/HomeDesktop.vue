@@ -5,7 +5,7 @@
     <TopbarLogged/>
   </div>
 
-  <div v-else-if="isLogged == false">
+  <div v-else-if="isLogged === false">
     <Sidebar/>
     <Panel/>
     <Topbar/>
@@ -27,20 +27,10 @@ import Topbar from "./unlogged/HomeDesktopPanelTopbar.vue";
 import { mapState } from "vuex";
 
 export default {
-  data() {
-    return {};
-  },
   computed: {
     ...mapState("user", {
       isLogged: store => store.isLogged
     })
-    // ...mapState(["categoriesBarShown"])
-    // isLogged() {
-    //   return this.$store.state.user.isLogged;
-    // }
-  },
-  beforeCreate() {
-    this.$store.dispatch("login");
   },
   components: {
     Sidebar,

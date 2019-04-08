@@ -1,6 +1,6 @@
 <template>
   <v-avatar color="grey lighten-4">
-    <img src="../../assets/crAvatar.jpg" alt="avatar" v-click-outside="hide" @click="toggle">
+    <img src="@/assets/crAvatar.jpg" alt="avatar" v-click-outside="hide" @click="toggle">
     <generalSettings v-show="isActive"></generalSettings>
   </v-avatar>
 </template>

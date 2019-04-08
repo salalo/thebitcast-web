@@ -81,7 +81,7 @@
 </template>
 
 <script>
-import Card from "../Card.vue";
+import Card from "@/components/shared/Card/Card.vue";
 import "swiper/dist/css/swiper.css";
 import { swiper, swiperSlide } from "vue-awesome-swiper";
 

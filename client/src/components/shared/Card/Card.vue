@@ -35,7 +35,7 @@
 
   <article class="card" v-else>
     <header class="card__avatar">
-      <img src="../assets/crAvatar.jpg" alt="avatar">
+      <img src="@/assets/crAvatar.jpg" alt="avatar">
       <i class="material-icons card__avatar-play-btn" @click="playThePodcast()">play_circle_filled</i>
     </header>
     <footer class="card__info" @click="expandCard()">
@@ -107,7 +107,7 @@ export default {
     float: left;
     color: $white;
     background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
-      url("../assets/crAvatar.jpg") center no-repeat;
+      url("../../../assets/crAvatar.jpg") center no-repeat;
     background-size: cover;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 

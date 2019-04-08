@@ -12,9 +12,9 @@
 
     <div class="badges row">
       <!-- not a proper badge just img -->
-      <img src="../assets/Home/google-play-badge.png" alt="google" width="50%" height="80">
+      <img src="@/assets/Home/google-play-badge.png" alt="google" width="50%" height="80">
 
-      <img src="../assets/Home/ios-badge.png" alt="ios" width="44%" height="54" class="badges__ios">
+      <img src="@/assets/Home/ios-badge.png" alt="ios" width="44%" height="54" class="badges__ios">
     </div>
   </div>
 </template>
@@ -24,7 +24,7 @@
 
 .container__mobile {
   background-color: $main;
-  background-image: url("../assets/Home/mobile-bg.png");
+  background-image: url("../../assets/Home/mobile-bg.png");
   background-size: cover;
   height: 100vh;
   text-align: center;
