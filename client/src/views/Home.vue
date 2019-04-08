@@ -4,8 +4,8 @@
 </template>
 
 <script>
-import Mobile from "@/components/Home/HomeMobile.vue";
-import Desktop from "@/components/Home/HomeDesktop.vue";
+import Mobile from "@/components/Home/Mobile.vue";
+import Desktop from "@/components/Home/Desktop.vue";
 
 export default {
   components: {

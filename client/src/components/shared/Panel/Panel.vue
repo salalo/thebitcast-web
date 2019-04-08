@@ -1,109 +1,60 @@
 <template>
-  <main id="card-panel-container">
-    <div class="stack">
-      <section class="recommended">
-        <DeckTop></DeckTop>
-
-        <swiper :options="swiperOption">
-          <swiper-slide>
-            <Card/>
-          </swiper-slide>
-          <swiper-slide>
-            <Card/>
-          </swiper-slide>
-          <swiper-slide>
-            <Card/>
-          </swiper-slide>
-          <swiper-slide>
-            <Card/>
-          </swiper-slide>
-          <swiper-slide>
-            <Card/>
-          </swiper-slide>
-          <swiper-slide>
-            <Card/>
-          </swiper-slide>
-          <swiper-slide>
-            <Card/>
-          </swiper-slide>
-          <swiper-slide>
-            <Card/>
-          </swiper-slide>
-          <swiper-slide>
-            <Card/>
-          </swiper-slide>
-          <swiper-slide>
-            <Card/>
-          </swiper-slide>
-        </swiper>
-      </section>
-
-      <section class="popular">
-        <DeckBottom></DeckBottom>
-
-        <swiper :options="swiperOption">
-          <swiper-slide>
-            <Card/>
-          </swiper-slide>
-          <swiper-slide>
-            <Card/>
-          </swiper-slide>
-          <swiper-slide>
-            <Card/>
-          </swiper-slide>
-          <swiper-slide>
-            <Card/>
-          </swiper-slide>
-          <swiper-slide>
-            <Card/>
-          </swiper-slide>
-          <swiper-slide>
-            <Card/>
-          </swiper-slide>
-          <swiper-slide>
-            <Card/>
-          </swiper-slide>
-          <swiper-slide>
-            <Card/>
-          </swiper-slide>
-          <swiper-slide>
-            <Card/>
-          </swiper-slide>
-          <swiper-slide>
-            <Card/>
-          </swiper-slide>
-        </swiper>
-      </section>
+  <main
+    id="card-panel-container"
+    :style="{width: isLogged ? 'calc(100vw - 300px)' : 'calc(100vw - 640px)',
+            padding: isLogged ? '60px 200px' : '50px'}"
+  >
+    <div class="deck">
+      <Card></Card>
+      <Card></Card>
+      <Card></Card>
+      <Card></Card>
+      <Card></Card>
+      <Card></Card>
+      <Card></Card>
+      <Card></Card>
+      <Card></Card>
+      <Card></Card>
+      <Card></Card>
+      <Card></Card>
+      <Card></Card>
+      <Card></Card>
+      <Card></Card>
+      <Card></Card>
+      <Card></Card>
+      <Card></Card>
+      <Card></Card>
+      <Card></Card>
+      <Card></Card>
+      <Card></Card>
+      <Card></Card>
+      <Card></Card>
+      <Card></Card>
+      <Card></Card>
+      <Card></Card>
+      <Card></Card>
+      <Card></Card>
+      <Card></Card>
+      <Card></Card>
     </div>
   </main>
 </template>
 
 <script>
 import Card from "@/components/shared/Card/Card.vue";
-import "swiper/dist/css/swiper.css";
-import { swiper, swiperSlide } from "vue-awesome-swiper";
-import DeckTop from "../PanelDeckTop.vue";
-import DeckBottom from "../PanelDeckBottom.vue";
+import DeckPicker from "../DeckPicker.vue";
+import { mapState } from "vuex";
 
 export default {
-  data() {
-    return {
-      swiperOption: {
-        direction: "horizontal",
-        mousewheel: true,
-        slidesPerView: 7,
-        spaceBetween: 30,
-        freeMode: true
-      }
-    };
-  },
-
   components: {
     Card,
-    DeckTop,
-    DeckBottom,
-    swiper,
-    swiperSlide
+    DeckPicker
+  },
+
+  computed: {
+    ...mapState("user", {
+      isLogged: store => store.isLogged
+    })
   }
 };
 </script>
@@ -114,43 +65,16 @@ export default {
 // minus width of Sidebar
 main {
   @include transition(0s, transform 0.5s);
-  width: calc(100vw - 640px);
   height: calc(100vh - 80px);
   position: fixed;
   bottom: 0;
   right: 0;
+  overflow-y: scroll;
 }
 
-.stack {
-  margin-left: 30px;
-  width: inherit;
-  position: absolute;
-  top: 50%;
-  -webkit-transform: translateY(-50%);
-  -moz-transform: translateY(-50%);
-  transform: translateY(-50%);
-}
-
-.recommended,
-.popular {
-  span {
-    font-size: 20px;
-    position: fixed;
-    top: -40px;
-  }
-}
-.popular {
-  margin-top: 50px;
-  // span { top: calc(50% - 180px); } for 3 row
-  span {
-    top: calc(50% + 10px);
-  }
-}
-
-.swiper-slide {
-  justify-content: center;
-  align-self: center;
-  min-width: 200px;
-  min-height: 280px;
+.deck {
+  display: grid;
+  grid-template-columns: auto auto auto auto auto;
+  grid-row-gap: 50px;
 }
 </style>

@@ -1,11 +1,14 @@
 <template>
   <div class="deck-container--outter">
     <div class="deck-container--inner">
-      <div class="deck" v-for="item in selectedDecks2" :key="item">{{ item }}</div>
+      <div class="deck" v-for="item in selectedDecks" :key="item">{{ item }}</div>
 
-      <i class="material-icons icon" @click="selectDeck()">add</i>
+      <i
+        class="material-icons icon deck-container--inner__icon"
+        @click="selectDeck"
+      >add_circle_outline</i>
     </div>
-    <div class="deck-selector__container-bottom">
+    <div class="deck-selector__container-top">
       <div class="deck-selector">
         <div v-for="deck in decks" @click="addDeck(deck, $event)" :key="deck">{{ deck.deck }}</div>
       </div>
@@ -17,7 +20,7 @@
 export default {
   data() {
     return {
-      selectedDecks2: ["Most popular"],
+      selectedDecks: ["Recommended"],
       decks: [
         { deck: "Art" },
         { deck: "Business" },
@@ -49,37 +52,37 @@ export default {
   methods: {
     selectDeck() {
       document.getElementsByClassName(
-        "deck-selector__container-bottom"
+        "deck-selector__container-top"
       )[0].style.display = "block";
 
       window.onclick = e => {
         if (
           e.target ===
-          document.getElementsByClassName("deck-selector__container-bottom")[0]
+          document.getElementsByClassName("deck-selector__container-top")[0]
         )
           document.getElementsByClassName(
-            "deck-selector__container-bottom"
+            "deck-selector__container-top"
           )[0].style.display = "none";
       };
     },
 
     addDeck() {
-      if (!this.selectedDecks2.includes(event.target.innerHTML)) {
-        if (this.selectedDecks2.length < 3)
-          this.selectedDecks2.push(event.target.innerHTML);
+      if (!this.selectedDecks.includes(event.target.innerHTML)) {
+        if (this.selectedDecks.length < 3)
+          this.selectedDecks.push(event.target.innerHTML);
         else {
-          this.$q.notify({
-            message: "Buy premium to add more decks.",
-            type: "info", // 'positive', 'negative', 'warning', 'info'
-            timeout: 3000
-          });
+          // this.$q.notify({
+          //   message: "Buy premium to add more decks.",
+          //   type: "info", // 'positive', 'negative', 'warning', 'info'
+          //   timeout: 3000
+          // });
         }
       } else {
-        this.$q.notify({
-          message: "This deck is already is use.",
-          type: "info", // 'positive', 'negative', 'warning', 'info'
-          timeout: 3000
-        });
+        // this.$q.notify({
+        //   message: "This deck is already is use.",
+        //   type: "info", // 'positive', 'negative', 'warning', 'info'
+        //   timeout: 3000
+        // });
       }
     }
   }
@@ -129,7 +132,7 @@ export default {
   }
 }
 
-.deck-selector__container-bottom {
+.deck-selector__container-top {
   overflow-y: scroll;
   display: none;
   z-index: 99999;

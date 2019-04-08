@@ -233,6 +233,7 @@ export default {
 			else if (this.fontStateAction === "/auth/login") {
 				if (resultLogin.error === null) {
 					axios.post('http://localhost:8081/auth/login', logingUser)
+						.then(location.reload())
 						.catch(this.showAlert(this.Notifs.incorrectLoginData))
 						
 				} else this.showAlert(this.Nofits.incorrectLoginData)
