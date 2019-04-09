@@ -1,23 +1,33 @@
 import mysql from 'mysql'
 import keys from './keys.js'
 
-try{
-  const database = mysql.createConnection(keys.mysql)
-} catch(e)
-{
-  console.log('Cannot connect to db')
-}
+//const database = mysql.createConnection(keys.mysql)
 
 module.exports = { 
 
+  query: function(sql){
+    return new Promise((resolve, reject)=>{
+      const connection = mysql.createConnection(keys.mysql)
+      connection.connect((err)=>{
+        if(err) resolve(false)
+        else{
+          connection.query(sql, (err1, result)=>{
+            if(err1) resolve(false)
+            else resolve(result)
+          })
+        }
+      })
+    })
+  }
+
+  /*
   query : async function(sql){
     try{
-        let res = await database.query(sql)
-        return res
+        return await database.query(sql)
     }catch(e){
         console.log('Database error')
         return false
     }
-  },
+  },*/
 }
 

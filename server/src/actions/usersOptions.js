@@ -3,18 +3,23 @@ import bcrypt from 'bcrypt';
 import notifs from '../config/notifications'
 
 async function checkPassword(ID, password) {
-	console.log(ID)
-	let sql = 'SELECT password FROM Users WHERE ID=' + ID;
-	const actualPassword = await db.query(sql)[0];
 
-	let status = false
+  let sql = 'SELECT password FROM Users WHERE ID=' + ID;
+  const actualPassword = await db.query(sql)[0];
 
-	bcrypt.compare(password, actualPassword, (err, result)=>status = result);
-	return status
+	return new Promise((resolve, reject)=>{
+    
+    bcrypt.compare(password, actualPassword, (err, result)=>{
+      if(err) resolve(false)
+      resolve(result)
+    });
+  })
+	
+	
 }
 
 export default {
-	updateLanguageAndLocation(ID, language, location) {
+	async updateLanguageAndLocation(ID, language, location) {
     let sql = 'UPDATE Users SET language="' + language + '", location="' + '" WHERE ID=' + ID;
 
     if(!db.query(sql)) return notifs.dbError
@@ -22,54 +27,69 @@ export default {
     return notifs.updateLocationAndLanguage
   },
 
-  updateUsername(ID, newUsername) {
+  async updateUsername(ID, password, newUsername) {
+
+    if(!await checkPassword(ID, password))
+      return notifs.wrongPassword
 
     let sql = 'SELECT nick FROM Users WHERE nick=' + newUsername
 
-    const result = db.query(sql)
+    const result = await db.query(sql)
 
     if(!result) return notifs.dbError
 
     if(result.length > 0)
       return notifs.usernameTaken
       
-    
+    sql = 'UPDATE Users SET nick="'+newUsername+"' WHERE ID="+ID
+
     if(!db.query(sql)) return notifs.dbError
     
     return notifs.updateUsername
   },
 
-  updateEmail(ID, password, newEmail) {
+  async updateEmail(ID, password, newEmail) {
     
-    if(!checkPassword(ID, password))
+    if(!await checkPassword(ID, password))
       return notifs.wrongPassword
     
-      let sql = 'SELECT * FROM Users WHERE ID='+ID
-      let result = db.query(sql)
+      let sql = 'SELECT ID, password FROM Users WHERE email="'+newEmail+'"'
+      let result = await db.query(sql)
+
+
 
       if(!result) return notifs.dbError
 
-      if(result.length > 0)
+      if(result.length > 0){
+        if(result[0].ID == ID) return notifs.sameEmail
         return notifs.emailTaken
+      }
+        
 
       sql = 'UPDATE Users SET email="' + newEmail + '" WHERE ID=' + ID
 
-      if(!db.query(sql)) return notifs.dbError
+      if(!await db.query(sql)) return notifs.dbError
 
       return notifs.updateEmail
   },
 
-  updatePassword(ID, hashedNewPassword, callback) {
-    let sql = 'UPDATE Users SET password="' + hashedNewPassword + '" WHERE ID=' + ID;
+  async updatePassword(ID, password, newPassword) {
 
-    if(!db.query(sql)) return notifs.dbError
+    if(!await checkPassword(ID, password))
+      return notifs.wrongPassword
+
+    let hashedNewPassword = await bcrypt.hash(password, 10)
+
+    sql = 'UPDATE Users SET password="' + hashedNewPassword + '" WHERE ID=' + ID;
+
+    if(!await db.query(sql)) return notifs.dbError
     return notifs.updatePassword
   },
 
-  setNotificationsOnOff(ID, emailStatus, pushStatus, callback) {
-    let sql = 'UPDATE Users SET email_notifications="' + '", push_notifications="' + pushStatus +  '" WHERE ID=' + ID;
+  async updateNotificationsOptions(ID, emailStatus, pushStatus) {
+    let sql = 'UPDATE Users SET email_notifications=' + emailStatus + ', push_notifications=' + pushStatus +  ' WHERE ID=' + ID;
 
-    if(!db.query(sql)) return notifs.dbError
+    if(!await db.query(sql)) return notifs.dbError
     return notifs.updateNotifsOptions
   }
 }
