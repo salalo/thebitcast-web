@@ -8,7 +8,7 @@ export default () => {
     
     const {newEmail, password} = req.body
     console.log(newEmail)
-    res.json(user.updateEmail(6, newEmail, password))
+    res.json(user.updateEmail(6, password, newEmail))
   })
 /*
   api.update('/email', (req, res)=>{ 
