@@ -30,7 +30,10 @@ export default {
 	
 			if (err) {
 				//Validation error
-				res.send('Inserted data are incorrect.')
+				res.json({
+					message: 'Inserted data are incorrect.',
+					type: 'negative'
+				})
 				console.log("authController [REG37]: Inserted data are incorrect.")
 				 done(null, false)
 			}
@@ -49,7 +52,10 @@ export default {
 					//Captcha error
 					if (body.success !== undefined && !body.success) {
 						// Send notification to frontend 
-						res.send('Captcha error')
+						res.json({
+							message: 'Captcha error',
+							type: 'negative'
+						})
 
 						console.log("authController [REG60]: Captcha error")
 						done(null, false)
@@ -68,7 +74,10 @@ export default {
 								if(!exist) {
 									userActions.addUser(USER, 'local')
 									res.sendStatus(200)
-								} else res.send('User already registered')
+								} else res.json({
+									message: 'User already registered',
+									type: 'negative'
+								})
 							})
 						})
 					}

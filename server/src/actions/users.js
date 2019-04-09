@@ -7,11 +7,7 @@ function getActualTime() {
   return dt.format('Y-m-d H:M:S');
 }
 
-async function checkPassword(ID, password) {
-  let sql = 'SELECT password FROM Users WHERE ID=' + ID;
-  const actualPassword = await db.query(sql)[0];
-  return await bcrypt.compare(password, actualPassword);
-}
+
 
 export default {
   checkLocalUserExists(nick, email, callback) {
@@ -120,77 +116,8 @@ export default {
 
   updateLastLogin(ID) {
     //Update last login time
-    let sql =
-      'UPDATE Users SET last_login="' + getActualTime() + '" WHERE ID=' + ID;
-    db.query(sql);
-  },
-
-  updateLanguageAndLocation(ID, language, location, callback) {
-    let sql =
-      'UPDATE Users SET language="' +
-      language +
-      '", location="' +
-      location +
-      '" WHERE ID=' +
-      ID;
-
-    db.query(sql, (err, result) => {
-      callback();
-    });
-  },
-
-  updateUsername(ID, newUsername, callback) {
-    //Check username exist
-    db.query(sql, (err, result) => {
-      if (result.length > 0) {
-        callback('Username already taken');
-      } else {
-        //Set new username
-        let sql = 'UPDATE Users SET nick="' + newUsername + '" WHERE ID=' + ID;
-
-        db.query(sql, (err1, result1) => {
-          callback();
-        });
-      }
-    });
-  },
-
-  updateEmail(ID, newEmail, callback) {
-    //Check email exist
-    db.query(sql, (err, result) => {
-      if (result.length > 0) {
-        callback('Email already cośtam');
-      } else {
-        //Set new email
-        let sql = 'UPDATE Users SET email="' + newEmail + '" WHERE ID=' + ID;
-
-        db.query(sql, (err1, result1) => {
-          callback();
-        });
-      }
-    });
-  },
-
-  updatePassword(ID, hashedNewPassword, callback) {
-    let sql =
-      'UPDATE Users SET password="' + hashedNewPassword + '" WHERE ID=' + ID;
-
-    db.query(sql, (err, result) => {
-      callback();
-    });
-  },
-
-  setNotificationsOnOff(ID, emailStatus, pushStatus, callback) {
-    let sql =
-      'UPDATE Users SET email_notifications="' +
-      emailStatus +
-      '", push_notifications="' +
-      pushStatus +
-      '" WHERE ID=' +
-      ID;
-
-    db.query(sql, (err, result) => {
-      callback();
-    });
+    let sql = 'UPDATE Users SET last_login="' + getActualTime() + '" WHERE ID=' + ID;
+    
+    db.query(sql)
   }
 };

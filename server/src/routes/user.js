@@ -1,14 +1,21 @@
 import { Router } from 'express';
-import {
-  updateLanguageAndLocation,
-  updateUsername,
-  updateEmail,
-  updatePassword,
-  setNotificationsOnOff
-} from '../actions/users';
+import user from '../actions/usersOptions';
 
 export default () => {
   const api = Router();
 
+  api.post('/updateEmail', (req, res)=>{ 
+    
+    const {newEmail, password} = req.body
+    console.log(newEmail)
+    res.json(user.updateEmail(6, newEmail, password))
+  })
+/*
+  api.update('/email', (req, res)=>{ 
+    const {newEmail, password} = req.body
+    console.log(updateEmail(6, newEmail, password))
+    //res.JSON()
+  })
+*/
   return api;
 };

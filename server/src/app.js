@@ -9,6 +9,7 @@ import cors from 'cors';
 import auth from './routes/auth.js';
 import user from './routes/user.js';
 import keys from './config/keys.js';
+import db from './config/db.js';
 import { notFound, catchErrors } from './middlewares/errors.js';
 
 const app = express();
@@ -16,7 +17,7 @@ const app = express();
 app.use(
   cors({
     credentials: true,
-    origin: 'http://localhost:8080'
+    origin: '*'//'http://localhost:8080'
   })
 );
 
@@ -44,6 +45,8 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
+
+// app.use(db);
 
 // routes
 app.use('/auth', auth());
