@@ -75,5 +75,35 @@ module.exports = {
     message: "Selected region is invalid",
     type: "negative",
     status: "400"
-  }
+	},
+	
+	userAlreadyRegistered: {
+    message: "User already registered",
+    type: "negative",
+    status: "500"
+	},
+	
+	userRegister: {
+    message: "User registered succesfully",
+    type: "positive",
+    status: "200"
+	},
+	
+	captchaError: {
+    message: "Captcha error",
+    type: "negative",
+    status: "500"
+	},
+	
+	userRegister: {
+    message: "User registered succesfully",
+    type: "positive",
+    status: "200"
+	},
+	
+	userRegister: {
+    message: "User registered succesfully",
+    type: "positive",
+    status: "200"
+  },
 };

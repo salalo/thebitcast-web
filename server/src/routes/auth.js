@@ -39,9 +39,9 @@ export default () => {
 	//localhost:8081/auth/getId
 	api.get('/getUser', (req, res) => {
 		if (req.isAuthenticated())
-			res.send(req.user)
+			res.status(200).send(req.user)
 		else
-			res.send('NotLogged')
+			res.status(500).send('NotLogged')
 	})
 
 	//Logout user

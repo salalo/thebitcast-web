@@ -8,6 +8,7 @@ import request from 'request'
 
 import userActions from './users.js'
 import keys from '../config/keys.js'
+import notifs from '../config/notifications'
 
 export default {
 
@@ -30,10 +31,7 @@ export default {
 	
 			if (err) {
 				//Validation error
-				res.json({
-					message: 'Inserted data are incorrect.',
-					type: 'negative'
-				})
+				res.status(notifs.incorrectData.status).json(notifs.incorrectData)
 				console.log("authController [REG37]: Inserted data are incorrect.")
 				 done(null, false)
 			}
@@ -52,10 +50,7 @@ export default {
 					//Captcha error
 					if (body.success !== undefined && !body.success) {
 						// Send notification to frontend 
-						res.json({
-							message: 'Captcha error',
-							type: 'negative'
-						})
+						res.status(notifs.captchaError.status).json(notifs.captchaError)
 
 						console.log("authController [REG60]: Captcha error")
 						done(null, false)
@@ -73,11 +68,8 @@ export default {
 							userActions.checkLocalUserExists(USER.nick, USER.email, exist => {
 								if(!exist) {
 									userActions.addUser(USER, 'local')
-									res.sendStatus(200)
-								} else res.json({
-									message: 'User already registered',
-									type: 'negative'
-								})
+									res.status(notifs.userRegister.status).json(notifs.userRegister)
+								} else res.status(notifs.userAlreadyRegistered.status).json(notifs.userAlreadyRegistered)
 							})
 						})
 					}
