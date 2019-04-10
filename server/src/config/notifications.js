@@ -111,5 +111,17 @@ module.exports = {
     message: "Description succesfully updated",
     type: "positive",
     status: "200"
+  },
+
+  notLogged: {
+    message: "User must be logged in",
+    type: "negative",
+    status: "500"
+  },
+
+  socialMediaLinkUpdate: {
+    message: "Social media link succesfully updated",
+    type: "positive",
+    status: "200"
   }
 };

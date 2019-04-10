@@ -139,10 +139,58 @@ export default {
 
   async updateDescription(ID, desc){
 
+    const schema = Joi.string()
+      .min(0)
+      .max(2500)
+      .required();
+
+    if (
+      Joi.validate(desc, schema).error 
+    )
+      return notifs.incorrectData;
+
     let sql = 'UPDATE Users SET description="'+desc+'" WHERE ID='+ID
 
     if(!await db.query(sql)) return notifs.dbError
 
     return notifs.updateDescription
+  },
+
+  async updateSocialMediaLinks(ID, facebookLink, twitterLink, instagramLink){
+    const fbSchema = Joi.string()
+      .min(0)
+      .max(100)
+      .trim()
+      .required()
+      .regex(new RegExp('^facebook.com/([A-Za-z0-9]+)'))
+    
+    const instaSchema = Joi.string()
+      .min(0)
+      .max(100)
+      .trim()
+      .required()
+      .regex(new RegExp('^instagram.com/([A-Za-z0-9]+)'))
+
+    const twitterSchema = Joi.string()
+      .min(0)
+      .max(100)
+      .trim()
+      .required()
+      .regex(new RegExp('^twitter.com/([A-Za-z0-9]+)'))
+
+    
+      if (
+        Joi.validate(facebookLink, fbSchema).error ||
+        Joi.validate(twitterLink, twitterSchema).error ||
+        Joi.validate(instagramLink, instaSchema).error
+      )
+        return notifs.incorrectData;
+
+      let sql = 'UPDATE Users SET facebook_link="'+facebookLink+'", twitter_link="'+twitterLink+'", instagram_link="'+instagramLink+'" WHERE ID='+ID
+
+      if(!await db.query(sql)) return notifs.dbError
+
+      return notifs.socialMediaLinkUpdate
   }
+
 };
