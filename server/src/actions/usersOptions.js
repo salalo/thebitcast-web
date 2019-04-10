@@ -135,5 +135,14 @@ export default {
       ID;
     if (!(await db.query(sql))) return notifs.dbError;
     return notifs.updateNotifsOptions;
+  },
+
+  async updateDescription(ID, desc){
+
+    let sql = 'UPDATE Users SET description="'+desc+'" WHERE ID='+ID
+
+    if(!await db.query(sql)) return notifs.dbError
+
+    return notifs.updateDescription
   }
 };

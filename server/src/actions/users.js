@@ -65,7 +65,7 @@ export default {
       sql =
         'INSERT INTO Users (' +
         'ID, nick, email, password, register_date, last_login, avatar_href, google_ID, facebook_ID, twitter_ID,' +
-        'facebook_link, twitter_link, instagram_link, gender, description, activated, premium, banned) VALUES' +
+        'facebook_link, twitter_link, instagram_link, gender, description, activated, premium, banned, region_ID, language_ID, email_notifications, push_notifications) VALUES' +
         '(NULL, "' +
         USER.nick +
         '", "' +
@@ -77,12 +77,12 @@ export default {
         '", "' +
         getActualTime() +
         '", NULL, ' +
-        'NULL, NULL, NULL , NULL, NULL, NULL, NULL, NULL, 0, 0, 0)';
+        'NULL, NULL, NULL , NULL, NULL, NULL, NULL, NULL, 0, 0, 0,0,0,0,0)';
     } else {
       sql =
         'INSERT INTO Users (' +
         'ID, nick, email, password, register_date, last_login, avatar_href, google_ID, facebook_ID, twitter_ID,' +
-        'facebook_link, twitter_link, instagram_link, gender, description, activated, premium, banned) VALUES' +
+        'facebook_link, twitter_link, instagram_link, gender, description, activated, premium, bannedregion_ID, language_ID, email_notifications, push_notifications) VALUES' +
         '(NULL, "' +
         nick +
         '", "' +
@@ -97,7 +97,7 @@ export default {
         facebook_ID +
         ', ' +
         twitter_ID +
-        ', NULL, NULL, NULL, NULL, NULL, 0, 0, 0)';
+        ', NULL, NULL, NULL, NULL, NULL, 0, 0, 0,0,0,0,0)';
     }
 
     db.query(sql, (err, result) =>

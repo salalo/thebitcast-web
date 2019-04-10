@@ -40,5 +40,13 @@ export default () => {
       });
   });
 
+  api.patch("/updateDescription", (req, res) => {
+    const { description } = req.body;
+    user
+      .updateDescription(req.user.ID, description).then(notif => {
+        res.status(notif.status).json(notif);
+      });
+  });
+
   return api;
 };

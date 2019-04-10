@@ -106,4 +106,10 @@ module.exports = {
     type: "positive",
     status: "200"
   },
+
+  updateDescription: {
+    message: "Description succesfully updated",
+    type: "positive",
+    status: "200"
+  }
 };
