@@ -1,46 +1,79 @@
 module.exports = {
-	dbError: {
-		message: 'Connection error, try again later',
-		type: 'negative'
-	},
-	
-	updateNotifsOptions: {
-		message: 'Notifications options changed succesfully',
-    type: 'positive'
-	},
-	
-	updatePassword: {
-		message: 'Password changed succesfully.',
-    type: 'positive'
-	},
+  dbError: {
+    message: "Connection error, try again later",
+    type: "negative",
+    status: "500"
+  },
 
-	updateEmail: {
-		message: 'Email changed succesfully.',
-    type: 'positive'
-	},
+  updateNotifsOptions: {
+    message: "Notifications options changed succesfully",
+    type: "positive",
+    status: "200"
+  },
 
-	emailTaken: {
-		message: 'Email already taken',
-    type: 'negative'
-	},
+  updatePassword: {
+    message: "Password changed succesfully.",
+    type: "positive",
+    status: "200"
+  },
 
-	wrongPassword: {
-		message: 'Wrong password',
-    type: 'negative'
-	},
+  updateEmail: {
+    message: "Email changed succesfully.",
+    type: "positive",
+    status: "200"
+  },
 
-	usernameTaken: {
-		message: 'Username already taken',
-    type: 'negative'
-	},
+  emailTaken: {
+    message: "Email already taken",
+    type: "negative",
+    status: "500"
+  },
 
-	updateUsername: {
-		message: 'Username updated succesfully',
-    type: 'positive'
-	},
+  wrongPassword: {
+    message: "Wrong password",
+    type: "negative",
+    status: "500"
+  },
 
-	updateLocationAndLanguage: {
-		message: 'Location and language options updated succesfully',
-      type: 'positive'
-	}
-}
+  usernameTaken: {
+    message: "Username already taken",
+    type: "negative",
+    status: "500"
+  },
+
+  updateUsername: {
+    message: "Username updated succesfully",
+    type: "positive",
+    status: "200"
+  },
+
+  updateLocationAndLanguage: {
+    message: "Location and language options updated succesfully",
+    type: "positive",
+    status: "200"
+  },
+
+  sameEmail: {
+    message: "Cannot change email to the same value",
+    type: "negative",
+    status: "500"
+  },
+
+  incorrectData: {
+    message: "Inserted data are incorrect",
+    type: "negative",
+    status: "500"
+  },
+
+  invalidLanguage: {
+    message: "Selected language is invalid",
+    type: "negative",
+    status: "400"
+  },
+
+  invalidRegion: {
+    message: "Selected region is invalid",
+    type: "negative",
+    status: "400"
+  }
+};
