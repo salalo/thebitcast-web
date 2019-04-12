@@ -16,7 +16,7 @@ export default () => {
     });
   });
 
-  api.patch("/updateNotificationsOptions", (req, res) => {
+  api.put("/updateNotificationsOptions", (req, res) => {
     if(!req.isAuthenticated()){
       res.status(notifs.notLogged.status).json(notifs.notLogged)
       return
@@ -27,7 +27,7 @@ export default () => {
     });
   });
 
-  api.patch("/updatePassword", (req, res) => {
+  api.put("/updatePassword", (req, res) => {
     if(!req.isAuthenticated()){
       res.status(notifs.notLogged.status).json(notifs.notLogged)
       return
@@ -49,7 +49,7 @@ export default () => {
     });
   });
 
-  api.patch("/updateLanguageAndRegion", (req, res) => {
+  api.put("/updateLanguageAndRegion", (req, res) => {
     if(!req.isAuthenticated()){
       res.status(notifs.notLogged.status).json(notifs.notLogged)
       return
@@ -61,7 +61,7 @@ export default () => {
       });
   });
 
-  api.patch("/updateDescription", (req, res) => {
+  api.put("/updateDescription", (req, res) => {
     if(!req.isAuthenticated()){
       res.status(notifs.notLogged.status).json(notifs.notLogged)
       return
@@ -73,7 +73,7 @@ export default () => {
       });
   });
 
-  api.patch("/updateSocialMediaLinks", (req, res) => {
+  api.put("/updateSocialMediaLinks", (req, res) => {
     if(!req.isAuthenticated()){
       res.status(notifs.notLogged.status).json(notifs.notLogged)
       return

@@ -1,12 +1,26 @@
 import { Router } from 'express'
 import passport from 'passport'
 import auth from '../actions/auth.js'
+import notifs from '../config/notifications'
 
 export default () => {
 	const api = Router()
 
 	//localhost:8081/auth/login
-	api.post('/login', passport.authenticate('local', { session: true }), (req, res) => res.sendStatus(200))
+	api.post('/login', (req, res, next)=>{
+		passport.authenticate('local',  (err, user, info)=>{
+
+			if(!user)
+			{
+				return res.status(err.status).json(err)
+			}else{
+
+				req.logIn(user, (errr)=>{
+					return res.status(notifs.logIn.status).json(notifs.logIn)
+				})
+			}			
+		}, {session: true})(req, res, next)
+	})//passport.authenticate('local', { session: true }), (req, res) => res.sendStatus(200))
 
 	//localhost:8081/auth/create
 	api.post('/create', auth.register)
@@ -39,9 +53,17 @@ export default () => {
 	//localhost:8081/auth/getId
 	api.get('/getUser', (req, res) => {
 		if (req.isAuthenticated())
-			res.status(200).send(req.user)
+			res.status(200).json({
+				message: 'User logged in',
+				type: 'positive',
+				user: req.user
+			})
 		else
-			res.status(500).send('NotLogged')
+			res.status(500).json({
+				message: 'User not logged in',
+				type: 'negative',
+				user: undefined
+			})
 	})
 
 	//Logout user

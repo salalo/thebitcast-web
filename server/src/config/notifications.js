@@ -123,5 +123,17 @@ module.exports = {
     message: "Social media link succesfully updated",
     type: "positive",
     status: "200"
+  },
+
+  incorrectEmailOrPassword: {
+    message: "Incorrect email or password",
+    type: "negative",
+    status: "500"
+  },
+
+  logIn: {
+    message: "Succesfully logged in",
+    type: "positive",
+    status: "200"
   }
 };
