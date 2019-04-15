@@ -19,15 +19,5 @@ module.exports = {
       })
     })
   }
-
-  /*
-  query : async function(sql){
-    try{
-        return await database.query(sql)
-    }catch(e){
-        console.log('Database error')
-        return false
-    }
-  },*/
 }
 

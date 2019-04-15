@@ -60,12 +60,11 @@ export default {
       return;
     }
 
-    /*
+    
 		if(!await checkCaptcha(captchaToken)){
       res.status(notifs.captchaError.status).json(notifs.captchaError)
-      done(null, false)
       return
-    }*/
+    }
 
     const USER = { nick, email, password };
 
@@ -144,22 +143,35 @@ passport.use(
       clientSecret: keys.google.clientSecret,
       callbackURL: "/auth/google/cb"
     },
-    (accessToken, refreshToken, profile, done) => {
-      userActions.getUserByUnique(profile.id, "google", result => {
-        if (result) {
-          //  Login
-          delete result.password; //Delete password from req.user
-          userActions.updateLastLogin(result.ID);
-          done(null, result);
-        } else {
-          //  Register
-          userActions.addUser(profile, "google");
-          userActions.getUserByUnique(profile.id, "google", result1 => {
-            // delete result1.password //Delete password from req.user
-            done(null, result1);
-          });
+    async (accessToken, refreshToken, profile, done) => {
+      let result = await userActions.getUserByUnique(profile.id, "google");
+      if (result === undefined) {
+        //  Register
+        if (!(await userActions.addUser(profile, "google"))) {
+          done(notifs.dbError, false);
+          return;
         }
-      });
+
+        let user = await userActions.getUserByUnique(profile.id, "google");
+        if (!user) {
+          done(notifs.dbError, false);
+          return;
+        }
+        delete user.password; //Delete password from req.user
+        done(null, user);
+      } else if (result) {
+        //  Login
+        delete result.password; //Delete password from req.user
+        if (!(await userActions.updateLastLogin(result.ID))) {
+          done(notifs.dbError, false);
+          return;
+        }
+        done(null, result);
+        return;
+      } else {
+        done(notifs.dbError, false);
+        return;
+      }
     }
   )
 );
@@ -184,22 +196,35 @@ passport.use(
         "photos"
       ]
     },
-    (accessToken, refreshToken, profile, done) => {
-      userActions.getUserByUnique(profile.id, "facebook", result => {
-        if (result) {
-          //  Login
-          delete result.password; //Delete password from req.user
-          userActions.updateLastLogin(result.ID);
-          done(null, result);
-        } else {
-          //  Register
-          userActions.addUser(profile, "facebook");
-          userActions.getUserByUnique(profile.id, "facebook", result1 => {
-            // delete result1.password //Delete password from req.user
-            done(null, result1);
-          });
+    async (accessToken, refreshToken, profile, done) => {
+      let result = await userActions.getUserByUnique(profile.id, "facebook");
+      if (result === undefined) {
+        //  Register
+        if (!(await userActions.addUser(profile, "google"))) {
+          done(notifs.dbError, false);
+          return;
         }
-      });
+
+        let user = await userActions.getUserByUnique(profile.id, "facebook");
+        if (!user) {
+          done(notifs.dbError, false);
+          return;
+        }
+        delete user.password; //Delete password from req.user
+        done(null, user);
+      } else if (result) {
+        //  Login
+        delete result.password; //Delete password from req.user
+        if (!(await userActions.updateLastLogin(result.ID))) {
+          done(notifs.dbError, false);
+          return;
+        }
+        done(null, result);
+        return;
+      } else {
+        done(notifs.dbError, false);
+        return;
+      }
     }
   )
 );

@@ -93,7 +93,7 @@ export default {
         sql =
           "INSERT INTO Users (" +
           "ID, nick, email, password, register_date, last_login, avatar_href, google_ID, facebook_ID, twitter_ID," +
-          "facebook_link, twitter_link, instagram_link, gender, description, activated, premium, bannedregion_ID, language_ID, email_notifications, push_notifications) VALUES" +
+          "facebook_link, twitter_link, instagram_link, gender, description, activated, premium, banned, region_ID, language_ID, email_notifications, push_notifications) VALUES" +
           '(NULL, "' +
           nick +
           '", "' +
@@ -111,7 +111,10 @@ export default {
           ", NULL, NULL, NULL, NULL, NULL, 0, 0, 0,0,0,0,0)";
       }
       
-      if(!await db.query(sql)) resolve(false)
+      if(!await db.query(sql)) {
+        console.log(sql)
+        resolve(false)
+      }
       resolve(true)
     })
     
