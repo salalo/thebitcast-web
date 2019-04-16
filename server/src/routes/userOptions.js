@@ -22,7 +22,7 @@ export default () => {
       return
     }
     const { emailStatus, pushStatus } = req.body;
-    user.updateNotificationsOptions(req.user.ID, emailStatus, pushStatus).then(notif => {
+    user.updateNotificationsOptions(6, emailStatus, pushStatus).then(notif => {
       res.json(notif);
     });
   });
