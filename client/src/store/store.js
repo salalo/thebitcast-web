@@ -5,27 +5,27 @@ import { user } from "./modules/user";
 Vue.use(Vuex);
 
 export const store = new Vuex.Store({
-  modules: { user }
-  // state: {
-  //   formType: "register",
-  //   categoriesBarShown: false
-  // },
+  modules: { user },
+  state: {
+    formType: "register",
+    categoriesBarShown: false
+  },
 
-  // getters: {
-  //   FORMTYPE: state => {
-  //     return state.formType;
-  //   },
-  //   CATBARSHOWN: state => {
-  //     return state.categoriesBarShown;
-  //   }
-  // },
+  getters: {
+    FORMTYPE: state => {
+      return state.formType;
+    },
+    CATBARSHOWN: state => {
+      return state.categoriesBarShown;
+    }
+  },
 
-  // mutations: {
-  //   CHANGE_FORMTYPE: (state, payload) => {
-  //     state.formType = payload;
-  //   },
-  //   CHANGE_CATBAR: (state, payload) => {
-  //     state.categoriesBarShown = payload;
-  //   }
-  // }
+  mutations: {
+    CHANGE_FORMTYPE: (state, payload) => {
+      state.formType = payload;
+    },
+    CHANGE_CATBAR: (state, payload) => {
+      state.categoriesBarShown = payload;
+    }
+  }
 });

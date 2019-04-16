@@ -5,6 +5,9 @@ export default {
     return Api().get("/auth/getUser");
   },
   login(credentials) {
-    return Api().post("http://localhost:8081/auth/login", credentials);
+    return Api().post("auth/login", credentials);
+  },
+  register(credentials) {
+    return Api().post("auth/register", credentials)
   }
 };

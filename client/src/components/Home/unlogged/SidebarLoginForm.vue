@@ -134,12 +134,12 @@ const schemaRegister = Joi.object().keys({
 	email: Joi.string().email().lowercase().trim().min(5).required(),
 	password: Joi.string().trim().min(8).max(40).required(),
 	captchaToken: Joi.string()
-})
+});
 
 const schemaLogin = Joi.object().keys({
 	email: Joi.string().email().lowercase().trim().min(5).required(),
 	password: Joi.string().trim().min(8).max(40).required(),
-})
+});
 
 export default {
 	data() {
@@ -182,23 +182,23 @@ export default {
 	methods: {
 		startCaptcha() {
 			this.$recaptcha('login').then((token) => {
-				this.newCaptchaToken = token
-				this.sendUser()
+				this.newCaptchaToken = token;
+				this.sendUser();
 			}
 		)},
 
 		// alert showing method -> default is error (red) notification
 		showAlert(msg) {
 
-			let alert = document.getElementsByClassName('alert')[0]
+			let alert = document.getElementsByClassName('alert')[0];
 			this.alertMassage = msg
 
-			alert.style.transform = "translateY(-120px)"
+			alert.style.transform = "translateY(-120px)";
 
 			setTimeout(() => alert.style.transform = "translateY(0)", 5000)
 		},
 
-		sendUser() {
+		async sendUser() {
 			let newUser = {
 				nick: this.User.nick,
 				email: this.User.email,
@@ -219,23 +219,22 @@ export default {
 				if (resultRegister.error === null) {
 
 					// Creating user
-					axios.post('http://localhost:8081/auth/create', newUser)
-						.then(
-							axios.post('http://localhost:8081/auth/login', logingUser)
-								.then(location.reload())
-								.catch(err => console.log(err))
-						)
-						.catch(this.Notifs.incorrectRegisterData)
+					try {
+						this.$store.dispatch("user/register", newUser);
+					} catch (error) {
+						this.Notifs.incorrectRegisterData()
+					}
 				} else this.showAlert(this.Notifs.incorrectRegisterData)
 			}
 
 			// LOGIN POST
 			else if (this.fontStateAction === "/auth/login") {
 				if (resultLogin.error === null) {
-					axios.post('http://localhost:8081/auth/login', logingUser)
-						.then(location.reload())
-						.catch(this.showAlert(this.Notifs.incorrectLoginData))
-						
+					try {
+						await this.$store.dispatch("user/login", logingUser);
+					} catch (error) {
+						this.showAlert(this.Notifs.incorrectLoginData)
+					}
 				} else this.showAlert(this.Nofits.incorrectLoginData)
 			}
 		},
