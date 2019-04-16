@@ -1,94 +1,144 @@
-import db from '../config/db.js'
-import dateTime from 'node-datetime'
+import db from "../config/db.js";
+import dateTime from "node-datetime";
+import bcrypt from "bcrypt";
 
 function getActualTime() {
-	const dt = dateTime.create()
-	return dt.format('Y-m-d H:M:S')
+  const dt = dateTime.create();
+  return dt.format("Y-m-d H:M:S");
 }
 
 export default {
-  checkLocalUserExists(nick, email, callback) {
-    let sql = "SELECT ID FROM Users WHERE nick=\""+nick+"\" OR email=\""+email+"\""
- 
-		db.query(sql, (err, result) => 
-			callback(result.length != 0))
-	},
-	
-	getUserByUnique(unique, accountType, callback) {
-		let sql = "SELECT * FROM Users WHERE "
+  checkLocalUserExists(nick, email) {
+    return new Promise(async (resolve, reject) => {
+      let sql =
+        'SELECT ID FROM Users WHERE nick="' +
+        nick +
+        '" OR email="' +
+        email +
+        '"';
 
-		switch(accountType){
-			case 'local':
-				sql += "email"
-				break
-			case 'google':
-				sql += "google_ID"
-				break
-			case 'twitter':
-				sql += "twitter_ID"
-				break
-			case 'facebook':
-				sql += "facebook_ID"
-				break
-		}
-		sql += "=\"" + unique + "\""
+      let res = await db.query(sql)
+      if (!res) resolve("dbError");
+      if (res.length > 0) resolve(true);
+      resolve(false);
 
-		db.query(sql, (err, result) =>
-			result.length == 0 ? callback(null) : callback(result[0]))
-	},
+    });
+  },
 
- 	addUser(USER, accountType) {
-    let facebook_ID = "NULL"
-    let google_ID = "NULL"
-		let twitter_ID = "NULL"
-		let nick = USER.displayName
-		let sql
+  getUserByUnique(unique, accountType) {
+    return new Promise(async(resolve, reject)=>{
+      let sql = "SELECT * FROM Users WHERE ";
 
-		switch(accountType){
-			case 'facebook':
-				nick = USER.name.givenName + " " + USER.name.familyName
-				facebook_ID = "\"" + USER.id + "\""
-				break
-			case 'twitter':
-      	twitter_ID = "\"" + USER.id + "\""
-				break
-			case 'google':
-      	google_ID = "\"" + USER.id + "\""
-				break
-		}
+      switch (accountType) {
+        case "local":
+          sql += "email";
+          break;
+        case "google":
+          sql += "google_ID";
+          break;
+        case "twitter":
+          sql += "twitter_ID";
+          break;
+        case "facebook":
+          sql += "facebook_ID";
+          break;
+      }
+      sql += '="' + unique + '"';
+  
+      let res = await db.query(sql)
+      if(!res) resolve(false)
+      resolve(res[0])
+    })
+  },
 
-		if (accountType === 'local') {
-			sql = "INSERT INTO Users ("+
-				"ID, nick, email, password, register_date, last_login, avatar_href, google_ID, facebook_ID, twitter_ID,"+
-				"facebook_link, twitter_link, instagram_link, gender, description, activated, premium, banned) VALUES"+
-				"(NULL, \"" + USER.nick +"\", \"" + USER.email + "\", \"" + USER.password +"\", \""+ getActualTime() +"\", \""+ getActualTime() +"\", NULL, "+
-				"NULL, NULL, NULL , NULL, NULL, NULL, NULL, NULL, 0, 0, 0)"
-		}
-		else {
-			sql  = "INSERT INTO Users ("+
-				"ID, nick, email, password, register_date, last_login, avatar_href, google_ID, facebook_ID, twitter_ID,"+
-				"facebook_link, twitter_link, instagram_link, gender, description, activated, premium, banned) VALUES"+
-				"(NULL, \"" + nick +"\", \"" + USER.emails[0].value + "\", NULL, \""+ getActualTime() +"\", \""+ getActualTime() +"\", NULL, "+
-				google_ID + ", " + facebook_ID + ", " + twitter_ID + ", NULL, NULL, NULL, NULL, NULL, 0, 0, 0)"
-		}
+  addUser(USER, accountType) {
+    return new Promise(async (resolve, reject)=>{ 
+      let facebook_ID = "NULL";
+      let google_ID = "NULL";
+      let twitter_ID = "NULL";
+      let nick = USER.displayName;
+      let sql;
 
-		db.query(sql, (err, result) =>
-			err ? console.log("actions/users", err) : null)
-	},
+      switch (accountType) {
+        case "facebook":
+          nick = USER.name.givenName + " " + USER.name.familyName;
+          facebook_ID = '"' + USER.id + '"';
+          break;
+        case "twitter":
+          twitter_ID = '"' + USER.id + '"';
+          break;
+        case "google":
+          google_ID = '"' + USER.id + '"';
+          break;
+      }
 
+      if (accountType === "local") {
+        sql =
+          "INSERT INTO Users (" +
+          "ID, nick, email, password, register_date, last_login, avatar_href, google_ID, facebook_ID, twitter_ID," +
+          "facebook_link, twitter_link, instagram_link, gender, description, activated, premium, banned, region_ID, language_ID, email_notifications, push_notifications) VALUES" +
+          '(NULL, "' +
+          USER.nick +
+          '", "' +
+          USER.email +
+          '", "' +
+          USER.password +
+          '", "' +
+          getActualTime() +
+          '", "' +
+          getActualTime() +
+          '", NULL, ' +
+          "NULL, NULL, NULL , NULL, NULL, NULL, NULL, NULL, 0, 0, 0,0,0,0,0)";
+      } else {
+        sql =
+          "INSERT INTO Users (" +
+          "ID, nick, email, password, register_date, last_login, avatar_href, google_ID, facebook_ID, twitter_ID," +
+          "facebook_link, twitter_link, instagram_link, gender, description, activated, premium, banned, region_ID, language_ID, email_notifications, push_notifications) VALUES" +
+          '(NULL, "' +
+          nick +
+          '", "' +
+          USER.emails[0].value +
+          '", NULL, "' +
+          getActualTime() +
+          '", "' +
+          getActualTime() +
+          '", NULL, ' +
+          google_ID +
+          ", " +
+          facebook_ID +
+          ", " +
+          twitter_ID +
+          ", NULL, NULL, NULL, NULL, NULL, 0, 0, 0,0,0,0,0)";
+      }
+      
+      if(!await db.query(sql)) {
+        console.log(sql)
+        resolve(false)
+      }
+      resolve(true)
+    })
+    
+  },
 
-	getUserByID(user_ID, callback) {
-		let sql = "SELECT * FROM Users WHERE ID="+user_ID
+  getUserByID(ID) {
+    return new Promise(async(resolve, reject)=>{
 
-		db.query(sql, (err, result) => {
-			delete result[0].password //Delete password from req.user
-			callback(result[0])
-		})
-	},
+      let sql = "SELECT * FROM Users WHERE ID=" + ID;
 
-	updateLastLogin(ID) {
-		//Update last login time
-		let sql = "UPDATE Users SET last_login=\""+getActualTime()+"\" WHERE ID="+ ID
-		db.query(sql)
-	}
-}
+      let res = await db.query(sql)
+      if(!res)resolve(false)
+      delete res[0].password
+      resolve(res[0])
+    })
+  },
+
+  updateLastLogin(ID) {
+    return new Promise(async(resolve, reject)=>{
+      let sql =
+      'UPDATE Users SET last_login="' + getActualTime() + '" WHERE ID=' + ID;
+
+      if(!await db.query(sql)) resolve(false)
+      resolve(true)
+    })
+  }
+};
