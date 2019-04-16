@@ -38,7 +38,7 @@
 		</header>
 
 		<!-- var for action and @submit method -->
-		<form action="fontStateAction" method="post" @submit.prevent="startCaptcha">
+		<form @submit.prevent="startCaptcha">
 
 			<v-text-field
 				dark
