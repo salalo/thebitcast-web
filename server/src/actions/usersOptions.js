@@ -1,7 +1,7 @@
 import db from "../config/db.js";
 import bcrypt from "bcrypt";
 import notifs from "../config/notifications";
-import Joi from "Joi";
+import Joi from "joi";
 
 async function checkPassword(ID, password) {
   let sql = "SELECT password FROM Users WHERE ID=" + ID;

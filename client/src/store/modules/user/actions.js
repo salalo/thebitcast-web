@@ -6,24 +6,20 @@ export const checkAuthStatus = async ({ commit }) => {
   commit("authStatusUpdated", data);
 };
 
-export const register = async ({dispatch}, newUser) => {
+export const register = async ({ dispatch }, newUser) => {
   try {
-    await userService.register(newUser);
+    const response = await userService.register(newUser);
+    console.log("Register", response);
     dispatch("login", {
       email: newUser.email,
       password: newUser.password
     });
   } catch (error) {
-    dispatch("registerError", error);
+    console.log("E", error);
   }
 };
 
 export const login = async ({ commit }, credentials) => {
-  try {
-    const response = await userService.login(credentials);
-    console.log(response);
-    location.reload()
-  } catch (error) {
-
-  }
+  const response = userService.login(credentials);
+  console.log("Login", response);
 };
