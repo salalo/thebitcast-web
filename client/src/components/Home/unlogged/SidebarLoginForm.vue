@@ -217,24 +217,18 @@ export default {
 			// REGISTRATION POST
 			if (this.fontStateAction === "/auth/create") {
 				if (resultRegister.error === null) {
-
-					// Creating user
-					try {
-						this.$store.dispatch("user/register", newUser);
-					} catch (error) {
-						this.Notifs.incorrectRegisterData()
-					}
+					this.$store.dispatch("user/register", newUser);
 				} else this.showAlert(this.Notifs.incorrectRegisterData)
 			}
 
 			// LOGIN POST
 			else if (this.fontStateAction === "/auth/login") {
 				if (resultLogin.error === null) {
-					try {
-						await this.$store.dispatch("user/login", logingUser);
-					} catch (error) {
-						this.showAlert(this.Notifs.incorrectLoginData)
-					}
+					let res = await this.$store.dispatch("user/login", logingUser);
+					if(res.data.status == 200)
+						location.reload()
+					else this.showAlert(res.data.message)
+					
 				} else this.showAlert(this.Nofits.incorrectLoginData)
 			}
 		},
