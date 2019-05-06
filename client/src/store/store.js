@@ -1,21 +1,14 @@
-import Vue from "vue";
-import Vuex from "vuex";
-import { user } from "./modules/user";
+import Vue from 'vue';
+import Vuex from 'vuex';
+import { user } from './modules/user.js';
+import { view } from './modules/view.js';
 
 Vue.use(Vuex);
 
 export const store = new Vuex.Store({
-  modules: { user },
-  state: {
-    formType: "register",
-    categoriesBarShown: false
-  },
+  modules: { user, view },
 
-  getters: {
-    
-  },
+  getters: {},
 
-  mutations: {
-    
-  }
+  mutations: {}
 });

@@ -25,10 +25,10 @@
       <v-divider></v-divider>
 
       <div class="giver">
-        <router-link to="#">
+        <a @click="toggleUpload">
           <i class="material-icons icon">cloud_upload</i>
           <span class="giver-upload">Upload podcast</span>
-        </router-link>
+        </a>
         <router-link to="#">
           <i class="material-icons icon">wifi_tethering</i>
           <span class="giver-live">Start live</span>
@@ -90,37 +90,20 @@ export default {
   components: {
     CategoriesBar
   },
-  data() {
-    return {
-      isActive: {
-        categories: false
-      }
-    };
-  },
 
   methods: {
-    toggleCategories() {
-      this.isActive.categories = !this.isActive.categories;
-      let cardPanel = document.getElementById("card-panel-container");
-      let categoriesSidebar = document.getElementsByClassName(
-        "categories-bar"
-      )[0];
-
-      // this.$store.commit('CHANGE_CATBAR', true)
-      categoriesSidebar.style.transform = "translateX(300px)";
-      cardPanel.style.transform = "translateX(300px)";
+    toggleUpload() {
+      this.$store.dispatch("view/changeUpload", true);
+    },
+    hideUpload() {
+      this.$store.dispatch("view/changeUpload", false);
     },
 
+    toggleCategories() {
+      this.$store.dispatch("view/changeCategories", true);
+    },
     hideCategories() {
-      this.isActive.categories = false;
-      let cardPanel = document.getElementById("card-panel-container");
-      let categoriesSidebar = document.getElementsByClassName(
-        "categories-bar"
-      )[0];
-
-      // this.$store.commit('CHANGE_CATBAR', false)
-      cardPanel.style.transform = "translateX(0)";
-      categoriesSidebar.style.transform = "translateX(0)";
+      this.$store.dispatch("view/changeCategories", false);
     }
   },
 

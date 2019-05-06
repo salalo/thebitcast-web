@@ -280,7 +280,6 @@ export default {
 
 @import '@/stylesheets/master.scss';
 
-
 .alert {
 	@include transition(0s, transform .5s);
 	position: fixed;
