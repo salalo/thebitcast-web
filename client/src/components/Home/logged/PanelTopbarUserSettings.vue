@@ -37,13 +37,6 @@ export default {
 
   directives: {
     ClickOutside
-  },
-
-  created() {
-    axios
-      .get("http://localhost:8081/auth/getUser")
-      .then(console.log("get user avatar"))
-      .catch(err => console.log(err));
   }
 };
 </script>

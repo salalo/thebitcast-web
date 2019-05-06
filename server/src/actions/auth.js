@@ -32,7 +32,7 @@ export default {
   // Register function
   async register(req, res) {
     const { nick, email, password, captchaToken } = req.body; // get data from request
-
+    console.log(req.body);
     // Create user schema
     // CHANGING THIS CHANGE HOMEDESKTOPLOGINFORM SCHEMA TOO
     const REG_SCHEMA = Joi.object().keys({
@@ -56,16 +56,15 @@ export default {
     });
 
     if (Joi.validate(req.body, REG_SCHEMA).error) {
-      res.status(notifs.incorrectData.status).json(notifs.incorrectData);
+      res.json(notifs.incorrectData);
       return;
     }
 
-    /*
-		if(!await checkCaptcha(captchaToken)){
-      res.status(notifs.captchaError.status).json(notifs.captchaError)
-      done(null, false)
-      return
-    }*/
+    if (!(await checkCaptcha(captchaToken))) {
+      res.json(notifs.captchaError);
+      done(null, false);
+      return;
+    }
 
     const USER = { nick, email, password };
 
@@ -74,22 +73,20 @@ export default {
     let exist = await userActions.checkLocalUserExists(USER.nick, USER.email);
 
     if (exist === "dbError") {
-      res.status(notifs.dbError.status).json(notifs.dbError);
+      res.json(notifs.dbError);
       return;
     }
     if (exist) {
-      res
-        .status(notifs.userAlreadyRegistered.status)
-        .json(notifs.userAlreadyRegistered);
+      res.json(notifs.userAlreadyRegistered);
       return;
     }
 
     if (!(await userActions.addUser(USER, "local"))) {
-      res.status(notifs.dbError.status).json(notifs.dbError);
+      res.json(notifs.dbError);
       return;
     }
 
-    res.status(notifs.userRegister.status).json(notifs.userRegister);
+    res.json(notifs.userRegister);
   }
 };
 
@@ -110,14 +107,15 @@ passport.use(
     },
     async (email, password, done) => {
       let user = await userActions.getUserByUnique(email, "local");
-      if (!user) {
-        if (user === []) {
-          done(notifs.incorrectEmailOrPassword);
-          return;
-        }
-        done(notifs.dbError, false);
+      
+      if (user === undefined) {
+        done(notifs.incorrectEmailOrPassword);
         return;
       }
+      else if (!user) {
+        done(notifs.dbError, false);
+        return;
+      }else{
 
       if (!(await bcrypt.compare(password, user.password))) {
         done(notifs.incorrectEmailOrPassword, false);
@@ -133,6 +131,7 @@ passport.use(
       done(null, user);
       return;
     }
+    }
   )
 );
 
@@ -144,22 +143,18 @@ passport.use(
       clientSecret: keys.google.clientSecret,
       callbackURL: "/auth/google/cb"
     },
-    (accessToken, refreshToken, profile, done) => {
-      userActions.getUserByUnique(profile.id, "google", result => {
-        if (result) {
-          //  Login
-          delete result.password; //Delete password from req.user
-          userActions.updateLastLogin(result.ID);
-          done(null, result);
-        } else {
-          //  Register
-          userActions.addUser(profile, "google");
-          userActions.getUserByUnique(profile.id, "google", result1 => {
-            // delete result1.password //Delete password from req.user
-            done(null, result1);
-          });
-        }
-      });
+    async (accessToken, refreshToken, profile, done) => {
+      let user = await userActions.getUserByUnique(profile.id, "google");
+      if (user) {
+        //  Login
+        await userActions.updateLastLogin(user.ID);
+        done(null, user);
+      } else {
+        //  Register
+        await userActions.addUser(profile, "google");
+        let result1 = await userActions.getUserByUnique(profile.id, "google");
+        done(null, result1);
+      }
     }
   )
 );
@@ -184,22 +179,18 @@ passport.use(
         "photos"
       ]
     },
-    (accessToken, refreshToken, profile, done) => {
-      userActions.getUserByUnique(profile.id, "facebook", result => {
-        if (result) {
-          //  Login
-          delete result.password; //Delete password from req.user
-          userActions.updateLastLogin(result.ID);
-          done(null, result);
-        } else {
-          //  Register
-          userActions.addUser(profile, "facebook");
-          userActions.getUserByUnique(profile.id, "facebook", result1 => {
-            // delete result1.password //Delete password from req.user
-            done(null, result1);
-          });
-        }
-      });
+    async (accessToken, refreshToken, profile, done) => {
+      let user = await userActions.getUserByUnique(profile.id, "facebook");
+      if (user) {
+        //  Login
+        await userActions.updateLastLogin(user.ID);
+        done(null, user);
+      } else {
+        //  Register
+        await userActions.addUser(profile, "facebook");
+        let result1 = await userActions.getUserByUnique(profile.id, "facebook");
+        done(null, result1);
+      }
     }
   )
 );

@@ -111,7 +111,7 @@
 			</p>
 
 		</form>
-		<p class="form-state">{{formStateText}} <a href="#" @click="changeFormState">{{formStateHyperlink}}</a>.</p>
+		<p class="form-state">{{formStateText}} <a @click="changeFormState">{{formStateHyperlink}}</a>.</p>
 
 		<v-alert
 			class="alert"
@@ -125,8 +125,6 @@
 </template>
 
 <script>
-
-import axios from 'axios'
 import Joi from 'joi'
 
 const schemaRegister = Joi.object().keys({
@@ -161,7 +159,7 @@ export default {
 			
 			Notifs: {
 				incorrectLoginData: "Email or password is incorrect. 🤔",
-				incorrectRegisterData: "Data you've inserted is incorrect, stick to requirements please. 😘"
+				incorrectRegisterData: "Data, that you've inserted are incorrect, stick to requirements please. 😘"
 			},
 
 			// rules: {
@@ -184,8 +182,8 @@ export default {
 			this.$recaptcha('login').then((token) => {
 				this.newCaptchaToken = token;
 				this.sendUser();
-			}
-		)},
+			})
+		},
 
 		// alert showing method -> default is error (red) notification
 		showAlert(msg) {
@@ -196,6 +194,25 @@ export default {
 			alert.style.transform = "translateY(-120px)";
 
 			setTimeout(() => alert.style.transform = "translateY(0)", 5000)
+		},
+
+		async login(logingUser){
+			let res = await this.$store.dispatch("user/login", logingUser);
+      if(res.data.status == 200)
+				this.$store.commit("user/login")
+			else this.showAlert(res.data.message)
+		},
+
+		async register(newUser){
+			let res = await this.$store.dispatch("user/register", newUser);
+			if(res.data.status == 200){
+				//Login after registration
+				let logingUser = {
+					email: newUser.email,
+					password: newUser.password
+				}
+				this.login(logingUser)
+			} else this.showAlert(res.data.message)
 		},
 
 		async sendUser() {
@@ -217,18 +234,14 @@ export default {
 			// REGISTRATION POST
 			if (this.fontStateAction === "/auth/create") {
 				if (resultRegister.error === null) {
-					this.$store.dispatch("user/register", newUser);
+					this.register(newUser)
 				} else this.showAlert(this.Notifs.incorrectRegisterData)
 			}
 
 			// LOGIN POST
 			else if (this.fontStateAction === "/auth/login") {
 				if (resultLogin.error === null) {
-					let res = await this.$store.dispatch("user/login", logingUser);
-					if(res.data.status == 200)
-						location.reload()
-					else this.showAlert(res.data.message)
-					
+					this.login(logingUser)
 				} else this.showAlert(this.Nofits.incorrectLoginData)
 			}
 		},
@@ -247,7 +260,6 @@ export default {
 				this.formStateText = "Not registered yet?"
 				this.formStateHyperlink = "Create one"
 				this.fontStateAction = "/auth/login"
-				this.$store.commit('CHANGE_FORMTYPE', 'login')
 			}
 			else {
 				this.isActive = false;
@@ -257,7 +269,6 @@ export default {
 				this.formStateText = "Already registered?"
 				this.formStateHyperlink = "Sign in"
 				this.fontStateAction = "/auth/create"
-				this.$store.commit('CHANGE_FORMTYPE', 'register')
 			}
 		}
 	}

@@ -43,33 +43,7 @@
 </template>
 
 <script>
-import axios from "axios";
 
-export default {
-  data() {
-    return {
-      actualUser: {
-        nick: "",
-        email: "",
-        password: "",
-        language: "",
-        location: ""
-      }
-    };
-  },
-
-  created() {
-    axios.defaults.withCredentials = true;
-
-    axios
-      .get("http://localhost:8081/auth/getUser")
-      .then(res => {
-        this.actualUser.nick = res.data.nick;
-        this.actualUser.email = res.data.email;
-      })
-      .catch(err => console.log(err));
-  }
-};
 </script>
 
 <style lang="scss" scoped>

@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isLogged">
+  <div v-if="this.$store.getters['user/checkIsLogged']">
     <Panel/>
     <SidebarLogged/>
     <TopbarLogged/>
@@ -23,13 +23,17 @@ import Panel from "@/components/shared/Panel/Panel.vue";
 import TopbarLogged from "@/components/Home/logged/PanelTopbar.vue";
 import Topbar from "@/components/Home/unlogged/PanelTopbar.vue";
 import LoadingScreen from "@/views/loadingScreen.vue";
-import { mapState } from "vuex";
 
-export default {
-  computed: {
-    ...mapState("user", {
-      isLogged: store => store.isLogged
-    })
+export default {  
+  async mounted(){
+    let res = await this.$store.dispatch("user/getUser")
+    if(res.data.status === 200){
+      this.$store.commit("user/login", res.data.user)
+      
+    }else{
+      this.$store.commit("user/logout")
+    }
+    
   },
   components: {
     Sidebar,

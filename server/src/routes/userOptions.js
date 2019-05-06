@@ -84,6 +84,6 @@ export default () => {
         res.status(notif.status).json(notif);
       });
   });
-
+  //avatar, darkmode
   return api;
 };

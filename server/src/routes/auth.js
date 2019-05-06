@@ -32,6 +32,7 @@ export default () => {
     '/google',
     passport.authenticate('google', {
       // get more info from google user's account
+      prompt: 'select_account',
       scope: ['profile', 'email']
     })
   );
@@ -42,6 +43,7 @@ export default () => {
     '/google/cb',
     passport.authenticate('google', { session: true }),
     (req, res) => {
+      console.log("Callback")
       res.redirect('http://localhost:8080');
     }
   );
@@ -67,12 +69,14 @@ export default () => {
       res.json({
         message: 'User logged in',
         type: 'positive',
+        status: 200,
         user: req.user
       });
     else
       res.json({
         message: 'User not logged in',
         type: 'negative',
+        status: 500,
         user: undefined
       });
   });
@@ -82,6 +86,7 @@ export default () => {
   api.get('/logout', (req, res) => {
     req.logout();
     req.session.destroy();
+    
   });
 
   return api;

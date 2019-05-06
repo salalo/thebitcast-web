@@ -1,8 +1,8 @@
 <template>
   <div class="general">
     <header>
-      <span>{{ actualUser.nick }}</span>
-      <span>{{ actualUser.email }}</span>
+      <span>{{ this.$store.getters['user/getUserData'].nick }}</span>
+      <span>{{ this.$store.getters['user/getUserData'].email }}</span>
     </header>
 
     <v-divider></v-divider>
@@ -51,36 +51,14 @@ import axios from "axios";
 import VueCookie from "vue-cookies";
 
 export default {
-  data() {
-    return {
-      actualUser: {
-        nick: "",
-        email: ""
-      }
-    };
+  mounted(){
+    this.$store.commit("user/setUserData")
   },
-
-  created() {
-    axios.defaults.withCredentials = true;
-
-    axios
-      .get("http://localhost:8081/auth/getUser")
-      .then(res => {
-        this.actualUser.nick = res.data.nick;
-        this.actualUser.email = res.data.email;
-      })
-      .catch(err => console.log(err));
-  },
-
   methods: {
     logout() {
-      axios
-        .get("http://localhost:8081/auth/logout")
-        .then(res => resolve(res))
-        .catch(err => console.log(err));
-
+      axios.get("http://localhost:8081/auth/logout")
+      this.$store.commit("user/logout")
       VueCookie.remove("SESS");
-      location.reload();
     }
   }
 };

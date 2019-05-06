@@ -12,9 +12,6 @@ export default {
     Mobile,
     Desktop
   },
-  beforeCreate() {
-    this.$store.dispatch("user/checkAuthStatus");
-  },
   computed: {
     isMobile() {
       if (
