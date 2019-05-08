@@ -1,5 +1,5 @@
 import { Router } from "express";
-import user from "../actions/usersOptions";
+import user from "../actions/settings";
 import notifs from '../config/notifications'
 
 export default () => {

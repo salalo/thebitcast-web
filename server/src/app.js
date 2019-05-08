@@ -7,9 +7,12 @@ import { join } from "path";
 import cors from "cors";
 
 import auth from "./routes/auth.js";
-import userOptions from "./routes/userOptions.js";
+import settings from "./routes/settings.js";
 import keys from "./config/keys.js";
 import { notFound, catchErrors } from "./middlewares/errors.js";
+import podcasts from "./routes/podcasts"
+import categories from "./routes/categories"
+import multer from "multer"
 
 const app = express();
 
@@ -24,7 +27,10 @@ app.set("view engine", "pug");
 app.set("views", join(__dirname, "views"));
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(bodyParser.json({
+  extended: true,
+  limit: '10mb'
+}));
 app.use(morgan("dev"));
 app.set("trust proxy", 1); // trust first proxy
 
@@ -45,11 +51,11 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-// app.use(db);
-
 // routes
 app.use("/auth", auth());
-app.use("/userOptions", userOptions());
+app.use("/podcasts", podcasts());
+app.use("/categories", categories());
+app.use("/userOptions", settings());
 
 // err handling
 app.use(notFound);

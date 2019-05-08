@@ -1,42 +1,35 @@
 <template>
   <div class="categories-bar">
     <a v-for="category in categories" :key="category">
-      <i class="material-icons icon">{{ category.icon }}</i>
-      <span>{{ category.text }}</span>
-      <i class="material-icons live-dot">{{ category.circle }}</i>
+      <i class="material-icons icon">{{ category.icon_name }}</i>
+      <span>{{ category.name }}</span>
+      <i v-if='category.name == "Live"' class="material-icons live-dot">lens</i>
     </a>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
+
+let Api = axios.create({
+  baseURL: `http://localhost:8081`,
+  withCredentials: true,
+  headers: {
+    Accept: "application/json",
+    "Content-Type": "application/json"
+  }
+});
+
 export default {
+  async mounted(){
+    let res = await Api.get('/categories/getCategories')
+    if(res.data.status == 200)
+      this.categories = res.data.categories
+    else console.log("db error")//this.showAlert
+  },
   data() {
     return {
-      categories: [
-        { icon: "brush", text: "Art" },
-        { icon: "attach_money", text: "Business" },
-        { icon: "directions_car", text: "Cars & motorization" },
-        { icon: "mood", text: "Comedy" },
-        { icon: "school", text: "Education" },
-        { icon: "movie", text: "Film" },
-        { icon: "gamepad", text: "Games & hobbies" },
-        { icon: "spa", text: "Nature" },
-        { icon: "wifi_tethering", text: "Live", circle: "lens" },
-        { icon: "local_hospital", text: "Health" },
-        { icon: "import_contacts", text: "History" },
-        { icon: "child_care", text: "Kids & family" },
-        { icon: "music_note", text: "Music" },
-        { icon: "receipt", text: "News & politycs" },
-        { icon: "accessibility_new", text: "Psychology" },
-        { icon: "location_city", text: "Religion & spirituality" },
-        { icon: "touch_app", text: "Science" },
-        { icon: "free_breakfast", text: "Small talk" },
-        { icon: "group", text: "Society & culture" },
-        { icon: "fitness_center", text: "Sport" },
-        { icon: "mic", text: "Stories" },
-        { icon: "memory", text: "Technology" },
-        { icon: "photo_camera", text: "Tourism" }
-      ]
+      categories: []
     };
   }
 };

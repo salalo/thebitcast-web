@@ -83,12 +83,6 @@ module.exports = {
     status: "500"
 	},
 	
-	userRegister: {
-    message: "User registered succesfully",
-    type: "positive",
-    status: "200"
-	},
-	
 	captchaError: {
     message: "Captcha error",
     type: "negative",
@@ -99,14 +93,8 @@ module.exports = {
     message: "User registered succesfully",
     type: "positive",
     status: "200"
-	},
-	
-	userRegister: {
-    message: "User registered succesfully",
-    type: "positive",
-    status: "200"
   },
-
+  
   updateDescription: {
     message: "Description succesfully updated",
     type: "positive",
@@ -135,5 +123,17 @@ module.exports = {
     message: "Succesfully logged in",
     type: "positive",
     status: "200"
+  },
+
+  podcastUploaded: {
+    message: "Podcast succesfully uploaded",
+    type: "positive",
+    status: "200"
+  },
+
+  invalidFiles: {
+    message: "Selected files are invalid",
+    type: "negative",
+    status: "400"
   }
 };

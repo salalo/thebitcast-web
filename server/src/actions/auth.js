@@ -6,7 +6,7 @@ import Joi from "joi";
 import bcrypt from "bcrypt";
 import request from "request";
 
-import userActions from "./users.js";
+import userActions from "./user.js";
 import keys from "../config/keys.js";
 import notifs from "../config/notifications";
 
