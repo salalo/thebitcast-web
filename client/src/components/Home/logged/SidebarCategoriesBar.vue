@@ -51,16 +51,10 @@ export default {
   box-shadow: 0 0 0 rgba(0, 0, 0, 0), 2px 0 10px rgba(0, 0, 0, 0.1);
   width: 300px;
   height: calc(100vh - 80px);
-  position: fixed;
+  position: absolute;
   padding: 30px 0;
   bottom: 0;
   overflow-y: auto;
-
-  div {
-    overflow: hidden;
-    padding: 15% 0;
-    border-bottom: 1px solid $dark-white;
-  }
 }
 
 a {

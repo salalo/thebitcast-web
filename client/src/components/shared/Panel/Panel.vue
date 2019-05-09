@@ -40,20 +40,19 @@
     </div>
   </main>
 
-  <!-- 
-    :style="{width: isLogged ? 'calc(100vw - 300px)' : 'calc(100vw - 640px)',
-  padding: isLogged ? '60px 200px' : '50px'}"-->
-  <main v-else-if="isRendered && isLogged" id="upload-panel-container">
-    <Categories></Categories>
+  <main
+    v-else-if="isRendered && isLogged"
+    id="upload-panel-container"
+    style="width: calc(100vw - 600px); float: left;"
+  >
     <UploadFile></UploadFile>
-    <UploadThumbnail></UploadThumbnail>,
+    <UploadThumbnail></UploadThumbnail>
     <UploadData></UploadData>
   </main>
 </template>
 
 <script>
 import Card from "@/components/shared/Card/Card.vue";
-import Categories from "@/components/Home/logged/upload_podcast/PanelCategories.vue";
 import UploadFile from "@/components/Home/logged/upload_podcast/PanelFile.vue";
 import UploadThumbnail from "@/components/Home/logged/upload_podcast/PanelThumbnail.vue";
 import UploadData from "@/components/Home/logged/upload_podcast/PanelData.vue";
@@ -63,7 +62,6 @@ import { mapState } from "vuex";
 export default {
   components: {
     Card,
-    Categories,
     UploadFile,
     UploadThumbnail,
     UploadData

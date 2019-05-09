@@ -18,32 +18,45 @@ export const view = {
     }
   },
   actions: {
-    changeUpload: ({ commit }, tf) => {
-      commit('CHANGE_UPLOAD', tf);
+    changeUpload: ({ commit }, boolUpl) => {
+      commit('CHANGE_CATEGORIES', boolUpl);
+      commit('CHANGE_UPLOAD', boolUpl);
     },
-    changeCategories: ({ commit }, tf) => {
-      commit('CHANGE_CATEGORIES', tf);
+    changeCategories: ({ commit }, boolCat) => {
+      commit('CHANGE_CATEGORIES', boolCat);
+    }
+  },
+  mutations: {
+    CHANGE_UPLOAD: (state, boolUpl) => {
+      state.rendered.upload = boolUpl;
+    },
+    CHANGE_CATEGORIES: (state, boolCat) => {
+      state.rendered.categories = boolCat;
 
-      let cardPanel = document.getElementById('card-panel-container');
+      let panel = document.getElementById('card-panel-container');
       let categoriesSidebar = document.getElementsByClassName(
         'categories-bar'
       )[0];
 
-      if (tf === true) {
-        categoriesSidebar.style.transform = 'translateX(300px)';
-        cardPanel.style.transform = 'translateX(300px)';
-      } else if (tf === false) {
-        cardPanel.style.transform = 'translateX(0)';
-        categoriesSidebar.style.transform = 'translateX(0)';
+      if (panel === null) {
+        panel = document.getElementById('upload-panel-container');
+
+        if (boolCat === true) {
+          categoriesSidebar.style.transform = 'translateX(300px)';
+          panel.style.transform = 'translateX(300px)';
+        } else if (boolCat === false) {
+          panel.style.transform = 'translateX(0px)';
+          categoriesSidebar.style.transform = 'translateX(0)';
+        }
+      } else {
+        if (boolCat === true) {
+          categoriesSidebar.style.transform = 'translateX(300px)';
+          panel.style.transform = 'translateX(300px)';
+        } else if (boolCat === false) {
+          panel.style.transform = 'translateX(0px)';
+          categoriesSidebar.style.transform = 'translateX(0)';
+        }
       }
-    }
-  },
-  mutations: {
-    CHANGE_UPLOAD: (state, tf) => {
-      state.rendered.upload = tf;
-    },
-    CHANGE_CATEGORIES: (state, tf) => {
-      state.rendered.categories = tf;
     }
   }
 };

@@ -25,7 +25,7 @@
       <v-divider></v-divider>
 
       <div class="giver">
-        <a @click="toggleUpload">
+        <a @click="toggleUpload" v-click-outside="hideUpload">
           <i class="material-icons icon">cloud_upload</i>
           <span class="giver-upload">Upload podcast</span>
         </a>
