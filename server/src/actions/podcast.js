@@ -172,11 +172,11 @@ export default {
   },
 
   async get(req, res) {
-    let sql = "SELECT * FROM podcasts WHERE ID=" + req.body.podcastID;
+    let sql = "SELECT * FROM podcasts WHERE ID=" + req.query.podcastID;
     let result = await db.query(sql);
 
-    if (!result && result != []) return res.json(notifs.dbError);
-    else if (result == []) return res.json(notifs.podcastNotFound);
+    if (!result && result !== []) return res.json(notifs.dbError);
+    else if (result.length==0) return res.json(notifs.podcastNotFound);
 
     let podcast = result[0];
 
@@ -184,10 +184,11 @@ export default {
       __dirname + "/../../public/podcasts/mp3/" + podcast.ID + ".mp3",
       function read(err, data) {
         if (err) {
+          console.log("AAA")
           return res.json(notifs.dbError);
         }else{
 
-          podcast.mp3 = data
+          podcast.mp3 = new Buffer(data).toString("base64")
 
           let thumbnialPath
           
@@ -201,7 +202,7 @@ export default {
               if (err1) {
                 return res.json(notifs.dbError);
               }else{
-                podcast.thumbnail = data1
+                podcast.thumbnail = new Buffer(data1).toString("base64")
 
                 res.json({
                   message: "Podcast found",
