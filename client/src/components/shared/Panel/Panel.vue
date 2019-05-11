@@ -43,11 +43,12 @@
   <main
     v-else-if="isRendered && isLogged"
     id="upload-panel-container"
-    style="width: calc(100vw - 600px); float: left;"
+    style="width: calc(100vw - 600px); right: 300px;"
   >
-    <UploadFile></UploadFile>
-    <UploadThumbnail></UploadThumbnail>
-    <UploadData></UploadData>
+    <UploadThumbnail ref="uploadThumbnail"></UploadThumbnail>
+    <UploadFile ref="uploadFile"></UploadFile>
+    <UploadData ref="uploadData"></UploadData>
+    <button @click="uploadPodcast">asd</button>
   </main>
 </template>
 
@@ -65,6 +66,32 @@ export default {
     UploadFile,
     UploadThumbnail,
     UploadData
+  },
+
+  data() {
+    return {
+      PodcastData: {}
+    };
+  },
+
+  methods: {
+    uploadPodcast() {
+      this.PodcastData = this.$refs.uploadData._data.Podcast;
+
+      let encodedMp3 = new Buffer(bl.toString(), "binary").toString("base64");
+      let encodedThumbnail = new Buffer(bl.toString(), "binary").toString(
+        "base64"
+      );
+
+      /*let data = {
+        title:
+        desc:
+        tags:
+        category:
+        mp3:
+        thumbnail:
+      };*/
+    }
   },
 
   computed: {
@@ -86,7 +113,7 @@ export default {
 main {
   @include transition(0s, transform 0.5s);
   height: calc(100vh - 80px);
-  position: fixed;
+  position: absolute;
   bottom: 0;
   right: 0;
   overflow-y: scroll;
