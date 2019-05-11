@@ -7,6 +7,12 @@ const acceptableFormats = [
 ];
 
 export default {
+
+  podcastThumbnailSize: {
+    width: 100,
+    height: 100
+  },
+
   checkThumbnail(thumbnail) {
     let type = imageType(thumbnail);
 

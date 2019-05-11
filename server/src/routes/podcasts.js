@@ -5,6 +5,7 @@ export default () => {
   const api = Router();
 
   api.post("/upload", podcasts.checkUpload);
+  api.get("/get", podcasts.get)
 
   return api;
 };

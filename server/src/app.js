@@ -12,7 +12,6 @@ import keys from "./config/keys.js";
 import { notFound, catchErrors } from "./middlewares/errors.js";
 import podcasts from "./routes/podcasts"
 import categories from "./routes/categories"
-import multer from "multer"
 
 const app = express();
 
@@ -29,7 +28,7 @@ app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json({
   extended: true,
-  limit: '10mb'
+  limit: '510MB'
 }));
 app.use(morgan("dev"));
 app.set("trust proxy", 1); // trust first proxy

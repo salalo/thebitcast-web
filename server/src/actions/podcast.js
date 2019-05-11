@@ -1,12 +1,15 @@
-import notifs from "../config/notifications";
 import Joi from "joi";
-import db from "../config/db";
 import fs from "fs";
 import isMp3 from "is-mp3";
-import thumbnails from "../config/thumbnails";
 import dateTime from "node-datetime";
 import mp3Duration from "mp3-duration";
 import timeFormat from "hh-mm-ss";
+
+import mp3s from "../config/mp3s";
+import notifs from "../config/notifications";
+import thumbnails from "../config/thumbnails";
+import db from "../config/db";
+import { get } from "http";
 
 function getActualTime() {
   const dt = dateTime.create();
@@ -17,7 +20,9 @@ async function abortUploading(podcastID) {
   let sql = "DELETE pocast WHERE ID=" + podcastID;
   await db.query(sql);
   fs.unlinkSync(__dirname + "/../../public/podcasts/mp3/" + podcastID + ".mp3");
-  fs.unlinkSync(__dirname + "/../../public/podcasts/mp3/" + podcastID + ".jpg");
+  fs.unlinkSync(
+    __dirname + "/../../public/podcasts/thumbnails/" + podcastID + ".jpg"
+  );
 }
 
 function getMp3Duration(mp3) {
@@ -125,7 +130,9 @@ export default {
     const mp3Duration = await getMp3Duration(mp3Decoded);
     if (!mp3Duration) return res.json(notifs.invalidFiles);
 
-    data.length = timeFormat.fromS(Math.floor(mp3Duration), "HH:MM");
+    if (mp3Duration > mp3s.maxDuration) return res.json(notifs.podcastTooLong);
+
+    data.length = timeFormat.fromS(Math.floor(mp3Duration), "HH:MM:SS");
 
     //Upload
     const podcastID = await upload(data);
@@ -159,6 +166,51 @@ export default {
           } else {
             return res.json(notifs.podcastUploaded);
           }
+        }
+      }
+    );
+  },
+
+  async get(req, res) {
+    let sql = "SELECT * FROM podcasts WHERE ID=" + req.body.podcastID;
+    let result = await db.query(sql);
+
+    if (!result && result != []) return res.json(notifs.dbError);
+    else if (result == []) return res.json(notifs.podcastNotFound);
+
+    let podcast = result[0];
+
+    fs.readFile(
+      __dirname + "/../../public/podcasts/mp3/" + podcast.ID + ".mp3",
+      function read(err, data) {
+        if (err) {
+          return res.json(notifs.dbError);
+        }else{
+
+          podcast.mp3 = data
+
+          let thumbnialPath
+          
+          if (!fs.existsSync(__dirname + "/../../public/podcasts/thumbnails/" + podcast.ID + ".jpg")) {
+            thumbnialPath = __dirname + "/../../public/podcasts/thumbnails/default.jpg"
+          }else thumbnialPath = __dirname + "/../../public/podcasts/thumbnails/" + podcast.ID + ".jpg"
+
+          fs.readFile(
+            thumbnialPath,
+            function read(err1, data1) {
+              if (err1) {
+                return res.json(notifs.dbError);
+              }else{
+                podcast.thumbnail = data1
+
+                res.json({
+                  message: "Podcast found",
+                  type: "positive",
+                  status: 200,
+                  podcast: podcast
+                })
+              }
+            })
         }
       }
     );
