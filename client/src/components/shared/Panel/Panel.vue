@@ -41,9 +41,6 @@
 
 <script>
 import Card from "@/components/shared/Card/Card.vue";
-import UploadFile from "@/components/Home/logged/upload_podcast/PanelFile.vue";
-import UploadThumbnail from "@/components/Home/logged/upload_podcast/PanelThumbnail.vue";
-import UploadData from "@/components/Home/logged/upload_podcast/PanelData.vue";
 
 import { mapState } from "vuex";
 

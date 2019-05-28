@@ -54,6 +54,7 @@ export default {
   position: absolute;
   padding: 30px 0;
   bottom: 0;
+  left: 300px;
   overflow-y: auto;
 }
 

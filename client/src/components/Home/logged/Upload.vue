@@ -35,27 +35,27 @@ export default {
     return {
       PodcastData: {}
     };
-  },
-
-  methods: {
-    uploadPodcast() {
-      this.PodcastData = this.$refs.uploadData._data.Podcast;
-
-      let encodedMp3 = new Buffer(bl.toString(), "binary").toString("base64");
-      let encodedThumbnail = new Buffer(bl.toString(), "binary").toString(
-        "base64"
-      );
-
-      /*let data = {
-        title:
-        desc:
-        tags:
-        category:
-        mp3:
-        thumbnail:
-      };*/
-    }
   }
+
+  // methods: {
+  //   uploadPodcast() {
+  //     this.PodcastData = this.$refs.uploadData._data.Podcast;
+
+  //     let encodedMp3 = new Buffer(bl.toString(), "binary").toString("base64");
+  //     let encodedThumbnail = new Buffer(bl.toString(), "binary").toString(
+  //       "base64"
+  //     );
+
+  //     /*let data = {
+  //       title:
+  //       desc:
+  //       tags:
+  //       category:
+  //       mp3:
+  //       thumbnail:
+  //     };*/
+  //   }
+  // }
 };
 </script>
 

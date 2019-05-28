@@ -1,6 +1,18 @@
 <template>
   <div class="categories-panel">
-    <a v-for="category in categories" :key="category">
+    <div class="info">
+      <p>Choose the most appropriate category</p>
+      <p>for your podcast.</p>
+    </div>
+
+    <v-divider class="divider-line"></v-divider>
+
+    <a
+      v-for="category in categories"
+      :key="category"
+      :style="pickCategory ? {color: '#F44336'} : null"
+      @click="pickCategory = true"
+    >
       <i class="material-icons icon">{{ category.icon }}</i>
       <span>{{ category.text }}</span>
       <i class="material-icons live-dot">{{ category.circle }}</i>
@@ -12,6 +24,7 @@
 export default {
   data() {
     return {
+      pickCategory: false,
       categories: [
         { icon: "brush", text: "Art" },
         { icon: "attach_money", text: "Business" },
@@ -60,6 +73,18 @@ export default {
     @include transition(0s, 0.4s box-shadow);
     cursor: pointer;
     box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  }
+  .divider-line {
+    margin: 20px;
+  }
+  .info {
+    background: transparent !important;
+    p {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 500;
+      text-align: center;
+    }
   }
 }
 

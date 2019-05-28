@@ -1,17 +1,15 @@
 <template>
   <nav>
-    <CategoriesBar></CategoriesBar>
-
     <div class="container">
       <div class="taker">
         <router-link to="/">
           <i class="material-icons icon">home</i>
           <span class="taker-home">Home</span>
         </router-link>
-        <a @click="toggleCategories" v-click-outside="hideCategories">
+        <router-link to="/categories">
           <i class="material-icons icon">view_list</i>
           <span class="taker-categories">Categories</span>
-        </a>
+        </router-link>
         <router-link to="#">
           <i class="material-icons icon">favorite</i>
           <span class="taker-following">Following</span>
@@ -83,32 +81,7 @@
 </template>
 
 <script>
-import CategoriesBar from "./SidebarCategoriesBar.vue";
-import ClickOutside from "vue-click-outside";
-
-export default {
-  components: {
-    CategoriesBar
-  },
-
-  methods: {
-    toggleCategories() {
-      this.$store.dispatch("view/changeCategories", true);
-    },
-    hideCategories() {
-      this.$store.dispatch("view/changeCategories", false);
-    }
-  },
-
-  mounted() {
-    // prevent click outside event with popupItem.
-    this.popupItem = this.$el;
-  },
-
-  directives: {
-    ClickOutside
-  }
-};
+export default {};
 </script>
 
 <style lang="scss" scoped>

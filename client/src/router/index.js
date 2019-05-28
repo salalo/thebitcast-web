@@ -5,6 +5,7 @@ import ProfileSettings from '@/components/Home/logged/user_settings/Profile.vue'
 import AccountSettings from '@/components/Home/logged/user_settings/Account.vue';
 import NotificationSettings from '@/components/Home/logged/user_settings/Notifications.vue';
 import Upload from '@/components/Home/logged/Upload.vue';
+import Categories from '@/components/Home/logged/Categories.vue';
 
 Vue.use(Router);
 
@@ -20,9 +21,15 @@ export default new Router({
         { path: '/notifs', component: NotificationSettings }
       ]
     },
+
     {
       path: '/upload',
       component: Upload
+    },
+
+    {
+      path: '/categories',
+      component: Categories
     },
 
     {
