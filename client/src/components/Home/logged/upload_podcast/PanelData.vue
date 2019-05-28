@@ -65,9 +65,11 @@ export default {
 
 .data-container {
   max-width: 1210px;
+  width: 1160px;
   height: 400px;
   background-color: #fff;
-  margin: 50px 0 0 50px;
+  float: right;
+  margin-top: 50px;
   padding: 50px;
 
   box-shadow: 0 0 0 rgba(0, 0, 0, 0), 2px 0 10px rgba(0, 0, 0, 0.1);

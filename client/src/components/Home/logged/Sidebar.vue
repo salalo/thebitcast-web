@@ -25,10 +25,10 @@
       <v-divider></v-divider>
 
       <div class="giver">
-        <a @click="toggleUpload">
+        <router-link to="/upload">
           <i class="material-icons icon">cloud_upload</i>
           <span class="giver-upload">Upload podcast</span>
-        </a>
+        </router-link>
         <router-link to="#">
           <i class="material-icons icon">wifi_tethering</i>
           <span class="giver-live">Start live</span>
@@ -92,13 +92,6 @@ export default {
   },
 
   methods: {
-    toggleUpload() {
-      this.$store.dispatch("view/changeUpload", true);
-    },
-    hideUpload() {
-      this.$store.dispatch("view/changeUpload", false);
-    },
-
     toggleCategories() {
       this.$store.dispatch("view/changeCategories", true);
     },

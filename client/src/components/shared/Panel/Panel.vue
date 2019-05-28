@@ -1,6 +1,5 @@
 <template>
   <main
-    v-if="!isRendered"
     id="card-panel-container"
     :style="{width: isLogged ? 'calc(100vw - 300px)' : 'calc(100vw - 640px)',
             padding: isLogged ? '60px 200px' : '50px'}"
@@ -36,19 +35,7 @@
       <Card></Card>
       <Card></Card>
       <Card></Card>
-      <Card></Card>
     </div>
-  </main>
-
-  <main
-    v-else-if="isRendered && isLogged"
-    id="upload-panel-container"
-    style="width: calc(100vw - 600px); right: 300px;"
-  >
-    <UploadThumbnail ref="uploadThumbnail"></UploadThumbnail>
-    <UploadFile ref="uploadFile"></UploadFile>
-    <UploadData ref="uploadData"></UploadData>
-    <button @click="uploadPodcast">asd</button>
   </main>
 </template>
 
@@ -62,45 +49,12 @@ import { mapState } from "vuex";
 
 export default {
   components: {
-    Card,
-    UploadFile,
-    UploadThumbnail,
-    UploadData
-  },
-
-  data() {
-    return {
-      PodcastData: {}
-    };
-  },
-
-  methods: {
-    uploadPodcast() {
-      this.PodcastData = this.$refs.uploadData._data.Podcast;
-
-      let encodedMp3 = new Buffer(bl.toString(), "binary").toString("base64");
-      let encodedThumbnail = new Buffer(bl.toString(), "binary").toString(
-        "base64"
-      );
-
-      /*let data = {
-        title:
-        desc:
-        tags:
-        category:
-        mp3:
-        thumbnail:
-      };*/
-    }
+    Card
   },
 
   computed: {
     ...mapState("user", {
       isLogged: store => store.isLogged
-    }),
-
-    ...mapState("view", {
-      isRendered: store => store.rendered.upload
     })
   }
 };

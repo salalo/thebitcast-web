@@ -1,11 +1,10 @@
 .thumbnail-container,
 .file-container {
   background-color: #fff;
-  width: 580px;
+  float: right;
+  width: 555px;
   height: 350px;
-  margin: 50px 50px 0 50px;
   padding-top: 30px;
-
   box-shadow: 0 0 0 rgba(0, 0, 0, 0), 2px 0 10px rgba(0, 0, 0, 0.1);
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   @include transition(0s, 0.4s box-shadow);
@@ -29,4 +28,6 @@
     font-weight: 500;
     margin: 0px 0;
   }
+
+  margin-right: 50px;
 }

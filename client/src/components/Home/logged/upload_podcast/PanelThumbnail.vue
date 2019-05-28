@@ -16,8 +16,7 @@ export default {};
 @import "./file_thumbnail.scss";
 
 .thumbnail-container {
-  float: right;
-
+  margin-right: 0px;
   .default-text {
     font-size: 16px;
     font-weight: 400;
