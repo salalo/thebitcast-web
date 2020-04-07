@@ -32,6 +32,12 @@ The Bitcast is a platform that tries to solve quality problem in podcasting nich
 - Bcrypt for hashing passwords
 - Joi for data validation
 
+### Mobile
+
+- React Native
+- Redux
+- Axios
+
 ### Design
 
 - Adobe XD with Figma for design and prototyping
